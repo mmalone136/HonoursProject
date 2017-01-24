@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.mmalo.prototype2.MainActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Options to do things"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+
+        android:textAlignment="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+
+    <ProgressBar
+        android:id="@+id/progressbar1"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        />
+
+
+    <Button
+        android:text="Summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSummary"
+        android:layout_alignBaseline="@+id/buttonPhoto"
+        android:layout_alignBottom="@+id/buttonPhoto"
+        android:layout_alignRight="@+id/progressbar1"
+        android:layout_alignEnd="@+id/progressbar1"
+        android:onClick="viewSummary"
+        />
+
+    <Button
+        android:text="Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMenu"
+        android:layout_alignBaseline="@+id/buttonPhoto"
+        android:layout_alignBottom="@+id/buttonPhoto"
+        android:layout_alignLeft="@+id/progressbar1"
+        android:layout_alignStart="@+id/progressbar1"
+        android:visibility="invisible" />
+
+
+    <Button
+        android:text="Take Photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/buttonPhoto"
+        android:onClick="takePhoto"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/buttonMenu"
+        android:layout_alignStart="@+id/buttonMenu" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textViewCurrentCalories"
+        android:textSize="20dp"
+
+        android:layout_below="@+id/progressbar1"
+        android:layout_alignLeft="@+id/progressbar1"
+        android:layout_alignStart="@+id/progressbar1" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTargetCalories"
+        android:textSize="20dp"
+
+        android:layout_alignBaseline="@+id/textViewCurrentCalories"
+        android:layout_alignBottom="@+id/textViewCurrentCalories"
+        android:layout_alignRight="@+id/progressbar1"
+        android:layout_alignEnd="@+id/progressbar1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/glass2"
+        android:id="@+id/imageView2"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/textViewTargetCalories"
+        android:layout_alignEnd="@+id/textViewTargetCalories"
+        android:layout_alignLeft="@+id/buttonSummary"
+        android:layout_alignStart="@+id/buttonSummary"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/apple"
+        android:id="@+id/imageView3"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignLeft="@+id/textViewCurrentCalories"
+        android:layout_alignStart="@+id/textViewCurrentCalories"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignRight="@+id/buttonPhoto"
+        android:layout_alignEnd="@+id/buttonPhoto"
+        android:visibility="invisible"/>
+
+
+
+</RelativeLayout>

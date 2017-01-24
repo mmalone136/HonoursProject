@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    tools:context="com.example.mmalo.prototype2.PTakenActivity">
+
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="262dp"
+
+        android:id="@+id/imageTaken"
+        android:padding = "10sp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/image_back"/>
+
+
+
+    <Button
+        android:text="Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSubmit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="13dp"
+        android:onClick="submitForm"
+        android:visibility="invisible"
+    />
+
+
+
+
+
+
+
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Comments"
+        android:ems="10"
+        android:id="@+id/textComments"
+        android:visibility="invisible"
+        android:minHeight="100dp"
+        android:layout_below="@+id/imageTaken"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Dinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textComments"
+        android:layout_alignRight="@+id/buttonBreak"
+        android:layout_alignEnd="@+id/buttonBreak"
+        android:id="@+id/buttonDin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:tag="Dinner"
+        android:onClick="mealButton"/>
+
+    <Button
+        android:text="Snack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/buttonLunch"
+        android:layout_alignStart="@+id/buttonLunch"
+        android:id="@+id/buttonSnack"
+        android:layout_below="@+id/textComments"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:tag="Snack"
+        android:onClick="mealButton"/>
+
+    <Button
+        android:text="Breakfast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonBreak"
+        android:layout_below="@+id/imageTaken"
+        android:layout_toLeftOf="@+id/buttonSubmit"
+        android:layout_marginRight="56dp"
+        android:layout_marginEnd="56dp"
+        android:layout_above="@+id/buttonDin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:tag="Breakfast"
+        android:onClick="mealButton"/>
+
+    <Button
+        android:text="Lunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLunch"
+        android:layout_below="@+id/imageTaken"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/buttonSnack"
+        android:layout_toEndOf="@+id/buttonDin"
+        android:layout_toRightOf="@+id/buttonDin"
+        android:tag="Lunch"
+        android:onClick="mealButton"/>
+
+
+</RelativeLayout>

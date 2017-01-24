@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    tools:context="com.example.mmalo.prototype2.OptionsActivity">
+
+    <Button
+        android:text="Take Photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonPhoto"
+        android:layout_weight="0.09"
+        android:elevation="0dp"
+        android:onClick="openPhotoPreview"
+        />
+
+    <Button
+        android:text="View Diary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSummary"
+        android:layout_weight="0.09"
+        android:onClick="viewDates"
+        />
+
+    <Button
+        android:text="View Guide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonGuide"
+        android:layout_weight="0.09" />
+
+    <Button
+        android:text="DELETE DATA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonDelete"
+        android:layout_weight="0.09"
+        android:onClick = "deleteDBData"/>
+
+    <Button
+        android:text="CREATE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonCreate"
+        android:layout_weight="0.09"
+        android:onClick = "createTable"/>
+
+    <Button
+        android:text="INSERT DATA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonInsert"
+        android:layout_weight="0.09"
+        android:onClick="doThingsNow"
+        />
+
+</LinearLayout>

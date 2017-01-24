@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:baselineAligned="false">
+
+
+    <FrameLayout
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_weight="1.14"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/frame_taken"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_weight="1.14"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        android:layout_above="@+id/button_capture" />
+
+
+    <Button
+        android:id="@+id/button_capture"
+        android:text="Capture"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:onClick="takePicClick"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_alignBaseline="@+id/button_cancel"
+        android:layout_alignBottom="@+id/button_cancel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <Button
+        android:id="@+id/button_cont"
+        android:text="Continue"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:onClick="continueForm"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_alignBaseline="@+id/button_cancel"
+        android:layout_alignBottom="@+id/button_cancel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+
+        />
+
+
+
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:text="Cancel"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp"
+        android:onClick="cancelPic"/>
+</RelativeLayout>
+
+
+
+
