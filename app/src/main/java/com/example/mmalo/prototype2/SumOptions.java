@@ -83,7 +83,7 @@ public class SumOptions extends AppCompatActivity {
 
                 try {
                     DiaryData curr;
-                    byte[] pic = null;//cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+                    byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
                     String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
 
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));

@@ -53,9 +53,9 @@ public class SummaryActivity extends AppCompatActivity {
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stringsofthings);
 
         currPhoto = theentry.getPhotoData();
-        //Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto,0,currPhoto.length);
-       // ImageView summaryPhoto = (ImageView) findViewById(R.id.imagePhoto);
-        //summaryPhoto.setImageBitmap(bmp);
+        Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto,0,currPhoto.length);
+       ImageView summaryPhoto = (ImageView) findViewById(R.id.imagePhoto);
+        summaryPhoto.setImageBitmap(bmp);
 
 
 
