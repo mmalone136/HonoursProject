@@ -15,10 +15,9 @@
         </activity>
         <activity android:name=".GuideActivity"></activity>
 
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".PTakenActivity"></activity>
+        <activity android:name=".DateviewActivity"></activity>
         <activity android:name=".OptionsActivity">
 
 
