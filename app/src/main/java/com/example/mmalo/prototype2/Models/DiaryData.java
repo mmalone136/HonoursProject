@@ -19,54 +19,70 @@ public class DiaryData implements Parcelable {
     private byte[] spokenData;
     private Timestamp timestamp;
     private String meal;
-   // private Date theDate;
-   // private Time theTime;
+    private String filepath;
+    // private Date theDate;
+    // private Time theTime;
 
-    public DiaryData(){}
-    public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
+    public DiaryData() {
+    }
+
+    public DiaryData(byte[] pd, String com, byte[] sp, Timestamp ts, String theMeal, String fp) {
         this.setPhotoData(pd);
         this.setComment(com);
         //this.setSpokenData(sp);
         this.setTimestamp(ts);
         this.setMeal(theMeal);
+        this.setFilepath(fp);
     }
 
-    public void setPhotoData(byte[] pData){
+    public void setPhotoData(byte[] pData) {
         this.photoData = pData;
     }
 
-    public void setComment(String comData){
+    public void setComment(String comData) {
         this.comment = comData;
     }
-    public void setSpokenData(byte[] sData){
+
+    public void setSpokenData(byte[] sData) {
         this.spokenData = sData;
     }
-    public void setTimestamp(Timestamp time){
+
+    public void setTimestamp(Timestamp time) {
         this.timestamp = time;
     }
-    public void setMeal(String mealType){
+
+    public void setMeal(String mealType) {
         this.meal = mealType;
     }
-   // public void setTheDate(Date d){this.theDate = d;}
-    //public void setTheTime(Time t){this.theTime = t;}
 
-    public byte[] getPhotoData(){
+    public void setFilepath(String file) {
+        this.meal = file;
+    }
+
+
+    public byte[] getPhotoData() {
         return this.photoData;
     }
-    public String getComment(){
+
+    public String getComment() {
         return this.comment;
     }
-    public byte[] getSpokenData(){
+
+    public byte[] getSpokenData() {
         return this.spokenData;
     }
-    public Timestamp getTimestamp(){
+
+    public Timestamp getTimestamp() {
         return this.timestamp;
     }
-    public String getMeal(){
+
+    public String getMeal() {
         return this.meal;
     }
-    //public Date getTheDate(){return this.theDate;}
-   // public Time getTheTime(){return this.theTime;}
+
+    public String getFilepath() {
+        return this.filepath;
+    }
 
 
     public void writeToParcel(Parcel out, int flags) {

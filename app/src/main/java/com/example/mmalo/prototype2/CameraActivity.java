@@ -1,12 +1,14 @@
 package com.example.mmalo.prototype2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +18,22 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraPreview;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import static android.R.attr.id;
 import static android.content.ContentValues.TAG;
@@ -38,42 +50,58 @@ public class CameraActivity extends Activity {
     private CameraPreview mPreview;
     private boolean cancelFlag;
     Bitmap bitmap;
-    byte [] dataToPass;
+    Timestamp theTime;
+    String filename;
+    byte[] dataToPass;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_preview);
 
-        cancelFlag=false;
+        cancelFlag = false;
         // Create an instance of Camera
         mCamera = getCameraInstance();
 
-        if(mCamera == null)
-        {
+        if (mCamera == null) {
             releaseCamera();
             Toast t = Toast.makeText(this, "UNABLE to get camera instance", Toast.LENGTH_LONG);
             t.show();
             //Intent i = new Intent(this, MainActivity.class);
             //startActivity(i);
 
-        }else
+        } else
 
         {
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-        mCamera.setDisplayOrientation(90);
-        preview.addView(mPreview);
+            // Create our Preview view and set it as the content of our activity.
+            mPreview = new CameraPreview(this, mCamera);
+            FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+            mCamera.setDisplayOrientation(90);
+            preview.addView(mPreview);
 
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-        public void takePicClick(View v) {
-            // get an image from the camera
-            //mCamera.setDisplayOrientation(270);
-            mCamera.takePicture(null, null, mPicture);
-        }
+    public void takePicClick(View v) {
+        // get an image from the camera
+        //mCamera.setDisplayOrientation(270);
+
+        Date date = new Date();
+        Timestamp ts = new Timestamp(date.getTime());
+        theTime = ts;
+
+
+        mCamera.takePicture(null, null, mPicture);
+
+    }
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
@@ -81,25 +109,29 @@ public class CameraActivity extends Activity {
         public void onPictureTaken(byte[] data, Camera camera) {
 
 
-           bitmap = BitmapFactory.decodeByteArray(data , 0, data.length);
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             //afterTaken(bitmap,data);
             //dataToPass= data;
 
             ByteArrayOutputStream str = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,str);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, str);
             dataToPass = str.toByteArray();
 
 
             Matrix rotationMat = new Matrix();
             rotationMat.postRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
-            afterTaken(bitmap,dataToPass);
+            afterTaken(bitmap, dataToPass);
+
+
         }
     };
 
-    public void afterTaken(Bitmap bmp, byte[] photoData){
 
 
+
+
+    public void afterTaken(Bitmap bmp, byte[] photoData) {
         ImageView iv = (ImageView) findViewById(R.id.frame_taken);
         iv.setImageBitmap(bmp);
         iv.setVisibility(View.VISIBLE);
@@ -116,43 +148,47 @@ public class CameraActivity extends Activity {
         capture.setVisibility(View.INVISIBLE);
     }
 
-    public void continueForm(View v){
+    public void continueForm(View v) {
         //Pass data to next activity then release camera then load activity
+        //saveImageToFile(dataToPass);
+        //readImageFromFile(filename);
 
         PTakenActivity.photoData = dataToPass;
         PTakenActivity.thePic = bitmap;
+        PTakenActivity.timetaken = theTime;
+        PTakenActivity.filename = filename;
+        //saveImageToFile(dataToPass);
 
         releaseCamera();
         Intent i = new Intent(this, PTakenActivity.class);
         this.startActivity(i);
-
     }
 
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
         releaseCamera();
-       super.onBackPressed();
+        super.onBackPressed();
     }
 
-    public void skipPicTake(View v){
+    public void skipPicTake(View v) {
         releaseCamera();
         Intent i = new Intent(this, PTakenActivity.class);
         this.startActivity(i);
 
     }
 
-    public void cancelPic(View v){
+    public void cancelPic(View v) {
 
-        if(!cancelFlag) {
+        if (!cancelFlag) {
             //In preview Mode, cancel releases camera and returns to main options
             releaseCamera();
             Intent i = new Intent(this, OptionsActivity.class);
             this.startActivity(i);
-        }else{
+        } else {
             //Pic Taken, cancel resets camera to take another photo
-            cancelFlag= !cancelFlag;
+            cancelFlag = !cancelFlag;
             Button confirm = (Button) findViewById(R.id.button_cont);
             confirm.setVisibility(View.INVISIBLE);
 
@@ -162,8 +198,8 @@ public class CameraActivity extends Activity {
     }
 
 
-    private void releaseCamera(){
-        if (mCamera != null){
+    private void releaseCamera() {
+        if (mCamera != null) {
             mCamera.release();        // release the camera for other applications
             mCamera = null;
         }

@@ -101,14 +101,14 @@ public class SumOptions extends AppCompatActivity {
 
                 try {
                     DiaryData curr;
-                    byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+                    //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
                     String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
-
+                    String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
                     String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
 
                     Timestamp theTime = Timestamp.valueOf(tID);
-                    curr = new DiaryData(pic, comm, null, theTime, theMeal);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file);
 
                     entries.add(curr);
                     i++;
@@ -123,7 +123,7 @@ public class SumOptions extends AppCompatActivity {
 
         }
 
-
+        db.close();
         cursor.close();
 
         return entries;
@@ -141,10 +141,11 @@ public class SumOptions extends AppCompatActivity {
         String[] projection = {
                 "time_stamp"
         };
+        String sort = "time_stamp ASC";
 
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
-        Cursor cursor = db.query("diary_entries", projection, null, null, null, null, null);
-
+        Cursor cursor = db.query("diary_entries", projection, null, null, null, null, sort);
+        //db.close();
         System.out.print("");
         ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
         //ArrayList<String> comments = new ArrayList<String>();
@@ -193,7 +194,7 @@ public class SumOptions extends AppCompatActivity {
 
         }
 
-
+        db.close();
         cursor.close();
 
         return dates;

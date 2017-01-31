@@ -1,6 +1,7 @@
 package com.example.mmalo.prototype2;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,6 +25,10 @@ import android.widget.Toast;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -40,7 +45,8 @@ public class PTakenActivity extends AppCompatActivity {
     public static Bitmap thePic;
     String commentData;
     String mealChoice;
-    Timestamp timetaken;
+    public static Timestamp timetaken;
+    public static String filename;
 
 
     @Override
@@ -113,12 +119,12 @@ public class PTakenActivity extends AppCompatActivity {
 
         ContentValues vals = new ContentValues();
         //vals.put("entry_ID",1);
-        vals.put("photo_data",dd.getPhotoData());
+       // vals.put("photo_data",dd.getPhotoData());
         vals.put("comment_data",dd.getComment());
         vals.put("audio_data",dd.getSpokenData());
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
         vals.put("meal",dd.getMeal());
-
+        vals.put("filepath",dd.getFilepath());
         long rowID = db.insert("diary_entries",null,vals);
         return rowID;
     }
@@ -145,17 +151,17 @@ public class PTakenActivity extends AppCompatActivity {
         int i = 0;
         while(cursor.moveToNext()) {
             DiaryData curr;
-            byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+            //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
             String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
             //Timestamp tID = new Timestamp(cursor.getLong(cursor.getColumnIndexOrThrow("time_stamp")));
             String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
             String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
-
+            String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
            // comments.add(itemId);
            // times.add(tID);
             //public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
             Timestamp theTime = Timestamp.valueOf(tID);
-            curr = new DiaryData(pic,comm,null,theTime,theMeal);
+            curr = new DiaryData(null,comm,null,theTime,theMeal,file);
 
             entries.add(curr);
             i++;
@@ -169,25 +175,12 @@ public class PTakenActivity extends AppCompatActivity {
 
     public void initValues()
     {
-        java.util.Date date = new java.util.Date();
-        Timestamp ts = new java.sql.Timestamp(date.getTime());
-        timetaken = ts;
+
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
         taken.setImageBitmap(thePic);
 
-        //https://developer.android.com/guide/topics/ui/controls/spinner.html
-        //http://stackoverflow.com/questions/2784081/android-create-spinner-programmatically-from-array
 
-        //Spinner spinner = (Spinner) findViewById(R.id.spinnerMeal);
-        //String [] meals = {"Select Meal", "Breakfast", "Lunch", "Dinner", "Snack"};
-
-      //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, meals);
-
-        // Specify the layout to use when the list of choices appears
-       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-      //  spinner.setAdapter(adapter);
     }
 
 
@@ -219,6 +212,27 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
+
+
+    public void saveImageToFile(byte[] datas) {
+        FileOutputStream fos;
+        //filename = theTime.toString();
+
+        try {
+            fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(datas);
+            fos.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+
+
+
     public void submitForm(View v)
     {
         EditText comments = (EditText) findViewById(R.id.textComments);
@@ -226,7 +240,7 @@ public class PTakenActivity extends AppCompatActivity {
         commentData = comments.getText().toString();
 
         //commentData =
-        DiaryData entry = new DiaryData(photoData,commentData,null,timetaken,mealChoice);
+        DiaryData entry = new DiaryData(null,commentData,null,timetaken,mealChoice,filename);
         long l = insertEntry(entry);
 
         Toast t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);

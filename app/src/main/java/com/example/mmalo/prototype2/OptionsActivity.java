@@ -29,7 +29,7 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
         //Toast t = Toast.makeText(this, "This is the correct", Toast.LENGTH_LONG);
-       //t.show();
+        //t.show();
     }
 
     public void deleteDBData(View v) {
@@ -39,6 +39,21 @@ public class OptionsActivity extends AppCompatActivity {
         db.execSQL("DROP TABLE IF EXISTS diary_entries");
         System.out.print("");
         db.close();
+    }
+
+    public void deleteTiday(View v) {
+        try {
+            DBHelper dbh = new DBHelper(getApplicationContext());
+            SQLiteDatabase db = dbh.getWritableDatabase();
+            String date = "2017-01-31";
+            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-01-31%'");
+            System.out.print("");
+            db.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ex.printStackTrace();
+        }
+
     }
 
 
@@ -54,6 +69,7 @@ public class OptionsActivity extends AppCompatActivity {
                         " comment_data TEXT," +
                         " audio_data BLOB ," +
                         " time_stamp TEXT," +
+                        " filepath TEXT," +
                         " meal TEXT)";
 
         db.execSQL(SQL_CREATE_ENTRIES);

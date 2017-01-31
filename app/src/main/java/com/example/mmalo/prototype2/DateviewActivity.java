@@ -86,7 +86,8 @@ public class DateviewActivity extends AppCompatActivity {
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         String[] projection = {
-                "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
+                "entry_ID", "filepath", "comment_data", "time_stamp", "meal"
+                // "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
         };
         String select = "time_stamp Like ?";
         String[] selArgs = {"%" + date + "%"};
@@ -105,14 +106,14 @@ public class DateviewActivity extends AppCompatActivity {
 
                 try {
                     DiaryData curr;
-                    byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+                   // byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
                     String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
-
+                    String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
                     String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
 
                     Timestamp theTime = Timestamp.valueOf(tID);
-                    curr = new DiaryData(pic, comm, null, theTime, theMeal);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file);
 
                     entries.add(curr);
                     i++;
@@ -129,7 +130,7 @@ public class DateviewActivity extends AppCompatActivity {
 
 
         cursor.close();
-
+        db.close();
         return entries;
     }
 }

@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper{
                     " comment_data TEXT," +
                     " audio_data BLOB ," +
                     " time_stamp TEXT," +
+                    " filepath TEXT," +
                     " meal TEXT)";
 
 

@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.example.mmalo.prototype2.Models.DiaryData;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -52,7 +55,7 @@ public class SummaryActivity extends AppCompatActivity {
         ListView dataList = (ListView) findViewById(R.id.listViewOfDatas);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stringsofthings);
 
-        currPhoto = theentry.getPhotoData();
+        currPhoto = readImageFromFile(theentry.getFilepath());//theentry.getPhotoData();
         Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto,0,currPhoto.length);
        ImageView summaryPhoto = (ImageView) findViewById(R.id.imagePhoto);
         summaryPhoto.setImageBitmap(bmp);
@@ -66,5 +69,28 @@ public class SummaryActivity extends AppCompatActivity {
     public void nextOption(View v) {
 
 
+    }
+
+
+
+
+    public byte[] readImageFromFile(String filename) {
+        try {
+
+            InputStream is = openFileInput(filename);
+
+            byte[] photodata = org.apache.commons.io.IOUtils.toByteArray(is);
+
+            System.out.println("");
+            return photodata;
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

@@ -57,4 +57,12 @@
         android:onClick="doThingsNow"
         />
 
+    <Button
+        android:text="Delete More"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_weight="0.09"
+        android:onClick="deleteTiday"/>
+
 </LinearLayout>
