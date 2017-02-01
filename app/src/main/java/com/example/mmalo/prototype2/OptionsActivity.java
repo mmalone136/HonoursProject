@@ -46,7 +46,7 @@ public class OptionsActivity extends AppCompatActivity {
             DBHelper dbh = new DBHelper(getApplicationContext());
             SQLiteDatabase db = dbh.getWritableDatabase();
             String date = "2017-01-31";
-            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-01-31%'");
+            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-02-01%'");
             System.out.print("");
             db.close();
         } catch (Exception ex) {

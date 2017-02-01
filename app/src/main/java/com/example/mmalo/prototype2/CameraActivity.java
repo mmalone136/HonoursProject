@@ -156,7 +156,7 @@ public class CameraActivity extends Activity {
         PTakenActivity.photoData = dataToPass;
         PTakenActivity.thePic = bitmap;
         PTakenActivity.timetaken = theTime;
-        PTakenActivity.filename = filename;
+        PTakenActivity.filename = theTime.toString();
         //saveImageToFile(dataToPass);
 
         releaseCamera();

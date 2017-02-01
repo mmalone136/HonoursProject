@@ -64,7 +64,7 @@ public class PTakenActivity extends AppCompatActivity {
         //readAllEntries();
     }
 
-    public ArrayList<DiaryData> doDBThings(){
+    public ArrayList<DiaryData> doDBThings() {
 
         DBHelper dbh = new DBHelper(getApplicationContext());
 
@@ -72,7 +72,7 @@ public class PTakenActivity extends AppCompatActivity {
 
         ArrayList<DiaryData> DDList = new ArrayList<DiaryData>();
 
-        for(int i = 0; i<25; i++){
+        for (int i = 0; i < 25; i++) {
             DiaryData dd = new DiaryData();
 
             byte[] photo = new byte[7];
@@ -86,15 +86,13 @@ public class PTakenActivity extends AppCompatActivity {
 
 
             String meal;
-            if(i<10)
-            {
-                meal= "Breakfast";
-            }else if(i>=10 && i<20)
-            {
+            if (i < 10) {
+                meal = "Breakfast";
+            } else if (i >= 10 && i < 20) {
                 meal = "Lunch";
-            }else{
+            } else {
 
-                meal="Dinner";
+                meal = "Dinner";
             }
 
             dd.setComment(comment);
@@ -107,34 +105,33 @@ public class PTakenActivity extends AppCompatActivity {
         }
 
 
-
         System.out.print("");
         return DDList;
     }
 
 
-    public long insertEntry(DiaryData dd){
+    public long insertEntry(DiaryData dd) {
         DBHelper dbh = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbh.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
         //vals.put("entry_ID",1);
-       // vals.put("photo_data",dd.getPhotoData());
-        vals.put("comment_data",dd.getComment());
-        vals.put("audio_data",dd.getSpokenData());
+        // vals.put("photo_data",dd.getPhotoData());
+        vals.put("comment_data", dd.getComment());
+        vals.put("audio_data", dd.getSpokenData());
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
-        vals.put("meal",dd.getMeal());
-        vals.put("filepath",dd.getFilepath());
-        long rowID = db.insert("diary_entries",null,vals);
+        vals.put("meal", dd.getMeal());
+        vals.put("filepath", dd.getFilepath());
+        long rowID = db.insert("diary_entries", null, vals);
         return rowID;
     }
 
-    public ArrayList<DiaryData> readAllEntries(){
+    public ArrayList<DiaryData> readAllEntries() {
         DBHelper dbh = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         String[] projection = {
-          "entry_ID","photo_data","comment_data","time_stamp","meal"
+                "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
         };
 
         //String selection = "column_name = ?";
@@ -142,14 +139,14 @@ public class PTakenActivity extends AppCompatActivity {
         //String sortOrder = "column_name DESC";
 
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
-        Cursor cursor = db.query("diary_entries",projection,null,null,null,null,null);
+        Cursor cursor = db.query("diary_entries", projection, null, null, null, null, null);
 
         System.out.print("");
         ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
         ArrayList<String> comments = new ArrayList<String>();
         ArrayList<String> times = new ArrayList<String>();
         int i = 0;
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             DiaryData curr;
             //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
             String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
@@ -157,11 +154,11 @@ public class PTakenActivity extends AppCompatActivity {
             String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
             String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
             String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
-           // comments.add(itemId);
-           // times.add(tID);
+            // comments.add(itemId);
+            // times.add(tID);
             //public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
             Timestamp theTime = Timestamp.valueOf(tID);
-            curr = new DiaryData(null,comm,null,theTime,theMeal,file);
+            curr = new DiaryData(null, comm, null, theTime, theMeal, file);
 
             entries.add(curr);
             i++;
@@ -172,9 +169,7 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
-
-    public void initValues()
-    {
+    public void initValues() {
 
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
@@ -184,12 +179,10 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
-    public void mealButton(View v)
-    {
+    public void mealButton(View v) {
         //if tag == 1,2,3,4 set meal = corresponding value then do:
 
         mealChoice = v.getTag().toString();
-
 
 
         Button button = (Button) findViewById(R.id.buttonDin);
@@ -202,7 +195,6 @@ public class PTakenActivity extends AppCompatActivity {
         button4.setVisibility(View.INVISIBLE);
 
 
-
         EditText comments = (EditText) findViewById(R.id.textComments);
         comments.setVisibility(View.VISIBLE);
 
@@ -213,8 +205,7 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
-
-    public void saveImageToFile(byte[] datas) {
+    public int saveImageToFile(byte[] datas) {
         FileOutputStream fos;
         //filename = theTime.toString();
 
@@ -222,28 +213,40 @@ public class PTakenActivity extends AppCompatActivity {
             fos = openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write(datas);
             fos.close();
-
+            return 7;
         } catch (Exception ex) {
             ex.printStackTrace();
+            return 0;
         }
     }
 
 
-
-
-
-
-    public void submitForm(View v)
-    {
+    public void submitForm(View v) {
         EditText comments = (EditText) findViewById(R.id.textComments);
         comments.setVisibility(View.VISIBLE);
         commentData = comments.getText().toString();
+        String fp = filename;
 
         //commentData =
-        DiaryData entry = new DiaryData(null,commentData,null,timetaken,mealChoice,filename);
-        long l = insertEntry(entry);
+        DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp);
 
-        Toast t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
+        System.out.print("");
+        System.out.print("");
+        System.out.print("");
+        Toast t;
+        int success = saveImageToFile(photoData);
+
+        if (success == 7) {
+            long l = insertEntry(entry);
+            if (l != -1) {
+                t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
+            } else {
+                t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
+            }
+        } else {
+            t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
+        }
+
         t.show();
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
@@ -252,8 +255,7 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
-    public void cancelForm(View v)
-    {
+    public void cancelForm(View v) {
 
         Toast t = Toast.makeText(this, "Entry Cancelled", Toast.LENGTH_LONG);
         t.show();
@@ -262,7 +264,6 @@ public class PTakenActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

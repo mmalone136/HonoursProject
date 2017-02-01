@@ -56,7 +56,7 @@ public class DiaryData implements Parcelable {
     }
 
     public void setFilepath(String file) {
-        this.meal = file;
+        this.filepath = file;
     }
 
 
