@@ -18,10 +18,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraPreview;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -53,11 +49,8 @@ public class CameraActivity extends Activity {
     Timestamp theTime;
     String filename;
     byte[] dataToPass;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,9 +78,7 @@ public class CameraActivity extends Activity {
             preview.addView(mPreview);
 
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     public void takePicClick(View v) {
@@ -119,6 +110,7 @@ public class CameraActivity extends Activity {
 
 
             Matrix rotationMat = new Matrix();
+            //rotationMat.postRotate(90);
             rotationMat.postRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
             afterTaken(bitmap, dataToPass);
@@ -154,6 +146,12 @@ public class CameraActivity extends Activity {
         //readImageFromFile(filename);
 
         PTakenActivity.photoData = dataToPass;
+
+        Matrix rotationMat = new Matrix();
+        //rotationMat.postRotate(90);
+        rotationMat.postRotate(270);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
+
         PTakenActivity.thePic = bitmap;
         PTakenActivity.timetaken = theTime;
         PTakenActivity.filename = theTime.toString();

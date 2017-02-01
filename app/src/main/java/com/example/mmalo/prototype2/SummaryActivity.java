@@ -36,6 +36,7 @@ public class SummaryActivity extends AppCompatActivity {
     Timestamp entryTime;
     DiaryData currEntry;
     public static DiaryData theentry;
+    ListView dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class SummaryActivity extends AppCompatActivity {
         stringsofthings.add(String.valueOf(theentry.getTimestamp()));
         stringsofthings.add(theentry.getComment());
 
-        ListView dataList = (ListView) findViewById(R.id.listViewOfDatas);
+        dataList = (ListView) findViewById(R.id.listViewOfDatas);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stringsofthings);
 
         currPhoto = readImageFromFile(theentry.getFilepath());//theentry.getPhotoData();
@@ -66,11 +67,24 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
 
-    public void nextOption(View v) {
+    public void reviewData(View v) {
+        //Hide List View
+        //Show Text box containing existing text, allow typing to edit
 
+        dataList.setVisibility(View.INVISIBLE);
+
+        EditText comments = (EditText) findViewById(R.id.textComms);
+        comments.setVisibility(View.VISIBLE);
+        comments.setText(theentry.getComment());
 
     }
 
+
+    public void saveReview(View v){
+        //Send updated comment to database
+
+
+    }
 
 
 
