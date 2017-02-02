@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -170,11 +173,20 @@ public class PTakenActivity extends AppCompatActivity {
 
 
     public void initValues() {
+        thePic = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+        //afterTaken(bitmap,data);
+        //dataToPass= data;
 
+        ByteArrayOutputStream str = new ByteArrayOutputStream();
+        thePic.compress(Bitmap.CompressFormat.JPEG, 100, str);
+        Matrix rotationMat = new Matrix();
+        //rotationMat.postRotate(90);
+        rotationMat.postRotate(0);
+
+        thePic = Bitmap.createBitmap(thePic, 0, 0, thePic.getWidth(), thePic.getHeight(), rotationMat, true);
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
         taken.setImageBitmap(thePic);
-
 
     }
 
@@ -247,6 +259,8 @@ public class PTakenActivity extends AppCompatActivity {
             t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
         }
 
+        thePic.recycle();
+        photoData = null;
         t.show();
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);

@@ -152,12 +152,17 @@ public class CameraActivity extends Activity {
         rotationMat.postRotate(270);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
 
-        PTakenActivity.thePic = bitmap;
+        //PTakenActivity.thePic = bitmap;
         PTakenActivity.timetaken = theTime;
         PTakenActivity.filename = theTime.toString();
         //saveImageToFile(dataToPass);
 
         releaseCamera();
+        bitmap.recycle();
+        dataToPass = null;
+        System.gc();
+
+
         Intent i = new Intent(this, PTakenActivity.class);
         this.startActivity(i);
     }

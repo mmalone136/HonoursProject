@@ -21,7 +21,7 @@
 
 
     <Button
-        android:text="Review"
+        android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonSave"
@@ -31,14 +31,15 @@
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/button3"
         android:layout_toEndOf="@+id/button3"
-        android:layout_alignTop="@+id/button3" />
+        android:visibility="invisible"
+        android:layout_below="@+id/listViewOfDatas" />
 
     <Button
         android:text="Back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-
+        android:onClick="backPress"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -58,21 +59,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listViewOfDatas"
-        android:layout_weight="0.84"
-        android:divider="#c2b35b"
-        android:dividerHeight="2dp"
-        android:drawSelectorOnTop="false"
-        android:contextClickable="false"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-
-        />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +74,22 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/buttonNextFeedback" />
+         />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewOfDatas"
+        android:layout_weight="0.84"
+        android:divider="#c2b35b"
+        android:dividerHeight="2dp"
+        android:drawSelectorOnTop="false"
+        android:contextClickable="false"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonReview"
+        android:layout_below="@+id/imagePhoto" />
 
 
 </RelativeLayout>
