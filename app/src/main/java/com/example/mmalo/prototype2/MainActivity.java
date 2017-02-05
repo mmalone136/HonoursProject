@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.menuGuide:
-                intent = new Intent(this, GuideActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.menuMainLayout:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.menuGuide:
+//                intent = new Intent(this, GuideActivity.class);
+//                startActivity(intent);
+//                return true;
+//            case R.id.menuMainLayout:
+//                intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

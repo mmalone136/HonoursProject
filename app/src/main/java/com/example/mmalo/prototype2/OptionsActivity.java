@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -54,6 +57,84 @@ public class OptionsActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_layout, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        Intent intent;
+        DBHelper dbh;
+        SQLiteDatabase db;
+        switch (item.getItemId()) {
+            case R.id.DelData:
+                dbh = new DBHelper(getApplicationContext());
+                db = dbh.getWritableDatabase();
+
+                db.execSQL("DROP TABLE IF EXISTS diary_entries");
+                db.execSQL("DROP TABLE IF EXISTS counts");
+                System.out.print("");
+                db.close();
+                return true;
+            case R.id.CreateData:
+                dbh = new DBHelper(getApplicationContext());
+                db = dbh.getWritableDatabase();
+
+
+                String SQL_CREATE_ENTRIES =
+                        "CREATE TABLE IF NOT EXISTS diary_entries (" +
+                                " entry_ID INTEGER PRIMARY KEY," +
+                                " photo_data BLOB ," +
+                                " comment_data TEXT," +
+                                " audio_data BLOB ," +
+                                " time_stamp TEXT," +
+                                " filepath TEXT," +
+                                " meal TEXT" +
+                                " fv_count INT," +
+                                " drink_count INT)";
+
+                db.execSQL(SQL_CREATE_ENTRIES);
+
+                String SQL_CREATE_COUNTS =
+                        "CREATE TABLE IF NOT EXISTS counts (" +
+                                " entry_ID INTEGER PRIMARY KEY," +
+                                " time_stamp TEXT," +
+                                " fv_count INT," +
+                                " drink_count INT)";
+                db.execSQL(SQL_CREATE_COUNTS);
+                System.out.print("");
+                db.close();
+                return true;
+            case R.id.InsertData:
+                ArrayList<DiaryData> seven = doDBThings();
+                for (DiaryData d : seven) {
+                    insertEntry(d);
+                }
+                return true;
+            case R.id.DeleteMore:
+                try {
+                    dbh = new DBHelper(getApplicationContext());
+                    db = dbh.getWritableDatabase();
+                    String date = "2017-01-31";
+                    db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-02-01%'");
+                    System.out.print("");
+                    db.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    ex.printStackTrace();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

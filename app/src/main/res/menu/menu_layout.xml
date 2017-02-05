@@ -2,12 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <item android:id="@+id/menuGuide"
-            android:title="View Guide"
+        <item android:id="@+id/DelData"
+            android:title="Delete Data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    <item android:id="@+id/menuMainLayout"
-        android:title="View Main Screen"
+    <item android:id="@+id/CreateData"
+        android:title="Create Table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <item android:id="@+id/InsertData"
+        android:title="Insert Data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <item android:id="@+id/DeleteMore"
+        android:title="Delete More"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     </menu>

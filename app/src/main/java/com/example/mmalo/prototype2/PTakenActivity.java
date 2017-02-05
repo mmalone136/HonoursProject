@@ -213,8 +213,38 @@ public class PTakenActivity extends AppCompatActivity {
         Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setVisibility(View.VISIBLE);
 
+        Button buttonFV = (Button) findViewById(R.id.buttonFV);
+        buttonFV.setVisibility(View.VISIBLE);
+        Button buttonDR = (Button) findViewById(R.id.buttonDR);
+        buttonDR.setVisibility(View.VISIBLE);
 
     }
+
+    public void addToCounts(View v){
+        //Show counter buttons, cancel button and text view
+
+
+    }
+
+
+    public void incCount(View v){
+        TextView tv = (TextView) findViewById(R.id.textViewIncCount);
+        int curr = Integer.valueOf(tv.getText().toString());
+        curr++;
+        tv.setText(String.valueOf(curr));
+
+    }
+
+    public void decCount(View v){
+        TextView tv = (TextView) findViewById(R.id.textViewIncCount);
+        int curr = Integer.valueOf(tv.getText().toString());
+        if (curr>0) {
+            curr--;
+        }
+        tv.setText(String.valueOf(curr));
+
+    }
+
 
 
     public int saveImageToFile(byte[] datas) {
@@ -232,6 +262,47 @@ public class PTakenActivity extends AppCompatActivity {
         }
     }
 
+    public void doFood(View v){
+        Button buttFood = (Button) findViewById(R.id.buttonFood);
+        buttFood.setVisibility(View.INVISIBLE);
+
+        Button buttDrink = (Button) findViewById(R.id.buttonDrink);
+        buttDrink.setVisibility(View.INVISIBLE);
+
+    }
+
+    public void doDrink(View v){
+        mealChoice = v.getTag().toString();
+
+        Button buttFood = (Button) findViewById(R.id.buttonFood);
+        buttFood.setVisibility(View.INVISIBLE);
+
+        Button buttDrink = (Button) findViewById(R.id.buttonDrink);
+        buttDrink.setVisibility(View.INVISIBLE);
+
+        Button button = (Button) findViewById(R.id.buttonDin);
+        button.setVisibility(View.INVISIBLE);
+        Button button2 = (Button) findViewById(R.id.buttonSnack);
+        button2.setVisibility(View.INVISIBLE);
+        Button button3 = (Button) findViewById(R.id.buttonLunch);
+        button3.setVisibility(View.INVISIBLE);
+        Button button4 = (Button) findViewById(R.id.buttonBreak);
+        button4.setVisibility(View.INVISIBLE);
+
+
+        EditText comments = (EditText) findViewById(R.id.textComments);
+        comments.setVisibility(View.VISIBLE);
+
+        Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        buttonSubmit.setVisibility(View.VISIBLE);
+
+        Button buttonFV = (Button) findViewById(R.id.buttonFV);
+        buttonFV.setVisibility(View.VISIBLE);
+        Button buttonDR = (Button) findViewById(R.id.buttonDR);
+        buttonDR.setVisibility(View.VISIBLE);
+
+
+    }
 
     public void submitForm(View v) {
         EditText comments = (EditText) findViewById(R.id.textComments);

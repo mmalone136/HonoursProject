@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonDelete"
         android:layout_weight="0.09"
-        android:onClick = "deleteDBData"/>
+        android:onClick = "deleteDBData"
+        android:visibility="invisible"/>
 
     <Button
         android:text="CREATE"
@@ -46,7 +47,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonCreate"
         android:layout_weight="0.09"
-        android:onClick = "createTable"/>
+        android:onClick = "createTable"
+        android:visibility="invisible"/>
 
     <Button
         android:text="INSERT DATA"
@@ -55,6 +57,7 @@
         android:id="@+id/buttonInsert"
         android:layout_weight="0.09"
         android:onClick="doThingsNow"
+        android:visibility="invisible"
         />
 
     <Button
@@ -63,6 +66,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/button2"
         android:layout_weight="0.09"
-        android:onClick="deleteTiday"/>
+        android:onClick="deleteTiday"
+        android:visibility="invisible"/>
 
 </LinearLayout>
