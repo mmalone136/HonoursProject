@@ -137,7 +137,7 @@
         android:id="@+id/buttonFV"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/buttonDR"
-        android:onClick="doFood"
+        android:onClick="addToCounts"
         android:tag="FV"
         android:layout_below="@+id/textComments"
         android:layout_toLeftOf="@+id/buttonDR"
@@ -152,7 +152,9 @@
         android:layout_toLeftOf="@+id/buttonLunch"
         android:layout_toStartOf="@+id/buttonLunch"
         android:id="@+id/buttonMinus"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:onClick="decCount"
+        />
 
     <Button
         android:text="+"
@@ -162,14 +164,15 @@
         android:layout_toRightOf="@+id/buttonFood"
         android:layout_toEndOf="@+id/buttonFood"
         android:id="@+id/buttonAdd"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:onClick="incCount"/>
 
     <TextView
-        android:text="1"
+        android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textComments"
-        android:id="@+id/textViewIncCount"
+        android:id="@+id/textViewCount"
         android:layout_alignRight="@+id/buttonAdd"
         android:layout_alignEnd="@+id/buttonAdd"
         android:layout_alignLeft="@+id/buttonMinus"
@@ -178,14 +181,17 @@
         android:textSize="200dp"
         android:textAlignment="center"
         android:visibility="invisible"
+        android:background="@drawable/background"
+        android:textColor="#FFFFFF"
         />
 
     <Button
-        android:text="Button"
+        android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonMinus"
         android:id="@+id/buttonCountConfirm"
+        android:onClick="saveCount"
         android:layout_alignLeft="@+id/buttonMinus"
         android:layout_alignStart="@+id/buttonMinus"
         android:layout_alignRight="@+id/buttonAdd"
@@ -227,8 +233,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonDR"
-        android:onClick="doDrink"
-        android:tag="DR"
+        android:onClick="addToCounts"
+        android:tag="Drink"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textComments"

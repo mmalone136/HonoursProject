@@ -18,4 +18,8 @@
         android:title="Delete More"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <item android:id="@+id/RefreshTotals"
+        android:title="Refresh More"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     </menu>

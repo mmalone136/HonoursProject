@@ -40,9 +40,9 @@ public class SumOptions extends AppCompatActivity {
 
         ListView datelist = (ListView) findViewById(R.id.listDates);
         uniqueDates = readUniqDates();
-        entries = readAllEntries();
+        //entries = readAllEntries();
 
-        ArrayList<Timestamp> ts = new ArrayList<Timestamp>();
+/*        ArrayList<Timestamp> ts = new ArrayList<Timestamp>();
         ArrayList<String> dt = new ArrayList<String>();
         for (DiaryData d : entries) {
             Timestamp curr = d.getTimestamp();
@@ -54,7 +54,7 @@ public class SumOptions extends AppCompatActivity {
 
             }
 
-        }
+        }*/
 
 
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, uniqueDates);
@@ -83,7 +83,7 @@ public class SumOptions extends AppCompatActivity {
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         String[] projection = {
-                "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
+                "entry_ID", "photo_data", "comment_data", "time_stamp", "meal","filepath","fv_count","drink_count"
         };
 
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
@@ -106,9 +106,11 @@ public class SumOptions extends AppCompatActivity {
                     String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
                     String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
+                    int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
+                    int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
 
                     Timestamp theTime = Timestamp.valueOf(tID);
-                    curr = new DiaryData(null, comm, null, theTime, theMeal, file);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file, fvCount, drCount);
 
                     entries.add(curr);
                     i++;

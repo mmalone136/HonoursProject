@@ -2,6 +2,7 @@ package com.example.mmalo.prototype2;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraController;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -26,6 +29,9 @@ import java.util.ArrayList;
 
 public class OptionsActivity extends AppCompatActivity {
 
+    int todaysFV;
+    int todaysDrinks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         //Toast t = Toast.makeText(this, "This is the correct", Toast.LENGTH_LONG);
         //t.show();
+        readCountData();
     }
 
     public void deleteDBData(View v) {
@@ -97,7 +104,7 @@ public class OptionsActivity extends AppCompatActivity {
                                 " audio_data BLOB ," +
                                 " time_stamp TEXT," +
                                 " filepath TEXT," +
-                                " meal TEXT" +
+                                " meal TEXT," +
                                 " fv_count INT," +
                                 " drink_count INT)";
 
@@ -131,6 +138,9 @@ public class OptionsActivity extends AppCompatActivity {
                     ex.printStackTrace();
                     ex.printStackTrace();
                 }
+                return true;
+            case R.id.RefreshTotals:
+                readCountData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -168,6 +178,69 @@ public class OptionsActivity extends AppCompatActivity {
         for (DiaryData d : seven) {
             insertEntry(d);
         }
+
+
+    }
+
+    public void readCountData(){
+
+
+//        "CREATE TABLE IF NOT EXISTS counts (" +
+//                " entry_ID INTEGER PRIMARY KEY," +
+//                " time_stamp TEXT," +
+//                " fv_count INT," +
+//                " drink_count INT)";
+
+
+        DBHelper dbh = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbh.getReadableDatabase();
+
+        java.util.Date theDate = new java.util.Date();
+        Date today = new Date(theDate.getTime());
+
+        String[] projection = {
+                "entry_ID", "fv_count", "time_stamp", "drink_count"
+        };
+        String select = "time_stamp Like ?";
+        String[] selArgs = {"%" + today + "%"};
+        //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
+        Cursor cursor = db.query("counts", projection, select, selArgs, null, null, null);
+
+
+        if(cursor.moveToFirst()) {
+            do {
+                try {
+                    String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
+                    int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
+                    int drinkCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
+
+                   // Timestamp theTime = Timestamp.valueOf(tID);
+                   // Date seven = new Date(theTime.getTime());
+
+                    todaysFV = fvCount;
+                    todaysDrinks = drinkCount;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    e.printStackTrace();
+
+                    todaysFV = 0;
+                    todaysDrinks = 0;
+
+                }
+
+
+            } while (cursor.moveToNext());
+
+
+        }
+        cursor.close();
+        TextView fv = (TextView) findViewById(R.id.textViewFV);
+        TextView dr = (TextView) findViewById(R.id.textViewDrinks);
+
+
+        fv.setText("Fruit & Veg: " + todaysFV);
+        dr.setText("Drinks: " + todaysDrinks);
 
 
     }

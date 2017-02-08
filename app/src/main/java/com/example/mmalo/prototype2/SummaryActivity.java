@@ -83,9 +83,13 @@ public class SummaryActivity extends AppCompatActivity {
     public void setListView(){
 
         ArrayList<String> stringsofthings = new ArrayList<String>();
+
+        String counts = "Fruit & Veg: " + theentry.getFvCount() + " | Drinks: " + theentry.getDrCount();
+
         stringsofthings.add(theentry.getMeal());
         stringsofthings.add(String.valueOf(theentry.getTimestamp()));
         stringsofthings.add(theentry.getComment());
+        stringsofthings.add(counts);
 
         dataList = (ListView) findViewById(R.id.listViewOfDatas);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stringsofthings);

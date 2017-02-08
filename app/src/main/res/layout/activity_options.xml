@@ -50,6 +50,13 @@
         android:onClick = "createTable"
         android:visibility="invisible"/>
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewFV"
+        android:layout_weight="0.09" />
+
     <Button
         android:text="INSERT DATA"
         android:layout_width="match_parent"
@@ -59,6 +66,13 @@
         android:onClick="doThingsNow"
         android:visibility="invisible"
         />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewDrinks"
+        android:layout_weight="0.09" />
 
     <Button
         android:text="Delete More"

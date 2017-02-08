@@ -22,17 +22,21 @@ public class DiaryData implements Parcelable {
     private String filepath;
     // private Date theDate;
     // private Time theTime;
+    private int fvCount;
+    private int drCount;
 
     public DiaryData() {
     }
 
-    public DiaryData(byte[] pd, String com, byte[] sp, Timestamp ts, String theMeal, String fp) {
+    public DiaryData(byte[] pd, String com, byte[] sp, Timestamp ts, String theMeal, String fp, int fv, int dr) {
         this.setPhotoData(pd);
         this.setComment(com);
         //this.setSpokenData(sp);
         this.setTimestamp(ts);
         this.setMeal(theMeal);
         this.setFilepath(fp);
+        this.setFvCount(fv);
+        this.setDrCount(dr);
     }
 
     public void setPhotoData(byte[] pData) {
@@ -59,6 +63,14 @@ public class DiaryData implements Parcelable {
         this.filepath = file;
     }
 
+    public void setFvCount(int fv) {
+        this.fvCount = fv;
+    }
+
+    public void setDrCount(int dr) {
+        this.drCount = dr;
+    }
+
 
     public byte[] getPhotoData() {
         return this.photoData;
@@ -82,6 +94,14 @@ public class DiaryData implements Parcelable {
 
     public String getFilepath() {
         return this.filepath;
+    }
+
+    public int getFvCount() {
+        return this.fvCount;
+    }
+
+    public int getDrCount() {
+        return this.drCount;
     }
 
 

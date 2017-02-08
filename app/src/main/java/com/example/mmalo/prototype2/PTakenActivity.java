@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
 import android.text.method.DateTimeKeyListener;
@@ -51,6 +52,9 @@ public class PTakenActivity extends AppCompatActivity {
     public static Timestamp timetaken;
     public static String filename;
 
+    int fv;
+    int dr;
+    String currCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,12 +123,15 @@ public class PTakenActivity extends AppCompatActivity {
 
         ContentValues vals = new ContentValues();
         //vals.put("entry_ID",1);
-        // vals.put("photo_data",dd.getPhotoData());
+        //vals.put("photo_data",dd.getPhotoData());
         vals.put("comment_data", dd.getComment());
         vals.put("audio_data", dd.getSpokenData());
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
         vals.put("meal", dd.getMeal());
         vals.put("filepath", dd.getFilepath());
+        vals.put("fv_count",fv);
+        vals.put("drink_count",dr);
+
         long rowID = db.insert("diary_entries", null, vals);
         return rowID;
     }
@@ -157,11 +164,13 @@ public class PTakenActivity extends AppCompatActivity {
             String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
             String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
             String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
+            int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
+            int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
             // comments.add(itemId);
             // times.add(tID);
             //public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
             Timestamp theTime = Timestamp.valueOf(tID);
-            curr = new DiaryData(null, comm, null, theTime, theMeal, file);
+            curr = new DiaryData(null, comm, null, theTime, theMeal, file,fvCount,drCount);
 
             entries.add(curr);
             i++;
@@ -222,26 +231,105 @@ public class PTakenActivity extends AppCompatActivity {
 
     public void addToCounts(View v){
         //Show counter buttons, cancel button and text view
+        currCount = v.getTag().toString();
+
+        Button buttFV = (Button) findViewById(R.id.buttonAdd);
+        Button buttDR = (Button) findViewById(R.id.buttonMinus);
+        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm);
+
+        buttFV.setVisibility(View.VISIBLE);
+        buttDR.setVisibility(View.VISIBLE);
+        buttConf.setVisibility(View.VISIBLE);
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount);
+        tv.setVisibility(View.VISIBLE);
+
+
+
+    }
+
+    public void saveCount(View v){
+        Button buttFV = (Button) findViewById(R.id.buttonAdd);
+        Button buttDR = (Button) findViewById(R.id.buttonMinus);
+        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm);
+
+        buttFV.setVisibility(View.INVISIBLE);
+        buttDR.setVisibility(View.INVISIBLE);
+        buttConf.setVisibility(View.INVISIBLE);
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount);
+        tv.setVisibility(View.INVISIBLE);
+
+        //UpdateTotals
 
 
     }
 
 
     public void incCount(View v){
-        TextView tv = (TextView) findViewById(R.id.textViewIncCount);
+        TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
         curr++;
         tv.setText(String.valueOf(curr));
 
+        updateLocals(curr);
+
     }
 
     public void decCount(View v){
-        TextView tv = (TextView) findViewById(R.id.textViewIncCount);
+        TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
         if (curr>0) {
             curr--;
         }
         tv.setText(String.valueOf(curr));
+        updateLocals(curr);
+
+    }
+
+
+    public void updateLocals(int val){
+
+        if(currCount.equals("Drink"))
+        {
+            dr = val;
+
+        }else{
+
+            fv = val;
+        }
+
+
+    }
+
+    public void updateCountsDB(int fvCount, int drinkCount){
+
+        try {
+            DBHelper dbh = new DBHelper(getApplicationContext());
+            SQLiteDatabase db = dbh.getWritableDatabase();
+
+            Date theDate = new Date(timetaken.getTime());
+
+
+            ContentValues cv = new ContentValues();
+            cv.put("fv_count", fvCount);
+            cv.put("drink_count", drinkCount);
+            String[] updateArgs = {theDate.toString()};
+            long id = db.update("counts", cv, "time_stamp = ?", updateArgs);
+
+            if(id==0){
+                cv.put("time_stamp",theDate.toString());
+                long rowID = db.insert("counts", null, cv);
+                System.out.print("");
+            }
+
+
+            db.close();
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            ex.printStackTrace();
+        }
 
     }
 
@@ -310,8 +398,9 @@ public class PTakenActivity extends AppCompatActivity {
         commentData = comments.getText().toString();
         String fp = filename;
 
+
         //commentData =
-        DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp);
+        DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp, fv, dr);
 
         System.out.print("");
         System.out.print("");
@@ -323,6 +412,7 @@ public class PTakenActivity extends AppCompatActivity {
             long l = insertEntry(entry);
             if (l != -1) {
                 t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
+                updateCountsDB(fv,dr);
             } else {
                 t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
             }

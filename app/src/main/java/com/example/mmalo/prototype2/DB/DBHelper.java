@@ -21,10 +21,12 @@ public class DBHelper extends SQLiteOpenHelper{
                     " audio_data BLOB ," +
                     " time_stamp TEXT," +
                     " filepath TEXT," +
-                    " meal TEXT)";
+                    " meal TEXT," +
+                    " fv_count INT," +
+                    " drink_count INT)";
 
     private static final String SQL_CREATE_COUNTS =
-            "CREATE TABLE IF NOT EXISTS diary_entries (" +
+            "CREATE TABLE IF NOT EXISTS counts (" +
                     " entry_ID INTEGER PRIMARY KEY," +
                     " time_stamp TEXT," +
                     " fv_count INT," +

@@ -86,7 +86,7 @@ public class DateviewActivity extends AppCompatActivity {
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         String[] projection = {
-                "entry_ID", "filepath", "comment_data", "time_stamp", "meal"
+                "entry_ID", "filepath", "comment_data", "time_stamp", "meal","fv_count","drink_count"
                 // "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
         };
         String select = "time_stamp Like ?";
@@ -100,34 +100,29 @@ public class DateviewActivity extends AppCompatActivity {
         ArrayList<String> times = new ArrayList<String>();
         int i = 0;
 
-
         if(cursor.moveToFirst()) {
             do {
-
                 try {
                     DiaryData curr;
-                   // byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+                    //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
                     String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
                     String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
                     String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
+                    int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
+                    int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
 
                     Timestamp theTime = Timestamp.valueOf(tID);
-                    curr = new DiaryData(null, comm, null, theTime, theMeal, file);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file,fvCount,drCount);
 
                     entries.add(curr);
                     i++;
                 } catch (Exception e) {
                     e.printStackTrace();
                     e.printStackTrace();
-
                 }
-
-
             } while (cursor.moveToNext());
-
         }
-
 
         cursor.close();
         db.close();
