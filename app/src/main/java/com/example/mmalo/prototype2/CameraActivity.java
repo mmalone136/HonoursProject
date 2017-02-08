@@ -147,10 +147,11 @@ public class CameraActivity extends Activity {
 
         PTakenActivity.photoData = dataToPass;
 
-        Matrix rotationMat = new Matrix();
+        //commented here
+        //Matrix rotationMat = new Matrix();
         //rotationMat.postRotate(90);
-        rotationMat.postRotate(270);
-        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
+        //rotationMat.postRotate(270);
+        //bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
 
         //PTakenActivity.thePic = bitmap;
         PTakenActivity.timetaken = theTime;

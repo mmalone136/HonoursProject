@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -52,6 +53,7 @@ public class PTakenActivity extends AppCompatActivity {
     public static Timestamp timetaken;
     public static String filename;
 
+    boolean firstClick;
     int fv;
     int dr;
     String currCount;
@@ -129,8 +131,8 @@ public class PTakenActivity extends AppCompatActivity {
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
         vals.put("meal", dd.getMeal());
         vals.put("filepath", dd.getFilepath());
-        vals.put("fv_count",fv);
-        vals.put("drink_count",dr);
+        vals.put("fv_count", fv);
+        vals.put("drink_count", dr);
 
         long rowID = db.insert("diary_entries", null, vals);
         return rowID;
@@ -170,7 +172,7 @@ public class PTakenActivity extends AppCompatActivity {
             // times.add(tID);
             //public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
             Timestamp theTime = Timestamp.valueOf(tID);
-            curr = new DiaryData(null, comm, null, theTime, theMeal, file,fvCount,drCount);
+            curr = new DiaryData(null, comm, null, theTime, theMeal, file, fvCount, drCount);
 
             entries.add(curr);
             i++;
@@ -186,17 +188,30 @@ public class PTakenActivity extends AppCompatActivity {
         //afterTaken(bitmap,data);
         //dataToPass= data;
 
-        ByteArrayOutputStream str = new ByteArrayOutputStream();
-        thePic.compress(Bitmap.CompressFormat.JPEG, 100, str);
-        Matrix rotationMat = new Matrix();
+        //ByteArrayOutputStream str = new ByteArrayOutputStream();
+        //thePic.compress(Bitmap.CompressFormat.JPEG, 100, str);
+        // Matrix rotationMat = new Matrix();
         //rotationMat.postRotate(90);
-        rotationMat.postRotate(0);
+        // rotationMat.postRotate(0);
 
-        thePic = Bitmap.createBitmap(thePic, 0, 0, thePic.getWidth(), thePic.getHeight(), rotationMat, true);
+        //thePic = Bitmap.createBitmap(thePic, 0, 0, thePic.getWidth(), thePic.getHeight(), rotationMat, true);
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
         taken.setImageBitmap(thePic);
+        fv = 0;
+        dr = 0;
+        firstClick = true;
+    }
 
+    public void clearTextBox(View v) {
+        if (v.getId() == R.id.textComments) ;
+        {
+            if (firstClick) {
+                EditText e = (EditText) v;
+                e.setText("");
+                firstClick = false;
+            }
+        }
     }
 
 
@@ -229,7 +244,7 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-    public void addToCounts(View v){
+    public void addToCounts(View v) {
         //Show counter buttons, cancel button and text view
         currCount = v.getTag().toString();
 
@@ -244,11 +259,16 @@ public class PTakenActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         tv.setVisibility(View.VISIBLE);
 
+        if (currCount.equals("Drink")) {
+            tv.setText(String.valueOf(dr));
+        } else {
+            tv.setText(String.valueOf(fv));
+        }
 
 
     }
 
-    public void saveCount(View v){
+    public void saveCount(View v) {
         Button buttFV = (Button) findViewById(R.id.buttonAdd);
         Button buttDR = (Button) findViewById(R.id.buttonMinus);
         Button buttConf = (Button) findViewById(R.id.buttonCountConfirm);
@@ -259,14 +279,13 @@ public class PTakenActivity extends AppCompatActivity {
 
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         tv.setVisibility(View.INVISIBLE);
-
-        //UpdateTotals
+        tv.setText("0");
 
 
     }
 
 
-    public void incCount(View v){
+    public void incCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
         curr++;
@@ -276,10 +295,10 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-    public void decCount(View v){
+    public void decCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
-        if (curr>0) {
+        if (curr > 0) {
             curr--;
         }
         tv.setText(String.valueOf(curr));
@@ -288,13 +307,12 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
-    public void updateLocals(int val){
+    public void updateLocals(int val) {
 
-        if(currCount.equals("Drink"))
-        {
+        if (currCount.equals("Drink")) {
             dr = val;
 
-        }else{
+        } else {
 
             fv = val;
         }
@@ -302,7 +320,7 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-    public void updateCountsDB(int fvCount, int drinkCount){
+    public void updateCountsDB(int fvCount, int drinkCount) {
 
         try {
             DBHelper dbh = new DBHelper(getApplicationContext());
@@ -315,10 +333,30 @@ public class PTakenActivity extends AppCompatActivity {
             cv.put("fv_count", fvCount);
             cv.put("drink_count", drinkCount);
             String[] updateArgs = {theDate.toString()};
-            long id = db.update("counts", cv, "time_stamp = ?", updateArgs);
 
-            if(id==0){
-                cv.put("time_stamp",theDate.toString());
+
+            //long id = db.update("counts", cv, "time_stamp = ?", updateArgs);
+
+            String condish = "time_stamp = " + theDate.toString();
+
+            //String sql = "UPDATE counts SET fv_count = fv_count + " + fvCount + ", drink_count = drink_count + " + fvCount + " WHERE " + condish;
+            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
+            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
+
+            //SQLiteStatement statement = db.compileStatement("UPDATE counts SET fv_count = fv_count + " + fvCount + ", drink_count = drink_count + "+ drinkCount + " WHERE time_stamp = " + theDate);
+            // int affectedRows = statement.executeUpdateDelete();
+
+            Cursor c = db.rawQuery(sql, args);
+            //long affectedRowCount = c.getLong(c.getColumnIndex("affected_row_count"));
+            long aa = c.getCount();
+
+            SQLiteStatement statement = db.compileStatement("SELECT changes()");
+            long a = statement.simpleQueryForLong();
+
+
+            // if(id==0){
+            if (a == 0) {
+                cv.put("time_stamp", theDate.toString());
                 long rowID = db.insert("counts", null, cv);
                 System.out.print("");
             }
@@ -326,13 +364,12 @@ public class PTakenActivity extends AppCompatActivity {
 
             db.close();
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             ex.printStackTrace();
         }
 
     }
-
 
 
     public int saveImageToFile(byte[] datas) {
@@ -350,7 +387,7 @@ public class PTakenActivity extends AppCompatActivity {
         }
     }
 
-    public void doFood(View v){
+    public void doFood(View v) {
         Button buttFood = (Button) findViewById(R.id.buttonFood);
         buttFood.setVisibility(View.INVISIBLE);
 
@@ -359,7 +396,7 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-    public void doDrink(View v){
+    public void doDrink(View v) {
         mealChoice = v.getTag().toString();
 
         Button buttFood = (Button) findViewById(R.id.buttonFood);
@@ -412,7 +449,7 @@ public class PTakenActivity extends AppCompatActivity {
             long l = insertEntry(entry);
             if (l != -1) {
                 t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
-                updateCountsDB(fv,dr);
+                updateCountsDB(fv, dr);
             } else {
                 t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
             }
