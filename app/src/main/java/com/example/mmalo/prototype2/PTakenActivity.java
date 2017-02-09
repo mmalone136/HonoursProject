@@ -328,39 +328,25 @@ public class PTakenActivity extends AppCompatActivity {
 
             Date theDate = new Date(timetaken.getTime());
 
-
             ContentValues cv = new ContentValues();
             cv.put("fv_count", fvCount);
             cv.put("drink_count", drinkCount);
             String[] updateArgs = {theDate.toString()};
 
-
-            //long id = db.update("counts", cv, "time_stamp = ?", updateArgs);
-
-            String condish = "time_stamp = " + theDate.toString();
-
-            //String sql = "UPDATE counts SET fv_count = fv_count + " + fvCount + ", drink_count = drink_count + " + fvCount + " WHERE " + condish;
             String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
             String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
 
-            //SQLiteStatement statement = db.compileStatement("UPDATE counts SET fv_count = fv_count + " + fvCount + ", drink_count = drink_count + "+ drinkCount + " WHERE time_stamp = " + theDate);
-            // int affectedRows = statement.executeUpdateDelete();
 
             Cursor c = db.rawQuery(sql, args);
-            //long affectedRowCount = c.getLong(c.getColumnIndex("affected_row_count"));
-            long aa = c.getCount();
 
             SQLiteStatement statement = db.compileStatement("SELECT changes()");
             long a = statement.simpleQueryForLong();
 
-
-            // if(id==0){
             if (a == 0) {
                 cv.put("time_stamp", theDate.toString());
                 long rowID = db.insert("counts", null, cv);
                 System.out.print("");
             }
-
 
             db.close();
 
@@ -368,7 +354,6 @@ public class PTakenActivity extends AppCompatActivity {
             ex.printStackTrace();
             ex.printStackTrace();
         }
-
     }
 
 

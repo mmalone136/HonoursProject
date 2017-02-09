@@ -2,7 +2,9 @@ package com.example.mmalo.prototype2;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.example.mmalo.prototype2.Models.DiaryData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -40,13 +43,13 @@ public class SummaryActivity extends AppCompatActivity {
     DiaryData currEntry;
     public static DiaryData theentry;
     ListView dataList;
-    Button review;
-    Button save;
     EditText comments;
-    Button editMeal;
-    Button buttonFV;
-    Button buttonDR;
-    String newMeal;
+    Button editMeal, buttonFV, buttonDR, review, save;
+
+    String newMeal, currCount;
+    int initDR, initFV;
+    int dr, fv;
+    int fvDiff,drDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,11 @@ public class SummaryActivity extends AppCompatActivity {
             Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto, 0, currPhoto.length);
             ImageView summaryPhoto = (ImageView) findViewById(R.id.imagePhoto);
             summaryPhoto.setImageBitmap(bmp);
+
+            initDR = theentry.getDrCount();
+            initFV = theentry.getFvCount();
+            dr=0;
+            fv=0;
 
         }catch(Exception ex)
         {
@@ -128,6 +136,85 @@ public class SummaryActivity extends AppCompatActivity {
 
     }
 
+
+    public void addToCounts(View v) {
+        //Show counter buttons, cancel button and text view
+        currCount = v.getTag().toString();
+
+        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
+        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
+
+        buttFV.setVisibility(View.VISIBLE);
+        buttDR.setVisibility(View.VISIBLE);
+        buttConf.setVisibility(View.VISIBLE);
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount2);
+        tv.setVisibility(View.VISIBLE);
+
+        if (currCount.equals("Drink")) {
+            tv.setText(String.valueOf(initDR+dr));
+        } else {
+            tv.setText(String.valueOf(initFV+fv));
+        }
+
+
+    }
+
+    public void updateLocals(int val) {
+
+        if (currCount.equals("Drink")) {
+            dr = val;
+
+        } else {
+
+            fv = val;
+        }
+
+
+    }
+
+
+    public void saveCount(View v) {
+        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
+        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
+
+        buttFV.setVisibility(View.INVISIBLE);
+        buttDR.setVisibility(View.INVISIBLE);
+        buttConf.setVisibility(View.INVISIBLE);
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount2);
+        tv.setVisibility(View.INVISIBLE);
+        tv.setText("0");
+
+
+    }
+
+
+    public void incCount(View v) {
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount2);
+        int curr = Integer.valueOf(tv.getText().toString());
+        if (curr < 8) {
+            curr++;
+        }
+        tv.setText(String.valueOf(curr));
+
+        updateLocals(curr);
+
+    }
+
+    public void decCount(View v) {
+        TextView tv = (TextView) findViewById(R.id.textViewCount2);
+        int curr = Integer.valueOf(tv.getText().toString());
+        if (curr > 0) {
+            curr--;
+        }
+        tv.setText(String.valueOf(curr));
+        updateLocals(curr);
+
+    }
 
 
     public void showMealTypes(View v){
@@ -208,10 +295,11 @@ public class SummaryActivity extends AppCompatActivity {
             ContentValues cv = new ContentValues();
             cv.put("comment_data", comment);
             if(!newMeal.equals("")){
-
                 cv.put("meal", newMeal);
             }
 
+            cv.put("fv_count",fv);
+            cv.put("drink_count",dr);
 
             String[] updateArgs = {theentry.getTimestamp().toString()};
             db.update("diary_entries", cv, "time_stamp = ?", updateArgs);
@@ -240,6 +328,26 @@ public class SummaryActivity extends AppCompatActivity {
             theentry.setMeal(newMeal);
         }
 
+        fvDiff = fv-initFV;
+        drDiff = dr-initDR;
+
+        if(fvDiff!=0) {
+            theentry.setFvCount(fv);
+        }
+        if(drDiff!=0) {
+            theentry.setDrCount(dr);
+        }
+
+        //Use fvDIff and drDiff to update daily counts
+        if(fvDiff!=0 || drDiff!=0)
+        {
+            Date d = new Date(theentry.getTimestamp().getTime());
+            updateCountsDB(fvDiff,drDiff,d);
+        }
+
+
+
+
         editMeal.setVisibility(View.INVISIBLE);
         buttonFV.setVisibility(View.INVISIBLE);
         buttonDR.setVisibility(View.INVISIBLE);
@@ -247,6 +355,44 @@ public class SummaryActivity extends AppCompatActivity {
         setListView();
         updateDatabase(updated);
     }
+
+
+
+
+    public void updateCountsDB(int fvCount, int drinkCount, Date theDate) {
+
+        try {
+            DBHelper dbh = new DBHelper(getApplicationContext());
+            SQLiteDatabase db = dbh.getWritableDatabase();
+
+            ContentValues cv = new ContentValues();
+            cv.put("fv_count", fvCount);
+            cv.put("drink_count", drinkCount);
+            String[] updateArgs = {theDate.toString()};
+
+            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
+            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
+
+
+            Cursor c = db.rawQuery(sql, args);
+
+            SQLiteStatement statement = db.compileStatement("SELECT changes()");
+            long a = statement.simpleQueryForLong();
+
+            if (a == 0) {
+                cv.put("time_stamp", theDate.toString());
+                long rowID = db.insert("counts", null, cv);
+                System.out.print("");
+            }
+
+            db.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ex.printStackTrace();
+        }
+    }
+
 
 
 

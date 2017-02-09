@@ -91,6 +91,8 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/buttonReview"
         android:visibility="invisible"
+        android:onClick="addToCounts"
+        android:tag="FV"
         />
 
     <Button
@@ -102,7 +104,9 @@
         android:layout_toEndOf="@+id/buttonFVFV"
         android:visibility="invisible"
         android:id="@+id/buttonDRDR"
-        android:layout_above="@+id/buttonReview" />
+        android:layout_above="@+id/buttonReview"
+        android:onClick="addToCounts"
+        android:tag="Drink"/>
 
     <Button
         android:text="Edit Meal"
@@ -182,6 +186,24 @@
         android:onClick="updateMealTag"
         android:tag="Dinner"/>
 
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewCount2"
+        android:layout_alignRight="@+id/buttonAdd2"
+        android:layout_alignEnd="@+id/buttonAdd2"
+        android:layout_alignLeft="@+id/buttonMinus2"
+        android:layout_alignStart="@+id/buttonMinus2"
+        android:layout_alignParentTop="true"
+        android:textSize="200dp"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:background="@drawable/background"
+        android:textColor="#FFFFFF"
+        android:layout_above="@+id/textComms" />
+
+
     <Button
         android:text="Snack"
         android:layout_width="wrap_content"
@@ -226,6 +248,43 @@
         android:visibility="invisible"
         android:onClick="updateMealTag"
         android:tag="Lunch"/>
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAdd2"
+        android:visibility="invisible"
+        android:onClick="incCount"
+        android:layout_below="@+id/imagePhoto"
+        android:layout_toRightOf="@+id/buttonChangeFood"
+        android:layout_toEndOf="@+id/buttonChangeFood" />
+
+
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonCountConfirm2"
+        android:onClick="saveCount"
+        android:visibility="invisible"
+        android:layout_above="@+id/buttonFVFV"
+        android:layout_alignRight="@+id/buttonAdd2"
+        android:layout_alignEnd="@+id/buttonAdd2"
+        android:layout_alignLeft="@+id/buttonMinus2"
+        android:layout_alignStart="@+id/buttonMinus2" />
+
+    <Button
+        android:text="-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMinus2"
+        android:visibility="invisible"
+        android:onClick="decCount"
+        android:layout_alignBaseline="@+id/buttonAdd2"
+        android:layout_alignBottom="@+id/buttonAdd2"
+        android:layout_toLeftOf="@+id/buttonChangeDrink"
+        android:layout_toStartOf="@+id/buttonChangeDrink" />
 
 
 </RelativeLayout>

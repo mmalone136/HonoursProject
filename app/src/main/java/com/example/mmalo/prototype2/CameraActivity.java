@@ -105,7 +105,7 @@ public class CameraActivity extends Activity {
             //dataToPass= data;
 
             ByteArrayOutputStream str = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, str);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, str);
             dataToPass = str.toByteArray();
 
 
