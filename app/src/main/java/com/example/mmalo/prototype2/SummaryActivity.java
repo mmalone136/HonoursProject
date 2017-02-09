@@ -43,6 +43,10 @@ public class SummaryActivity extends AppCompatActivity {
     Button review;
     Button save;
     EditText comments;
+    Button editMeal;
+    Button buttonFV;
+    Button buttonDR;
+    String newMeal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     public void initValues() {
         setListView();
+        newMeal="";
         try {
             currPhoto = readImageFromFile(theentry.getFilepath());//theentry.getPhotoData();
             Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto, 0, currPhoto.length);
@@ -82,17 +87,17 @@ public class SummaryActivity extends AppCompatActivity {
 
     public void setListView(){
 
-        ArrayList<String> stringsofthings = new ArrayList<String>();
+        ArrayList<String> listData = new ArrayList<String>();
 
         String counts = "Fruit & Veg: " + theentry.getFvCount() + " | Drinks: " + theentry.getDrCount();
 
-        stringsofthings.add(theentry.getMeal());
-        stringsofthings.add(String.valueOf(theentry.getTimestamp()));
-        stringsofthings.add(theentry.getComment());
-        stringsofthings.add(counts);
+        listData.add(theentry.getMeal());
+        listData.add(String.valueOf(theentry.getTimestamp()));
+        listData.add(theentry.getComment());
+        listData.add(counts);
 
         dataList = (ListView) findViewById(R.id.listViewOfDatas);
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stringsofthings);
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
 
         dataList.setAdapter(adapter);
     }
@@ -112,7 +117,88 @@ public class SummaryActivity extends AppCompatActivity {
 
         save = (Button) findViewById(R.id.buttonSave);
         save.setVisibility(View.VISIBLE);
+
+
+        editMeal = (Button) findViewById(R.id.buttonEditMeal);
+        editMeal.setVisibility(View.VISIBLE);
+        buttonFV = (Button) findViewById(R.id.buttonFVFV);
+        buttonFV.setVisibility(View.VISIBLE);
+        buttonDR = (Button) findViewById(R.id.buttonDRDR);
+        buttonDR.setVisibility(View.VISIBLE);
+
     }
+
+
+
+    public void showMealTypes(View v){
+
+        Button breakfast = (Button) findViewById(R.id.buttonBreak2);
+        breakfast.setVisibility(View.VISIBLE);
+
+        Button lunch = (Button) findViewById(R.id.buttonLunch2);
+        lunch.setVisibility(View.VISIBLE);
+
+        Button dinner = (Button) findViewById(R.id.buttonDin2);
+        dinner.setVisibility(View.VISIBLE);
+
+        Button snack = (Button) findViewById(R.id.buttonSnack2);
+        snack.setVisibility(View.VISIBLE);
+
+        Button food = (Button) findViewById(R.id.buttonChangeFood);
+        Button drink = (Button) findViewById(R.id.buttonChangeDrink);
+        food.setVisibility(View.INVISIBLE);
+        drink.setVisibility(View.INVISIBLE);
+
+    }
+
+    public void updateMealTag(View v){
+        String tag = v.getTag().toString();
+
+        newMeal = tag;
+
+        Button food = (Button) findViewById(R.id.buttonChangeFood);
+        Button drink = (Button) findViewById(R.id.buttonChangeDrink);
+        //hide food, hide drink
+        //hide breakfast,lunch,dinner,snack
+        food.setVisibility(View.INVISIBLE);
+        drink.setVisibility(View.INVISIBLE);
+
+        Button breakfast = (Button) findViewById(R.id.buttonBreak2);
+        breakfast.setVisibility(View.INVISIBLE);
+        Button lunch = (Button) findViewById(R.id.buttonLunch2);
+        lunch.setVisibility(View.INVISIBLE);
+        Button dinner = (Button) findViewById(R.id.buttonDin2);
+        dinner.setVisibility(View.INVISIBLE);
+        Button snack = (Button) findViewById(R.id.buttonSnack2);
+        snack.setVisibility(View.INVISIBLE);
+
+        save.setVisibility(View.VISIBLE);
+        editMeal.setVisibility(View.VISIBLE);
+        buttonFV.setVisibility(View.VISIBLE);
+        buttonDR.setVisibility(View.VISIBLE);
+        comments.setVisibility(View.VISIBLE);
+    }
+
+    public void editMealTag(View v){
+        Button food = (Button) findViewById(R.id.buttonChangeFood);
+        Button drink = (Button) findViewById(R.id.buttonChangeDrink);
+        //hide food, hide drink
+        //hide breakfast,lunch,dinner,snack
+        food.setVisibility(View.VISIBLE);
+        drink.setVisibility(View.VISIBLE);
+
+
+
+        editMeal.setVisibility(View.INVISIBLE);
+        save.setVisibility(View.INVISIBLE);
+        buttonFV.setVisibility(View.INVISIBLE);
+
+        buttonDR.setVisibility(View.INVISIBLE);
+        comments.setVisibility(View.INVISIBLE);
+
+    }
+
+
 
     public void updateDatabase(String comment){
         try {
@@ -121,6 +207,12 @@ public class SummaryActivity extends AppCompatActivity {
 
             ContentValues cv = new ContentValues();
             cv.put("comment_data", comment);
+            if(!newMeal.equals("")){
+
+                cv.put("meal", newMeal);
+            }
+
+
             String[] updateArgs = {theentry.getTimestamp().toString()};
             db.update("diary_entries", cv, "time_stamp = ?", updateArgs);
         }catch(Exception ex){
@@ -142,6 +234,15 @@ public class SummaryActivity extends AppCompatActivity {
         theentry.setComment(updated);
         comments.setText(updated);
         comments.setVisibility(View.INVISIBLE);
+
+        if(!newMeal.equals("")) {
+
+            theentry.setMeal(newMeal);
+        }
+
+        editMeal.setVisibility(View.INVISIBLE);
+        buttonFV.setVisibility(View.INVISIBLE);
+        buttonDR.setVisibility(View.INVISIBLE);
 
         setListView();
         updateDatabase(updated);
