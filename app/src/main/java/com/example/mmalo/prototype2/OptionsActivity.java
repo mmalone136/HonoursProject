@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    int todaysFV;
-    int todaysDrinks;
+    public static int todaysFV;
+    public static int todaysDrinks;
 
 
     @Override

@@ -357,6 +357,49 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
+
+    public void updateCountsDB2(int fvCount, int drinkCount) {
+
+        try {
+            DBHelper dbh = new DBHelper(getApplicationContext());
+            SQLiteDatabase db = dbh.getWritableDatabase();
+            Date theDate = new Date(timetaken.getTime());
+
+            int f = fvCount + OptionsActivity.todaysFV;
+            int d = drinkCount + OptionsActivity.todaysDrinks;
+
+
+            ContentValues cv = new ContentValues();
+            cv.put("fv_count", f);
+            cv.put("drink_count", d);
+            String[] updateArgs = {theDate.toString()};
+
+            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
+            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
+
+            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
+
+           // Cursor c = db.rawQuery(sql, args);
+
+           // SQLiteStatement statement = db.compileStatement("SELECT changes()");
+           // long a = statement.simpleQueryForLong();
+
+            if (a == 0) {
+                cv.put("time_stamp", theDate.toString());
+                long rowID = db.insert("counts", null, cv);
+                System.out.print("");
+            }
+
+            db.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ex.printStackTrace();
+        }
+    }
+
+
+
     public int saveImageToFile(byte[] datas) {
         FileOutputStream fos;
         //filename = theTime.toString();
@@ -434,7 +477,7 @@ public class PTakenActivity extends AppCompatActivity {
             long l = insertEntry(entry);
             if (l != -1) {
                 t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
-                updateCountsDB(fv, dr);
+                updateCountsDB2(fv, dr);
             } else {
                 t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
             }

@@ -342,11 +342,8 @@ public class SummaryActivity extends AppCompatActivity {
         if(fvDiff!=0 || drDiff!=0)
         {
             Date d = new Date(theentry.getTimestamp().getTime());
-            updateCountsDB(fvDiff,drDiff,d);
+            updateCountsDB(fvDiff + OptionsActivity.todaysFV,drDiff+OptionsActivity.todaysDrinks,d);
         }
-
-
-
 
         editMeal.setVisibility(View.INVISIBLE);
         buttonFV.setVisibility(View.INVISIBLE);
@@ -373,17 +370,16 @@ public class SummaryActivity extends AppCompatActivity {
             String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
             String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
 
-
-            Cursor c = db.rawQuery(sql, args);
-
-            SQLiteStatement statement = db.compileStatement("SELECT changes()");
-            long a = statement.simpleQueryForLong();
+            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
 
             if (a == 0) {
                 cv.put("time_stamp", theDate.toString());
                 long rowID = db.insert("counts", null, cv);
                 System.out.print("");
             }
+
+            OptionsActivity.todaysFV = fvCount;
+            OptionsActivity.todaysDrinks = drinkCount;
 
             db.close();
 
