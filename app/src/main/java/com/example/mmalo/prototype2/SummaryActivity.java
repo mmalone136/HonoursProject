@@ -50,6 +50,7 @@ public class SummaryActivity extends AppCompatActivity {
     int initDR, initFV;
     int dr, fv;
     int fvDiff,drDiff;
+    boolean fvChange, drChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,8 @@ public class SummaryActivity extends AppCompatActivity {
             initFV = theentry.getFvCount();
             dr=0;
             fv=0;
+            fvChange = false;
+            drChange = false;
 
         }catch(Exception ex)
         {
@@ -165,10 +168,10 @@ public class SummaryActivity extends AppCompatActivity {
 
         if (currCount.equals("Drink")) {
             dr = val;
-
+            drChange = true;
         } else {
-
             fv = val;
+            fvChange = true;
         }
 
 
@@ -331,18 +334,38 @@ public class SummaryActivity extends AppCompatActivity {
         fvDiff = fv-initFV;
         drDiff = dr-initDR;
 
-        if(fvDiff!=0) {
+        //        if(fvDiff!=0) {
+        //            theentry.setFvCount(fv);
+        //        }
+        //        if(drDiff!=0) {
+        //            theentry.setDrCount(dr);
+        //        }
+
+        int fvToPass = initFV;
+        int drToPass = initDR;
+
+        if(fvChange){
+            fvToPass = fvDiff + OptionsActivity.todaysFV;
             theentry.setFvCount(fv);
+        }else{
+
+            fv=initFV;
         }
-        if(drDiff!=0) {
+
+        if(drChange){
+            drToPass = drDiff+OptionsActivity.todaysDrinks;
             theentry.setDrCount(dr);
+        }else{
+
+            dr = initDR;
         }
+
 
         //Use fvDIff and drDiff to update daily counts
         if(fvDiff!=0 || drDiff!=0)
         {
             Date d = new Date(theentry.getTimestamp().getTime());
-            updateCountsDB(fvDiff + OptionsActivity.todaysFV,drDiff+OptionsActivity.todaysDrinks,d);
+            updateCountsDB(fvToPass,drToPass,d);
         }
 
         editMeal.setVisibility(View.INVISIBLE);
