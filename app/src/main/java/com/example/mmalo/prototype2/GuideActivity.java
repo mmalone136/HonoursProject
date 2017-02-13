@@ -3,16 +3,29 @@ package com.example.mmalo.prototype2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 public class GuideActivity extends AppCompatActivity {
+
+
+    TextView generalInfo;
+    ExpandableListView explExamples;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+
+        generalInfo = (TextView) findViewById(R.id.tvGenInfo);
+        explExamples = (ExpandableListView) findViewById(R.id.expListView);
     }
 
 
@@ -42,4 +55,31 @@ public class GuideActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+    public void showGenInfo(View v){
+        generalInfo.setVisibility(View.VISIBLE);
+        explExamples.setVisibility(View.INVISIBLE);
+
+
+    }
+
+
+    public void showExamples(View v){
+        generalInfo.setVisibility(View.INVISIBLE);
+        explExamples.setVisibility(View.VISIBLE);
+
+    }
+
+
+    //OptionsActivity - Back button
+    public void backToMain(View v) {
+        Intent i = new Intent(getBaseContext(), OptionsActivity.class);
+        this.startActivity(i);
+    }
+
+
+
+
 }

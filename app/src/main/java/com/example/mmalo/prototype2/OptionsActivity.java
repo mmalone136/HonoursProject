@@ -168,8 +168,15 @@ public class OptionsActivity extends AppCompatActivity {
         db.close();
     }
 
+    //ViewDiary
     public void viewDates(View v) {
         Intent i = new Intent(getBaseContext(), SumOptions.class);
+        this.startActivity(i);
+    }
+
+    //ViewGuide
+    public void viewGuide(View v) {
+        Intent i = new Intent(getBaseContext(), GuideActivity.class);
         this.startActivity(i);
     }
 
@@ -364,10 +371,10 @@ public class OptionsActivity extends AppCompatActivity {
         long rowID = db.insert("diary_entries", null, vals);
     }
 
-
+    //TakePhoto
     public void openPhotoPreview(View v) {
-        System.out.println(v.getId());
-        System.out.println("It did the thing");
+        //System.out.println(v.getId());
+        //System.out.println("It did the thing");
         CameraController cc = new CameraController();
         boolean hasCam = cc.checkCameraHardware(this);
         System.out.println(hasCam);

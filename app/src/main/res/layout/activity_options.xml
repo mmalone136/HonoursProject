@@ -30,25 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonGuide"
-        android:layout_weight="0.09" />
-
-    <Button
-        android:text="DELETE DATA"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonDelete"
         android:layout_weight="0.09"
-        android:onClick = "deleteDBData"
-        android:visibility="invisible"/>
+        android:onClick = "viewGuide"
+        />
 
-    <Button
-        android:text="CREATE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonCreate"
-        android:layout_weight="0.09"
-        android:onClick = "createTable"
-        android:visibility="invisible"/>
 
     <TextView
         android:text="TextView"
@@ -57,15 +42,6 @@
         android:id="@+id/textViewFV"
         android:layout_weight="0.09" />
 
-    <Button
-        android:text="INSERT DATA"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonInsert"
-        android:layout_weight="0.09"
-        android:onClick="doThingsNow"
-        android:visibility="invisible"
-        />
 
     <TextView
         android:text="TextView"
@@ -74,13 +50,6 @@
         android:id="@+id/textViewDrinks"
         android:layout_weight="0.09" />
 
-    <Button
-        android:text="Delete More"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_weight="0.09"
-        android:onClick="deleteTiday"
-        android:visibility="invisible"/>
+
 
 </LinearLayout>
