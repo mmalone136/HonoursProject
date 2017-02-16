@@ -15,6 +15,8 @@
         </activity>
         <activity android:name=".GuideActivity"> </activity>
 
+        <activity android:name=".TutorialActivity"> </activity>
+
         <activity android:name=".MainActivity"> </activity>
         <activity android:name=".PTakenActivity" android:screenOrientation="portrait"> </activity>
         <activity android:name=".DateviewActivity" android:screenOrientation="portrait"> </activity>

@@ -28,28 +28,6 @@
 
 
 
-    <Button
-        android:text="Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonSubmit"
-        android:onClick="submitForm"
-
-        android:layout_below="@+id/textComments"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/buttonDR"
-        android:layout_toEndOf="@+id/buttonDR"
-        android:visibility="invisible"/>
-
-
-
-
-
-
-
-
 
     <EditText
         android:layout_width="wrap_content"
@@ -131,21 +109,7 @@
 
 
 
-    <Button
-        android:text="Add To Fruit and Veg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/buttonFV"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/buttonDR"
-        android:onClick="addToCounts"
-        android:tag="FV"
-        android:layout_below="@+id/textComments"
-        android:layout_toLeftOf="@+id/buttonDR"
-        android:visibility="invisible"
-        />
+
 
     <Button
         android:text="-"
@@ -201,6 +165,52 @@
         android:layout_alignEnd="@+id/buttonAdd"
         android:visibility="invisible"/>
 
+
+    <Button
+        android:text="ADD TO DRINKS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonDR"
+        android:onClick="addToCounts"
+        android:tag="Drink"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textComments"
+        android:visibility="invisible"/>
+
+
+        <Button
+            android:text="Add To Fruit and Veg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/buttonFV"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/buttonDR"
+            android:onClick="addToCounts"
+            android:tag="FV"
+            android:layout_below="@+id/textComments"
+            android:layout_toLeftOf="@+id/buttonDR"
+            android:visibility="invisible"
+            />
+
+
+        <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSubmit"
+            android:onClick="submitForm"
+
+            android:layout_below="@+id/textComments"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/buttonDR"
+            android:layout_toEndOf="@+id/buttonDR"
+            android:visibility="invisible"/>
+
     <Button
         android:text="DRINK"
         android:layout_width="wrap_content"
@@ -230,18 +240,6 @@
         android:layout_toStartOf="@+id/buttonSnack"
         android:onClick="doFood"
         />
-
-    <Button
-        android:text="ADD TO DRINKS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonDR"
-        android:onClick="addToCounts"
-        android:tag="Drink"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textComments"
-        android:visibility="invisible"/>
 
 
 </RelativeLayout>

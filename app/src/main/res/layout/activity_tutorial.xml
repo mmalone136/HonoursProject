@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:text="Back To Main Menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonBackFromTut"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="backOption"/>
+
+    <LinearLayout android:id="@+id/ButtonLayout"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+
+        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+
+        <Button
+            android:text="Add To\nFruit\n and Veg"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/buttonFV"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/buttonDR"
+            android:onClick="addToCounts"
+            android:tag="FV"
+            android:layout_below="@+id/textComments"
+            android:layout_toLeftOf="@+id/buttonDR"
+
+            />
+
+
+        <Button
+            android:text="ADD TO\nDRINKS"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:id="@+id/buttonDR"
+            android:onClick="addToCounts"
+            android:tag="Drink"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textComments"
+            />
+
+
+        <Button
+            android:text="Submit"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/buttonSubmit2"
+            android:onClick="submitForm"
+            android:layout_weight="1"
+            android:layout_below="@+id/textComments"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/buttonDR"
+            android:layout_toEndOf="@+id/buttonDR"
+/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:id="@+id/imageView5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/ButtonLayout" />
+
+
+</RelativeLayout>

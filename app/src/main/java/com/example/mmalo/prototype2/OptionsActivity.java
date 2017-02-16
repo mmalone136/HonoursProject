@@ -174,6 +174,11 @@ public class OptionsActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
+    public void loadTutorial(View v){
+        Intent i = new Intent(getBaseContext(), TutorialActivity.class);
+        this.startActivity(i);
+    }
+
     //ViewGuide
     public void viewGuide(View v) {
         Intent i = new Intent(getBaseContext(), GuideActivity.class);
@@ -292,30 +297,6 @@ public class OptionsActivity extends AppCompatActivity {
         dd = new DiaryData();
         i++;
         comment = "This is the comment : " + i;
-        meal = "Dinner";
-        ts = java.sql.Timestamp.valueOf("2017-01-17 17:36:12.0");
-        dd.setPhotoData(photo);
-        dd.setSpokenData(audio);
-        dd.setComment(comment);
-        dd.setTimestamp(ts);
-        dd.setMeal(meal);
-        DDList.add(dd);
-
-        dd = new DiaryData();
-        i++;
-        comment = "This is the comment : " + i;
-        ts = java.sql.Timestamp.valueOf("2017-01-16 08:17:22.0");
-        meal = "Breakfast";
-        dd.setPhotoData(photo);
-        dd.setSpokenData(audio);
-        dd.setComment(comment);
-        dd.setTimestamp(ts);
-        dd.setMeal(meal);
-        DDList.add(dd);
-
-        dd = new DiaryData();
-        i++;
-        comment = "This is the comment : " + i;
         meal = "Lunch";
         ts = java.sql.Timestamp.valueOf("2017-01-16 12:59:10.0");
         dd.setPhotoData(photo);
@@ -342,7 +323,56 @@ public class OptionsActivity extends AppCompatActivity {
         i++;
         comment = "This is the comment : " + i;
         meal = "Snack";
-        ts = java.sql.Timestamp.valueOf("2017-01-16 19:58:19.0");
+        ts = java.sql.Timestamp.valueOf("2017-02-09 19:58:19.0");
+        dd.setPhotoData(photo);
+        dd.setSpokenData(audio);
+        dd.setComment(comment);
+        dd.setTimestamp(ts);
+        dd.setMeal(meal);
+        DDList.add(dd);
+
+        dd = new DiaryData();
+        i++;
+        comment = "This is the comment : " + i;
+        meal = "Dinner";
+        ts = java.sql.Timestamp.valueOf("2017-02-07 17:36:12.0");
+        dd.setPhotoData(photo);
+        dd.setSpokenData(audio);
+        dd.setComment(comment);
+        dd.setTimestamp(ts);
+        dd.setMeal(meal);
+        DDList.add(dd);
+
+        dd = new DiaryData();
+        i++;
+        comment = "This is the comment : " + i;
+        ts = java.sql.Timestamp.valueOf("2017-01-16 08:17:22.0");
+        meal = "Breakfast";
+        dd.setPhotoData(photo);
+        dd.setSpokenData(audio);
+        dd.setComment(comment);
+        dd.setTimestamp(ts);
+        dd.setMeal(meal);
+        DDList.add(dd);
+
+
+        dd = new DiaryData();
+        i++;
+        comment = "This is the comment : " + i;
+        meal = "Dinner";
+        ts = java.sql.Timestamp.valueOf("2017-02-03 17:55:12.0");
+        dd.setPhotoData(photo);
+        dd.setSpokenData(audio);
+        dd.setComment(comment);
+        dd.setTimestamp(ts);
+        dd.setMeal(meal);
+        DDList.add(dd);
+
+        dd = new DiaryData();
+        i++;
+        comment = "This is the comment : " + i;
+        ts = java.sql.Timestamp.valueOf("2017-01-31 08:49:22.0");
+        meal = "Breakfast";
         dd.setPhotoData(photo);
         dd.setSpokenData(audio);
         dd.setComment(comment);
