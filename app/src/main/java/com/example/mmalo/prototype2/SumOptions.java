@@ -150,8 +150,8 @@ public class SumOptions extends AppCompatActivity {
 
     public String[] getListForWeek(ArrayList<String> CurrentWeek) {
 
-        String[] weekData = {step + " Monday - No Entries" , step + " Tuesday - No Entries", step + " Wednesday - No Entries", step + " Thursday - No Entries",
-                step + " Friday - No Entries", step + " Saturday - No Entries", step + " Sunday - No Entries"};
+        String[] weekData = {" " +step + " Monday - No Entries" , " " +step + " Tuesday - No Entries", " " +step + " Wednesday - No Entries", " " +step + " Thursday - No Entries",
+                " " + step + " Friday - No Entries", " " +step + " Saturday - No Entries", " " + step + " Sunday - No Entries"};
 
         for (String curr : CurrentWeek) {
             //Check day of week for corresponding date
@@ -197,15 +197,16 @@ public class SumOptions extends AppCompatActivity {
     }
 
     public void setListAdapter() {
-        ListView datelist = (ListView) findViewById(R.id.listDates);
+        ListView dateList = (ListView) findViewById(R.id.listDates);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weekData);
-        datelist.setAdapter(adapter);
-        datelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dateList.setAdapter(adapter);
+        dateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //String curr = uniqueDates.get(position);
                 String curr = weekData[position];
-                if (!curr.equals("")) {
+                String seven = curr.substring(0,1);
+                if (!seven.equals(" ")) {
                     DateviewActivity.date = curr.substring(0, 10);
                     Intent i = new Intent(getBaseContext(), DateviewActivity.class);
                     //i.putExtra("diary_data", curr);

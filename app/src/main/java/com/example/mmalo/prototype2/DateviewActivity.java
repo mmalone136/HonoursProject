@@ -25,33 +25,52 @@ import java.util.ArrayList;
 public class DateviewActivity extends AppCompatActivity {
 
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
+    public ArrayList<DiaryData> init = new ArrayList<DiaryData>();
+    public ArrayList<DiaryData> sorted = new ArrayList<DiaryData>();
     public static String date;
+    public boolean flag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dateview);
 
-        initVals();
+        init = readEntriesForDate(date);
+        flag = true;
+        initVals(flag);
     }
 
 
-    public void initVals(){
-
-        ListView entryList = (ListView) findViewById(R.id.listEntries);
-        //uniqueDates = readUniqDates();
-        entries = readEntriesForDate(date);
-
+    public void initVals(Boolean sortFlag){
+        if(sortFlag) {
+            entries = init;
+        }else{
+            sorted = splitLists();
+            entries = sorted;
+        }
 
         ArrayList<String> listData = new ArrayList<String>();
         for (DiaryData d : entries) {
+            //TODO: Reformat this for output
             Timestamp dTimestamp = d.getTimestamp();
 
             String curr = d.getMeal() + " - " + dTimestamp.toString();
             listData.add(curr);
         }
+        System.out.println("");
 
+        setListAdapter(listData);
+    }
+
+    public void flipSort(View v){
+        flag = !flag;
+        initVals(flag);
+    }
+
+    public void setListAdapter(ArrayList<String> listData){
         try {
+
+            ListView entryList = (ListView) findViewById(R.id.listEntries);
 
             ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
 
@@ -76,9 +95,50 @@ public class DateviewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        System.out.println("");
     }
 
+    public ArrayList<DiaryData> splitLists(){
+        ArrayList<DiaryData> breakfast = new ArrayList<DiaryData>();
+        ArrayList<DiaryData> lunch = new ArrayList<DiaryData>();
+        ArrayList<DiaryData> dinner = new ArrayList<DiaryData>();
+        ArrayList<DiaryData> snacks = new ArrayList<DiaryData>();
+        ArrayList<DiaryData> drinks = new ArrayList<DiaryData>();
+
+        for(DiaryData dd : entries)
+        {
+            switch(dd.getMeal())
+            {
+                case("Breakfast"):
+                    breakfast.add(dd);
+                break;
+                case("Lunch"):
+                    lunch.add(dd);
+                    break;
+                case("Dinner"):
+                    dinner.add(dd);
+                    break;
+                case("Snack"):
+                    snacks.add(dd);
+                    break;
+                case("Drink"):
+                    drinks.add(dd);
+                    break;
+            }
+        }
+        ArrayList<DiaryData> sortedList = new ArrayList<DiaryData>();
+        sortedList.addAll(breakfast);
+        sortedList.addAll(lunch);
+        sortedList.addAll(dinner);
+        sortedList.addAll(snacks);
+        sortedList.addAll(drinks);
+
+        return sortedList;
+    }
+
+
+    public void goBack(View v){
+        onBackPressed();
+    }
 
 
     public ArrayList<DiaryData> readEntriesForDate(String date) {

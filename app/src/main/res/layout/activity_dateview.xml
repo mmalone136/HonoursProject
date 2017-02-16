@@ -11,12 +11,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listEntries"
-
+        android:layout_above="@+id/buttons"
         android:layout_weight="0.84"
         android:divider="#c2b35b"
         android:dividerHeight="3dp"
         android:drawSelectorOnTop="false"
         android:contextClickable="false"
         />
+
+    <LinearLayout android:id="@+id/buttons" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent" android:layout_alignParentLeft="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonInfoTab"
+            android:text="Back"
+
+            android:onClick="goBack"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonExamplesTab"
+            android:layout_weight="1"
+            android:text="Sort by Time/Meal"
+            android:onClick="flipSort"/>
+
+    </LinearLayout>
 
 </LinearLayout>
