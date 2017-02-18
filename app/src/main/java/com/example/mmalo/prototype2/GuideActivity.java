@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ExpandedMenuView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +30,7 @@ public class GuideActivity extends AppCompatActivity {
     private ExpandableListAdapter explAdapter;
     private ArrayList<ExpListGroup> explItems;
     private ExpandableListView dataList;
-
+    ArrayList<Integer> [] images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,16 @@ public class GuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guide);
 
         generalInfo = (TextView) findViewById(R.id.tvGenInfo);
+        generalInfo.setMovementMethod(new ScrollingMovementMethod());
+
+
         explExamples = (ExpandableListView) findViewById(R.id.expListView);
         explExamples.setVisibility(View.INVISIBLE);
 
         dataList = (ExpandableListView) findViewById(R.id.expListView);
         explItems = setDataGroups();
-        explAdapter = new ExplAdapter(GuideActivity.this, explItems);
+        images = setDrawables();
+        explAdapter = new ExplAdapter(GuideActivity.this, explItems,images);
         dataList.setAdapter(explAdapter);
 
 
@@ -60,6 +65,36 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
+    public ArrayList<Integer> [] setDrawables(){
+
+        ArrayList<Integer> [] drawables = new ArrayList[3];
+        // 3 Groups
+        // 10
+        // 7
+        // 10
+
+        ArrayList<Integer> temp = new ArrayList<>();
+        for(int i =0;i<10;i++)
+        {
+            int currInt = R.drawable.apple;
+            temp.add(currInt);
+        }
+
+        ArrayList<Integer> tempTwo = new ArrayList<>();
+        for(int i =0;i<7;i++)
+        {
+            int currInt = R.drawable.glass2;
+            tempTwo.add(currInt);
+        }
+
+
+        drawables[0] = temp;
+        drawables[1] = tempTwo;
+        drawables[2] = temp;
+
+        return drawables;
+    }
+
 
 
 
@@ -70,54 +105,98 @@ public class GuideActivity extends AppCompatActivity {
         ExpListGroup g1 = new ExpListGroup();
         g1.setName("Fruit & Vegetables");
 
-        ExpListChild ch1 = new ExpListChild();
-        ch1.setName("Apples");
-        ch1.setTag(null);
-        children.add(ch1);
+        ExpListChild child = new ExpListChild();
+        child.setName("Apples");
+        child.setTag(null);
+        children.add(child);
 
-        ExpListChild ch2 = new ExpListChild();
-        ch2.setName("Oranges");
-        ch2.setTag(null);
-        children.add(ch2);
+        child = new ExpListChild();
+        child.setName("Oranges");
+        child.setTag(null);
+        children.add(child);
 
-        ExpListChild ch3 = new ExpListChild();
-        ch3.setName("Tomatoes");
-        ch3.setTag(null);
-        children.add(ch3);
+        child = new ExpListChild();
+        child.setName("Tomatoes");
+        child.setTag(null);
+        children.add(child);
 
-        ExpListChild ch4 = new ExpListChild();
-        ch4.setName("Cabbage");
-        ch4.setTag(null);
-        children.add(ch4);
+        child = new ExpListChild();
+        child.setName("Banana");
+        child.setTag(null);
+        children.add(child);
 
-        ExpListChild ch5 = new ExpListChild();
-        ch5.setName("Broccoli");
-        ch5.setTag(null);
-        children.add(ch5);
+        child = new ExpListChild();
+        child.setName("Broccoli");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Sweetcorn");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Peas");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Mushrooms");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Cucumber");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Carrots");
+        child.setTag(null);
+        children.add(child);
 
         g1.setItems(children);
         groups.add(g1);
-
 
 
         children = new ArrayList<ExpListChild>();
         ExpListGroup g2 = new ExpListGroup();
         g2.setName("Drinks");
 
-        ch1 = new ExpListChild();
-        ch1.setName("Water");
-        ch1.setTag(null);
-        children.add(ch1);
+        child = new ExpListChild();
+        child.setName("Water");
+        child.setTag(null);
+        children.add(child);
 
-        ch2 = new ExpListChild();
-        ch2.setName("Low Sugar Diluting Juice");
-        ch2.setTag(null);
-        children.add(ch2);
+        child = new ExpListChild();
+        child.setName("'No Added Sugar' Diluting Juice");
+        child.setTag(null);
+        children.add(child);
 
-        ch3 = new ExpListChild();
-        ch3.setName("Tea");
-        ch3.setTag(null);
-        children.add(ch3);
+        child = new ExpListChild();
+        child.setName("Tea with no sugar");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Coffee with no sugar");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("1 glass of fruit juice");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("DIET or ZERO fizzy drinks");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Low fat Milk");
+        child.setTag(null);
+        children.add(child);
 
         g2.setItems(children);
         groups.add(g2);
@@ -126,22 +205,57 @@ public class GuideActivity extends AppCompatActivity {
 
         children = new ArrayList<ExpListChild>();
         ExpListGroup g3 = new ExpListGroup();
-        g3.setName("Things to avoid");
+        g3.setName("Eat less often, in small amounts");
 
-        ch1 = new ExpListChild();
-        ch1.setName("Chocolate");
-        ch1.setTag(null);
-        children.add(ch1);
+        child = new ExpListChild();
+        child.setName("Chocolate");
+        child.setTag(null);
+        children.add(child);
 
-        ch2 = new ExpListChild();
-        ch2.setName("Crisps");
-        ch2.setTag(null);
-        children.add(ch2);
+        child = new ExpListChild();
+        child.setName("Crisps");
+        child.setTag(null);
+        children.add(child);
 
-        ch3 = new ExpListChild();
-        ch3.setName("Fizzy Drinks");
-        ch3.setTag(null);
-        children.add(ch3);
+        child = new ExpListChild();
+        child.setName("Full sugar Fizzy Drinks (Cola, Energy Drinks)");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Biscuits");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Ice-Cream");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Ketchup");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Sweets");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Take-aways");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Chips");
+        child.setTag(null);
+        children.add(child);
+
+        child = new ExpListChild();
+        child.setName("Cakes");
+        child.setTag(null);
+        children.add(child);
 
         g3.setItems(children);
         groups.add(g3);

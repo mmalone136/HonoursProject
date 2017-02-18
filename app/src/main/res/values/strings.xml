@@ -3,4 +3,12 @@
     <string name="Black">#000000</string>
     <string name="ExpandChildBackground">#FFAFABAB</string>
     <string name="ExpandGroupBackground">#FF7C7C7C</string>
+    <string name ="genAdvice">"General healthy eating advice\n
+- Eat 5 portions of Fruit and Vegetables per day\n
+- Eight glasses of sugar free drinks\n
+- Have 3 regular meals per day\n
+- Cut down on unhealthy snacks\n
+-Physical Activity:
+    Aim to do 30 minutes of excercise, at least 5 days per week
+"</string>
 </resources>

@@ -1,11 +1,17 @@
 package com.example.mmalo.prototype2;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Models.TutorialData;
@@ -21,9 +27,16 @@ public class TutorialActivity extends AppCompatActivity {
 
     ArrayList<TutorialData> tutorialDataList;
     ImageView pictureView;
-    boolean currFV;
-    boolean currDR;
+    boolean currHasFV;
+    boolean currHasDR;
+    boolean userFV;
+    boolean userDR;
     private Random randGen;
+    Button buttonFV;
+    Button buttonDR;
+    int correctFVCount;
+    int correctDRCount;
+    TextView finalSum;
 
 
     @Override
@@ -32,9 +45,14 @@ public class TutorialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial);
         createList();
         randGen = new Random();
-
+        userFV=false;
+        userDR=false;
+        buttonFV = (Button) findViewById(R.id.buttonFV);
+        buttonDR = (Button) findViewById(R.id.buttonDR);
+        finalSum = (TextView) findViewById(R.id.txtViewFinalSummary);
         setCurrentPhoto(getNextPhoto());
-
+        correctFVCount = 0;
+        correctDRCount = 0;
     }
 
 
@@ -43,39 +61,27 @@ public class TutorialActivity extends AppCompatActivity {
         TutorialData tutData;
 
         String id = "@drawable/apple";
-        boolean fv = true;
-        boolean dr = false;
-        tutData = new TutorialData(id, fv, dr);
+        tutData = new TutorialData(id, true, false);
         tutorialDataList.add(tutData);
 
         id = "@drawable/glass2";
-        fv = false;
-        dr = true;
-        tutData = new TutorialData(id, fv, dr);
+        tutData = new TutorialData(id, false, true); //id, fv, dr
         tutorialDataList.add(tutData);
 
-        id = "@drawable/glass2";
-        fv = false;
-        dr = true;
-        tutData = new TutorialData(id, fv, dr);
+        id = "@drawable/fruitandveg";
+        tutData = new TutorialData(id, true, false);
         tutorialDataList.add(tutData);
 
         id = "@drawable/healthymeal";
-        fv = true;
-        dr = false;
-        tutData = new TutorialData(id, fv, dr);
+        tutData = new TutorialData(id, true, false);
         tutorialDataList.add(tutData);
 
         id = "@drawable/spaghetti";
-        fv = false;
-        dr = false;
-        tutData = new TutorialData(id, fv, dr);
+        tutData = new TutorialData(id, false, false);
         tutorialDataList.add(tutData);
 
         id = "@drawable/mealdrink";
-        fv = true;
-        dr = true;
-        tutData = new TutorialData(id, fv, dr);
+        tutData = new TutorialData(id, true, true);
         tutorialDataList.add(tutData);
 
 
@@ -84,8 +90,8 @@ public class TutorialActivity extends AppCompatActivity {
     public void setCurrentPhoto(TutorialData tutData) {
         try {
             String identifier = tutData.getFilePath();
-            boolean currFV = tutData.getHasFV();
-            boolean currDR = tutData.getHasDR();
+            currHasFV = tutData.getHasFV();
+            currHasDR = tutData.getHasDR();
             pictureView = (ImageView) findViewById(R.id.imageViewTut);
             String test = "@drawable/apple";
 
@@ -102,7 +108,6 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     public TutorialData getNextPhoto() {
-
         //http://stackoverflow.com/questions/5034370/retrieving-a-random-item-from-arraylist
         int nextIndex = randGen.nextInt(tutorialDataList.size());
         TutorialData nextData = tutorialDataList.get(nextIndex);
@@ -112,27 +117,75 @@ public class TutorialActivity extends AppCompatActivity {
 
     public void addToDrinks(View v) {
         //toggle drinks on/off
+        userDR = !userDR;
+        if (userDR) {
+            changeButtonColours(buttonDR,"#50BF0B");
+        }else{
+            changeButtonColours(buttonDR,"#DB2F09");
+        }
 
     }
-
     public void addToFV(View v) {
         //toggle FV on/off
+        userFV=!userFV;
+        if (userFV) {
+            changeButtonColours(buttonFV,"#50BF0B");
+        }else{
+            changeButtonColours(buttonFV,"#DB2F09");
+        }
+    }
 
+    public void changeButtonColours(Button curr,String colour){
+        curr.setBackgroundColor(Color.parseColor(colour));
     }
 
     public void goToNext(View v) {
 
-        //compareuser choices to actual value and update score
+        //compare user choices to actual value and update score
+
+
+        boolean fvResult = (userFV == currHasFV);
+        boolean drResult = (userDR == currHasDR);
+
+        if(fvResult){   correctFVCount++;  }
+        if(drResult){   correctDRCount++;  }
+
+
+        changeButtonColours(buttonFV,"#b0b4b7");
+        changeButtonColours(buttonDR,"#b0b4b7");
+        userFV=false;
+        userDR=false;
+        Toast t = Toast.makeText(this, "FV Correct: " + fvResult+ " |DR Correct: " + drResult, Toast.LENGTH_LONG);
+        t.show();
 
         if (tutorialDataList.size() > 0) {
             setCurrentPhoto(getNextPhoto());
         }else
         {
-            Toast t = Toast.makeText(this, "Images finished", Toast.LENGTH_LONG);
-            t.show();
-            Intent i = new Intent(getBaseContext(), OptionsActivity.class);
-            this.startActivity(i);
+            //Toast to = Toast.makeText(this, "FV Correct: " + correctFVCount, Toast.LENGTH_LONG);
+            //to.show();
+
+            //Toast toa = Toast.makeText(this, "DR Correct: " + correctDRCount, Toast.LENGTH_LONG);
+            //toa.show();
+
+            LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
+            tutButtons.setVisibility(View.INVISIBLE);
+
+
+            Button replay = (Button) findViewById(R.id.buttonReplayTut);
+            replay.setVisibility(View.VISIBLE);
+            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount +"\n\nDrinks Correct: " + correctDRCount);
+            finalSum.setVisibility(View.VISIBLE);
+
+
+            //Intent i = new Intent(getBaseContext(), OptionsActivity.class);
+            //this.startActivity(i);
         }
+    }
+
+    public void replay(View v){
+        this.recreate();
+
     }
 
     public void backOption(View v) {

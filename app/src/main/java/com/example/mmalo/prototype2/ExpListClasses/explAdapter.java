@@ -1,15 +1,15 @@
 package com.example.mmalo.prototype2.ExpListClasses;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mmalo.prototype2.R;
-        //tutorial.expandListView.R;
-//import com.tutorial.expandListView.Classes.*;
 
 //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
 
@@ -24,9 +24,11 @@ public class ExplAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<ExpListGroup> groups;
-    public ExplAdapter( Context cont, ArrayList<ExpListGroup> g){
+    ArrayList<Integer> [] drawables;
+    public ExplAdapter( Context cont, ArrayList<ExpListGroup> g, ArrayList<Integer> []  draws){
         this.context = cont;
         this.groups = g;
+        this.drawables = draws;
     }
 
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view,
@@ -39,6 +41,14 @@ public class ExplAdapter extends BaseExpandableListAdapter {
         TextView tv = (TextView) view.findViewById(R.id.tvChild);
         tv.setText(child.getName().toString());
         tv.setTag(child.getTag());
+
+
+        ImageView pic = (ImageView) view.findViewById(R.id.listImage);
+        int current = drawables[groupPosition].get(childPosition);
+        Drawable curr = view.getResources().getDrawable(current);
+        pic.setImageDrawable(curr);
+
+
         // TODO Auto-generated method stub
         return view;
     }
@@ -50,8 +60,14 @@ public class ExplAdapter extends BaseExpandableListAdapter {
         try {
             if (view == null) {
                 LayoutInflater inf = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-                view = inf.inflate(R.layout.explist_group_item, null);
+                if (groupPosition == 2) {
+                    view = inf.inflate(R.layout.explist_group_item, null);
+                }else{
+                    view = inf.inflate(R.layout.explist_group_item_good, null);
+                }
             }
+
+
 
             TextView tv = (TextView) view.findViewById(R.id.tvGroup);
             tv.setText(group.getName());
