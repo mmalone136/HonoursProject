@@ -68,10 +68,6 @@ public class GuideActivity extends AppCompatActivity {
     public ArrayList<Integer> [] setDrawables(){
 
         ArrayList<Integer> [] drawables = new ArrayList[3];
-        // 3 Groups
-        // 10
-        // 7
-        // 10
 
         ArrayList<Integer> temp = new ArrayList<>();
         for(int i =0;i<10;i++)

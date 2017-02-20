@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.Day;
@@ -36,24 +38,26 @@ public class SumOptions extends AppCompatActivity {
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
     public ArrayList<String> uniqueDates = new ArrayList<String>();
     String[] weekData;
+    String[] weekDates;
     Date weekStart;
     Date weekEnd;
     int step;
+    int stepLimit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary_options);
+
         step = 0;
         updateView(step);
+        stepLimit = calculateEarliest();
     }
 
 
     public void getCurrentWeek(int step) {
         //TODO: Refactor
         Calendar c = GregorianCalendar.getInstance();
-
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         c.add(Calendar.DATE, (7 * step));
@@ -150,33 +154,80 @@ public class SumOptions extends AppCompatActivity {
 
     public String[] getListForWeek(ArrayList<String> CurrentWeek) {
 
-        String[] weekData = {" " +step + " Monday - No Entries" , " " +step + " Tuesday - No Entries", " " +step + " Wednesday - No Entries", " " +step + " Thursday - No Entries",
-                " " + step + " Friday - No Entries", " " +step + " Saturday - No Entries", " " + step + " Sunday - No Entries"};
+        String[] weekData = {"# - No Entries", "# - No Entries", "# - No Entries", "# - No Entries",
+                "# - No Entries", "# - No Entries","# - No Entries"};
+
+        weekDates = new String[7];
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE");
+        SimpleDateFormat formDates = new SimpleDateFormat("dd/MM/yyyy");
+
 
         for (String curr : CurrentWeek) {
-            //Check day of week for corresponding date
-            //Add to appropriate array position
-
 
             Date currDate = Date.valueOf(curr);
             Calendar cal = GregorianCalendar.getInstance();
             cal.setTime(currDate);
             cal.setFirstDayOfWeek(Calendar.MONDAY);
 
-            SimpleDateFormat format = new SimpleDateFormat("EEEE");
-            String dayString = format.format(cal.getTime());
+            String dayString = formatter.format(cal.getTime());
+            String dateString = formDates.format(currDate);
 
             int day = cal.get(Calendar.DAY_OF_WEEK);
             System.out.print("");
             if (day > 1) {
-                weekData[day - 2] = curr + " | " + dayString;
+                weekData[day - 2] = dayString + "\t\t\t" + dateString;
             } else if (day == 1) {
                 //Sunday previously at day 1, move to position 6 for end of week
-                weekData[6] = curr + " | " + dayString;
+                weekData[6] = dayString + "\t\t\t" + dateString;
+            }
+        }
+
+        for(int i = 0;i<weekData.length;i++){
+            String curr = weekData[i];
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(weekStart);
+
+            java.util.Date temp;
+            Date current;
+
+            cal.add(Calendar.DATE, i);
+            temp = cal.getTime();
+            current = new Date(temp.getTime());
+
+            if(curr.charAt(0)=='#')
+            {
+
+                java.util.Date currDate = cal.getTime();
+                String dayString = formatter.format(currDate);
+                String dateString = formDates.format(currDate);
+
+                weekDates[i] = String.valueOf(current);
+                weekData[i] = dayString + "\t\t\t" + dateString + "\t\tNO ENTRIES";
+            }else{
+
+                weekDates[i] = String.valueOf(current);
             }
         }
 
         return weekData;
+    }
+
+
+    public int calculateEarliest() {
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTime(weekStart);
+        int week = c.get(Calendar.WEEK_OF_YEAR);
+
+
+        Date earliest = Date.valueOf(uniqueDates.get(0));
+        c.setTime(earliest);
+        int earlier = c.get(Calendar.WEEK_OF_YEAR);
+
+
+        int difference = week - earlier;
+        return -difference;
     }
 
 
@@ -199,32 +250,42 @@ public class SumOptions extends AppCompatActivity {
     public void setListAdapter() {
         ListView dateList = (ListView) findViewById(R.id.listDates);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weekData);
+
+
         dateList.setAdapter(adapter);
+
         dateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //String curr = uniqueDates.get(position);
-                String curr = weekData[position];
-                String seven = curr.substring(0,1);
-                if (!seven.equals(" ")) {
-                    DateviewActivity.date = curr.substring(0, 10);
+                String curr = weekDates[position];
+                String alsoCurr = weekData[position];
+                String entryCheck = alsoCurr.substring(alsoCurr.length()-10);
+
+                //No Entries
+                if (!entryCheck.equals("NO ENTRIES")) {
+                    DateviewActivity.date = curr;
                     Intent i = new Intent(getBaseContext(), DateviewActivity.class);
                     //i.putExtra("diary_data", curr);
                     startActivity(i);
                 }
             }
         });
+
+
     }
 
     public void updateWeek(View v) {
         String tag = v.getTag().toString();
 
-        if (tag.equals("+") && step<1) {
+        if (tag.equals("+") && step < 1) {
             step++;
             updateView(step);
         } else if (tag.equals("-")) {
-            step--;
-            updateView(step);
+            if (step > stepLimit) {
+                step--;
+                updateView(step);
+            }
         } else if (tag.equals("0")) {
             step = 0;
             updateView(step);
