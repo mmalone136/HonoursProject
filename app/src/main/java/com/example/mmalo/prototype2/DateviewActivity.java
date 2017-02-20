@@ -1,10 +1,12 @@
 package com.example.mmalo.prototype2;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +30,7 @@ public class DateviewActivity extends AppCompatActivity {
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
     public ArrayList<DiaryData> init = new ArrayList<DiaryData>();
     public ArrayList<DiaryData> sorted = new ArrayList<DiaryData>();
+    public ContentValues countData;
     public static String date;
     public boolean flag;
 
@@ -34,28 +38,39 @@ public class DateviewActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dateview);
-
+        //counts =new ArrayList<>(); //Pair<String, Integer>
+        countData = new ContentValues();
         init = readEntriesForDate(date);
+        sorted = splitLists();
         flag = true;
         initVals(flag);
     }
 
 
     public void initVals(Boolean sortFlag){
+
         if(sortFlag) {
             entries = init;
         }else{
-            sorted = splitLists();
             entries = sorted;
         }
+
+        SimpleDateFormat sdForm = new SimpleDateFormat("HH:mm:ss\t -\t dd/MM/yyyy");
 
         ArrayList<String> listData = new ArrayList<String>();
         for (DiaryData d : entries) {
             //TODO: Reformat this for output
             Timestamp dTimestamp = d.getTimestamp();
 
-            String curr = d.getMeal() + " - " + dTimestamp.toString();
-            listData.add(curr);
+            String dateString = sdForm.format(dTimestamp);
+            String meal = d.getMeal();
+            String curr;
+            if(meal.equals("Breakfast")) {
+                curr = meal + " \t-\t " + dateString;
+            }else{
+                curr = meal + " \t\t\t-\t " + dateString;
+            }
+                listData.add(curr);
         }
         System.out.println("");
 
@@ -83,6 +98,7 @@ public class DateviewActivity extends AppCompatActivity {
                     //activity.dateselected = dates.get(position);
 
                     DiaryData curr = entries.get(position);
+                    SummaryActivity.counts = countData;
                     SummaryActivity.theentry = curr;
                     Intent i = new Intent(getBaseContext(), SummaryActivity.class);
                     //i.putExtra("diary_data", curr);
@@ -104,7 +120,7 @@ public class DateviewActivity extends AppCompatActivity {
         ArrayList<DiaryData> snacks = new ArrayList<DiaryData>();
         ArrayList<DiaryData> drinks = new ArrayList<DiaryData>();
 
-        for(DiaryData dd : entries)
+        for(DiaryData dd : init)
         {
             switch(dd.getMeal())
             {
@@ -132,7 +148,19 @@ public class DateviewActivity extends AppCompatActivity {
         sortedList.addAll(snacks);
         sortedList.addAll(drinks);
 
+
+        getCountsFromLists(breakfast, lunch,dinner);
+
+
         return sortedList;
+    }
+
+    public void getCountsFromLists(ArrayList<DiaryData> breakList,ArrayList<DiaryData> lunchList,ArrayList<DiaryData> dinnList){
+
+        countData.put("BreakfastCount",breakList.size());
+        countData.put("LunchCount",lunchList.size());
+        countData.put("DinnerCount",dinnList.size());
+
     }
 
 

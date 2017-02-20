@@ -18,9 +18,7 @@ import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +29,9 @@ public class OptionsActivity extends AppCompatActivity {
 
     public static int todaysFV;
     public static int todaysDrinks;
+    public static boolean todayBreak;
+    public static boolean todayLunch;
+    public static boolean todayDinner;
 
 
     @Override
@@ -39,6 +40,7 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         //Toast t = Toast.makeText(this, "This is the correct", Toast.LENGTH_LONG);
         //t.show();
+        createTables();
         readCountData();
     }
 
@@ -86,39 +88,13 @@ public class OptionsActivity extends AppCompatActivity {
                 dbh = new DBHelper(getApplicationContext());
                 db = dbh.getWritableDatabase();
 
-                db.execSQL("DROP TABLE IF EXISTS diary_entries");
+               // db.execSQL("DROP TABLE IF EXISTS diary_entries");
                 db.execSQL("DROP TABLE IF EXISTS counts");
                 System.out.print("");
                 db.close();
                 return true;
             case R.id.CreateData:
-                dbh = new DBHelper(getApplicationContext());
-                db = dbh.getWritableDatabase();
-
-
-                String SQL_CREATE_ENTRIES =
-                        "CREATE TABLE IF NOT EXISTS diary_entries (" +
-                                " entry_ID INTEGER PRIMARY KEY," +
-                                " photo_data BLOB ," +
-                                " comment_data TEXT," +
-                                " audio_data BLOB ," +
-                                " time_stamp TEXT," +
-                                " filepath TEXT," +
-                                " meal TEXT," +
-                                " fv_count INT," +
-                                " drink_count INT)";
-
-                db.execSQL(SQL_CREATE_ENTRIES);
-
-                String SQL_CREATE_COUNTS =
-                        "CREATE TABLE IF NOT EXISTS counts (" +
-                                " entry_ID INTEGER PRIMARY KEY," +
-                                " time_stamp TEXT," +
-                                " fv_count INT," +
-                                " drink_count INT)";
-                db.execSQL(SQL_CREATE_COUNTS);
-                System.out.print("");
-                db.close();
+                createTables();
                 return true;
             case R.id.InsertData:
                 ArrayList<DiaryData> seven = doDBThings();
@@ -148,6 +124,45 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
 
+    public void createTables(){
+        DBHelper dbh;
+        SQLiteDatabase db;
+        dbh = new DBHelper(getApplicationContext());
+        db = dbh.getWritableDatabase();
+
+
+        String SQL_CREATE_ENTRIES =
+                "CREATE TABLE IF NOT EXISTS diary_entries (" +
+                        " entry_ID INTEGER PRIMARY KEY," +
+                        " photo_data BLOB ," +
+                        " comment_data TEXT," +
+                        " audio_data BLOB ," +
+                        " time_stamp TEXT," +
+                        " filepath TEXT," +
+                        " meal TEXT," +
+                        " fv_count INT," +
+                        " drink_count INT)";
+
+        db.execSQL(SQL_CREATE_ENTRIES);
+
+        String SQL_CREATE_COUNTS =
+                "CREATE TABLE IF NOT EXISTS counts (" +
+                        " entry_ID INTEGER PRIMARY KEY," +
+                        " time_stamp TEXT," +
+                        " fv_count INT," +
+                        " drink_count INT," +
+                        " hadBreakfast BOOLEAN," +
+                        " hadLunch BOOLEAN," +
+                        " hadDinner BOOLEAN)";
+
+        db.execSQL(SQL_CREATE_COUNTS);
+
+        System.out.print("");
+        db.close();
+
+    }
+
+
     public void createTable(View v) {
         DBHelper dbh = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbh.getWritableDatabase();
@@ -170,7 +185,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     //ViewDiary
     public void viewDates(View v) {
-        Intent i = new Intent(getBaseContext(), SumOptions.class);
+        Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
         this.startActivity(i);
     }
 
@@ -211,8 +226,9 @@ public class OptionsActivity extends AppCompatActivity {
         Date today = new Date(theDate.getTime());
 
         String[] projection = {
-                "entry_ID", "fv_count", "time_stamp", "drink_count"
+                "entry_ID", "fv_count", "time_stamp", "drink_count","hadBreakfast", "hadLunch","hadDinner"
         };
+        //
         String select = "time_stamp Like ?";
         String[] selArgs = {"%" + today + "%"};
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
@@ -226,9 +242,19 @@ public class OptionsActivity extends AppCompatActivity {
                     int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
                     int drinkCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
 
+                    int bfast = cursor.getInt(cursor.getColumnIndexOrThrow("hadBreakfast"));
+                    int lunch = cursor.getInt(cursor.getColumnIndexOrThrow("hadLunch"));
+                    int dinn = cursor.getInt(cursor.getColumnIndexOrThrow("hadDinner"));
+
+
                    // Timestamp theTime = Timestamp.valueOf(tID);
                    // Date seven = new Date(theTime.getTime());
 
+                    todayBreak = (bfast==1);
+                    todayLunch = (lunch==1);
+                    todayDinner = (dinn==1);
+                    
+                    
                     todaysFV = fvCount;
                     todaysDrinks = drinkCount;
 
@@ -249,11 +275,17 @@ public class OptionsActivity extends AppCompatActivity {
         cursor.close();
         TextView fv = (TextView) findViewById(R.id.textViewFV);
         TextView dr = (TextView) findViewById(R.id.textViewDrinks);
+        TextView bf = (TextView) findViewById(R.id.tvBreak);
+        TextView lu = (TextView) findViewById(R.id.tvLunch);
+        TextView dn = (TextView) findViewById(R.id.tvDinn);
 
 
         fv.setText("Fruit & Veg: " + todaysFV);
         dr.setText("Drinks: " + todaysDrinks);
 
+        bf.setText("Had Breakfast: " + todayBreak);
+        lu.setText("Had Lunch: " + todayLunch);
+        dn.setText("Had Dinner: " + todayDinner);
 
     }
 

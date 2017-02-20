@@ -5,35 +5,27 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.mmalo.prototype2.DB.DBHelper;
-import com.example.mmalo.prototype2.Models.Day;
 import com.example.mmalo.prototype2.Models.DiaryData;
-import com.example.mmalo.prototype2.Models.Week;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Created by mmalo on 17/01/2017.
  */
 
-public class SumOptions extends AppCompatActivity {
+public class WeekviewActivity extends AppCompatActivity {
 
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
     public ArrayList<String> uniqueDates = new ArrayList<String>();
@@ -47,7 +39,7 @@ public class SumOptions extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary_options);
+        setContentView(R.layout.activity_weekview);
 
         step = 0;
         updateView(step);
@@ -213,7 +205,6 @@ public class SumOptions extends AppCompatActivity {
 
         return weekData;
     }
-
 
     public int calculateEarliest() {
         Calendar c = GregorianCalendar.getInstance();

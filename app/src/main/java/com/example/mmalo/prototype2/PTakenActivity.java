@@ -185,16 +185,6 @@ public class PTakenActivity extends AppCompatActivity {
 
     public void initValues() {
         thePic = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
-        //afterTaken(bitmap,data);
-        //dataToPass= data;
-
-        //ByteArrayOutputStream str = new ByteArrayOutputStream();
-        //thePic.compress(Bitmap.CompressFormat.JPEG, 100, str);
-        // Matrix rotationMat = new Matrix();
-        //rotationMat.postRotate(90);
-        // rotationMat.postRotate(0);
-
-        //thePic = Bitmap.createBitmap(thePic, 0, 0, thePic.getWidth(), thePic.getHeight(), rotationMat, true);
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
         taken.setImageBitmap(thePic);
@@ -320,43 +310,6 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-    public void updateCountsDB(int fvCount, int drinkCount) {
-
-        try {
-            DBHelper dbh = new DBHelper(getApplicationContext());
-            SQLiteDatabase db = dbh.getWritableDatabase();
-
-            Date theDate = new Date(timetaken.getTime());
-
-            ContentValues cv = new ContentValues();
-            cv.put("fv_count", fvCount);
-            cv.put("drink_count", drinkCount);
-            String[] updateArgs = {theDate.toString()};
-
-            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
-            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
-
-
-            Cursor c = db.rawQuery(sql, args);
-
-            SQLiteStatement statement = db.compileStatement("SELECT changes()");
-            long a = statement.simpleQueryForLong();
-
-            if (a == 0) {
-                cv.put("time_stamp", theDate.toString());
-                long rowID = db.insert("counts", null, cv);
-                System.out.print("");
-            }
-
-            db.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            ex.printStackTrace();
-        }
-    }
-
-
 
     public void updateCountsDB2(int fvCount, int drinkCount) {
 
@@ -368,10 +321,24 @@ public class PTakenActivity extends AppCompatActivity {
             int f = fvCount + OptionsActivity.todaysFV;
             int d = drinkCount + OptionsActivity.todaysDrinks;
 
-
             ContentValues cv = new ContentValues();
             cv.put("fv_count", f);
             cv.put("drink_count", d);
+
+            switch(mealChoice)
+            {
+                case"Breakfast":
+                    cv.put("hadBreakfast", true);
+                break;
+                case"Lunch":
+                    cv.put("hadBreakfast", true);
+                    break;
+                case"Dinner":
+                    cv.put("hadBreakfast", true);
+                    break;
+            }
+
+
             String[] updateArgs = {theDate.toString()};
 
             String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";

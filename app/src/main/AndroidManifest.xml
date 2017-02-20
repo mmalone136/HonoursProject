@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".EditEntryActivity"> </activity>
         <activity android:name=".SummaryActivity" android:screenOrientation="portrait"> </activity>
-        <activity android:name=".SumOptions" android:screenOrientation="portrait"> </activity>
+        <activity android:name=".WeekviewActivity" android:screenOrientation="portrait"> </activity>
 
         <activity
             android:name=".CameraActivity"

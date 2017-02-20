@@ -30,7 +30,10 @@ public class DBHelper extends SQLiteOpenHelper{
                     " entry_ID INTEGER PRIMARY KEY," +
                     " time_stamp TEXT," +
                     " fv_count INT," +
-                    " drink_count INT)";
+                    " drink_count INT" +
+                    " hadBreakfast BOOLEAN" +
+                    " hadLunch BOOLEAN" +
+                    " hadDinner BOOLEAN)";
 
 
     private static final String SQL_DELETE_ENTRIES =

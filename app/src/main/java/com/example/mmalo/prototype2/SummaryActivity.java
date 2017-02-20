@@ -37,16 +37,14 @@ import java.util.ArrayList;
 public class SummaryActivity extends AppCompatActivity {
 
     byte[] currPhoto;
-    String currMeal;
-    String currComment;
-    Timestamp entryTime;
-    DiaryData currEntry;
+    public static ContentValues counts;
     public static DiaryData theentry;
     ListView dataList;
     EditText comments;
     Button editMeal, buttonFV, buttonDR, review, save;
 
     String newMeal, currCount;
+    String oldMeal;
     int initDR, initFV;
     int dr, fv;
     int fvDiff,drDiff;
@@ -59,7 +57,6 @@ public class SummaryActivity extends AppCompatActivity {
         initValues();
         System.gc();
     }
-
 
     public void initValues() {
         setListView();
@@ -326,20 +323,18 @@ public class SummaryActivity extends AppCompatActivity {
         comments.setText(updated);
         comments.setVisibility(View.INVISIBLE);
 
+
+        oldMeal = "";
         if(!newMeal.equals("")) {
 
+            oldMeal = theentry.getMeal();
             theentry.setMeal(newMeal);
         }
 
         fvDiff = fv-initFV;
         drDiff = dr-initDR;
 
-        //        if(fvDiff!=0) {
-        //            theentry.setFvCount(fv);
-        //        }
-        //        if(drDiff!=0) {
-        //            theentry.setDrCount(dr);
-        //        }
+
 
         int fvToPass = initFV;
         int drToPass = initDR;
@@ -362,7 +357,7 @@ public class SummaryActivity extends AppCompatActivity {
 
 
         //Use fvDIff and drDiff to update daily counts
-        if(fvDiff!=0 || drDiff!=0)
+        if(fvDiff!=0 || drDiff!=0 ||!newMeal.equals(""))
         {
             Date d = new Date(theentry.getTimestamp().getTime());
             updateCountsDB(fvToPass,drToPass,d);
@@ -389,6 +384,23 @@ public class SummaryActivity extends AppCompatActivity {
             cv.put("fv_count", fvCount);
             cv.put("drink_count", drinkCount);
             String[] updateArgs = {theDate.toString()};
+
+
+            if(!newMeal.equals("")&&!newMeal.equals("Snacks")&&!newMeal.equals("Drinks")){
+                String toAdd = "had" + newMeal;
+                cv.put(toAdd,true);
+            }
+
+            if(!oldMeal.equals("")&&!oldMeal.equals("Snacks")&&!oldMeal.equals("Drinks"))
+            {
+                int oldCount = counts.getAsInteger(oldMeal+"Count");
+                if(!(oldCount >1))
+                {
+                    String toAdd = "had" + oldMeal;
+                    cv.put(toAdd,false);
+                }
+            }
+
 
             String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
             String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};

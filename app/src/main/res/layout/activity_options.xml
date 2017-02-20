@@ -44,7 +44,7 @@
         android:onClick="loadTutorial"/>
 
     <TextView
-        android:text="TextView"
+        android:text="TextViewFV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewFV"
@@ -52,12 +52,32 @@
 
 
     <TextView
-        android:text="TextView"
+        android:text="TextViewDR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewDrinks"
         android:layout_weight="0.09" />
 
+    <TextView
+        android:text="TextViewB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBreak"
+        android:layout_weight="0.09" />
+
+    <TextView
+        android:text="TextViewL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLunch"
+        android:layout_weight="0.09" />
+
+    <TextView
+        android:text="TextViewD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDinn"
+        android:layout_weight="0.09" />
 
 
 </LinearLayout>
