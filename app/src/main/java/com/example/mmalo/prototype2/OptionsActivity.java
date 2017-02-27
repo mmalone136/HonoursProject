@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraController;
+import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
@@ -32,42 +34,16 @@ public class OptionsActivity extends AppCompatActivity {
     public static boolean todayBreak;
     public static boolean todayLunch;
     public static boolean todayDinner;
-
+    public static DBContainer dbCont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        //Toast t = Toast.makeText(this, "This is the correct", Toast.LENGTH_LONG);
-        //t.show();
-        createTables();
+        dbCont = new DBContainer();
+        dbCont.createTables(getApplicationContext());
         readCountData();
     }
-
-    public void deleteDBData(View v) {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-        db.execSQL("DROP TABLE IF EXISTS diary_entries");
-        System.out.print("");
-        db.close();
-    }
-
-    public void deleteTiday(View v) {
-        try {
-            DBHelper dbh = new DBHelper(getApplicationContext());
-            SQLiteDatabase db = dbh.getWritableDatabase();
-            String date = "2017-01-31";
-            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-02-01%'");
-            System.out.print("");
-            db.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            ex.printStackTrace();
-        }
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,44 +52,24 @@ public class OptionsActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        Intent intent;
-        DBHelper dbh;
-        SQLiteDatabase db;
         switch (item.getItemId()) {
             case R.id.DelData:
-                dbh = new DBHelper(getApplicationContext());
-                db = dbh.getWritableDatabase();
-
-               // db.execSQL("DROP TABLE IF EXISTS diary_entries");
-                db.execSQL("DROP TABLE IF EXISTS counts");
-                System.out.print("");
-                db.close();
+                dbCont.dropTables(getApplicationContext());
                 return true;
             case R.id.CreateData:
-                createTables();
+                dbCont.createTables(getApplicationContext());
                 return true;
             case R.id.InsertData:
                 ArrayList<DiaryData> seven = doDBThings();
                 for (DiaryData d : seven) {
-                    insertEntry(d);
+                    dbCont.insertEntry(d, getApplicationContext());
                 }
                 return true;
             case R.id.DeleteMore:
-                try {
-                    dbh = new DBHelper(getApplicationContext());
-                    db = dbh.getWritableDatabase();
-                    String date = "2017-01-31";
-                    db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-02-01%'");
-                    System.out.print("");
-                    db.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    ex.printStackTrace();
-                }
+                dbCont.deleteDate(getApplicationContext());
                 return true;
             case R.id.RefreshTotals:
                 readCountData();
@@ -124,155 +80,32 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
 
-    public void createTables(){
-        DBHelper dbh;
-        SQLiteDatabase db;
-        dbh = new DBHelper(getApplicationContext());
-        db = dbh.getWritableDatabase();
+    public void readCountData() {
 
+        try {
+            int[] countData = dbCont.readCountData(this);
 
-        String SQL_CREATE_ENTRIES =
-                "CREATE TABLE IF NOT EXISTS diary_entries (" +
-                        " entry_ID INTEGER PRIMARY KEY," +
-                        " photo_data BLOB ," +
-                        " comment_data TEXT," +
-                        " audio_data BLOB ," +
-                        " time_stamp TEXT," +
-                        " filepath TEXT," +
-                        " meal TEXT," +
-                        " fv_count INT," +
-                        " drink_count INT)";
+            todaysFV = countData[0];
+            todaysDrinks = countData[1];
 
-        db.execSQL(SQL_CREATE_ENTRIES);
+            int hadBreak = countData[2];
+            int hadLunch = countData[3];
+            int hadDinner = countData[4];
 
-        String SQL_CREATE_COUNTS =
-                "CREATE TABLE IF NOT EXISTS counts (" +
-                        " entry_ID INTEGER PRIMARY KEY," +
-                        " time_stamp TEXT," +
-                        " fv_count INT," +
-                        " drink_count INT," +
-                        " hadBreakfast BOOLEAN," +
-                        " hadLunch BOOLEAN," +
-                        " hadDinner BOOLEAN)";
+            todayBreak = (hadBreak > 0);
+            todayLunch = (hadLunch > 0);
+            todayDinner = (hadDinner > 0);
 
-        db.execSQL(SQL_CREATE_COUNTS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.printStackTrace();
 
-        System.out.print("");
-        db.close();
-
-    }
-
-
-    public void createTable(View v) {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-
-        String SQL_CREATE_ENTRIES =
-                "CREATE TABLE diary_entries (" +
-                        " entry_ID INTEGER PRIMARY KEY," +
-                        " photo_data BLOB ," +
-                        " comment_data TEXT," +
-                        " audio_data BLOB ," +
-                        " time_stamp TEXT," +
-                        " filepath TEXT," +
-                        " meal TEXT)";
-
-        db.execSQL(SQL_CREATE_ENTRIES);
-        System.out.print("");
-        db.close();
-    }
-
-    //ViewDiary
-    public void viewDates(View v) {
-        Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
-        this.startActivity(i);
-    }
-
-    public void loadTutorial(View v){
-        Intent i = new Intent(getBaseContext(), TutorialActivity.class);
-        this.startActivity(i);
-    }
-
-    //ViewGuide
-    public void viewGuide(View v) {
-        Intent i = new Intent(getBaseContext(), GuideActivity.class);
-        this.startActivity(i);
-    }
-
-    public void doThingsNow(View v) {
-        ArrayList<DiaryData> seven = doDBThings();
-        for (DiaryData d : seven) {
-            insertEntry(d);
-        }
-
-
-    }
-
-    public void readCountData(){
-
-
-//        "CREATE TABLE IF NOT EXISTS counts (" +
-//                " entry_ID INTEGER PRIMARY KEY," +
-//                " time_stamp TEXT," +
-//                " fv_count INT," +
-//                " drink_count INT)";
-
-
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getReadableDatabase();
-
-        java.util.Date theDate = new java.util.Date();
-        Date today = new Date(theDate.getTime());
-
-        String[] projection = {
-                "entry_ID", "fv_count", "time_stamp", "drink_count","hadBreakfast", "hadLunch","hadDinner"
-        };
-        //
-        String select = "time_stamp Like ?";
-        String[] selArgs = {"%" + today + "%"};
-        //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
-        Cursor cursor = db.query("counts", projection, select, selArgs, null, null, null);
-
-
-        if(cursor.moveToFirst()) {
-            do {
-                try {
-                    String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
-                    int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
-                    int drinkCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
-
-                    int bfast = cursor.getInt(cursor.getColumnIndexOrThrow("hadBreakfast"));
-                    int lunch = cursor.getInt(cursor.getColumnIndexOrThrow("hadLunch"));
-                    int dinn = cursor.getInt(cursor.getColumnIndexOrThrow("hadDinner"));
-
-
-                   // Timestamp theTime = Timestamp.valueOf(tID);
-                   // Date seven = new Date(theTime.getTime());
-
-                    todayBreak = (bfast==1);
-                    todayLunch = (lunch==1);
-                    todayDinner = (dinn==1);
-                    
-                    
-                    todaysFV = fvCount;
-                    todaysDrinks = drinkCount;
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.printStackTrace();
-
-                    todaysFV = 0;
-                    todaysDrinks = 0;
-
-                }
-
-
-            } while (cursor.moveToNext());
-
+            todaysFV = 0;
+            todaysDrinks = 0;
 
         }
-        cursor.close();
+
+
         TextView fv = (TextView) findViewById(R.id.textViewFV);
         TextView dr = (TextView) findViewById(R.id.textViewDrinks);
         TextView bf = (TextView) findViewById(R.id.tvBreak);
@@ -288,6 +121,56 @@ public class OptionsActivity extends AppCompatActivity {
         dn.setText("Had Dinner: " + todayDinner);
 
     }
+
+
+
+//--------------Functions for changing forms
+
+
+    //TakePhoto
+    public void openPhotoPreview(View v) {
+        //System.out.println(v.getId());
+        //System.out.println("It did the thing");
+        CameraController cc = new CameraController();
+        boolean hasCam = cc.checkCameraHardware(this);
+        System.out.println(hasCam);
+        Toast toast;
+        toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
+        //toast.show();
+        // Camera c = cc.getCameraInstance();
+
+        int apiLevel = Build.VERSION.SDK_INT;
+        Intent i;
+        if (apiLevel < 21) {
+            i = new Intent(this, CameraActivity.class);
+        } else {
+            i = new Intent(this, Camera2Activity.class);
+
+        }
+        this.startActivity(i);
+    }
+
+    //ViewGuide
+    public void viewGuide(View v) {
+        Intent i = new Intent(getBaseContext(), GuideActivity.class);
+        this.startActivity(i);
+    }
+
+    //ViewDiary
+    public void viewDates(View v) {
+        Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
+        this.startActivity(i);
+    }
+
+    public void loadTutorial(View v) {
+        Intent i = new Intent(getBaseContext(), TutorialActivity.class);
+        this.startActivity(i);
+    }
+
+
+
+//--------------Functions for creating dummy data => Temporary functions
+
 
     public ArrayList<DiaryData> doDBThings() {
 
@@ -417,39 +300,4 @@ public class OptionsActivity extends AppCompatActivity {
         return DDList;
     }
 
-
-    public void insertEntry(DiaryData dd) {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-        ContentValues vals = new ContentValues();
-        //vals.put("entry_ID",1);
-        vals.put("photo_data", dd.getPhotoData());
-        vals.put("comment_data", dd.getComment());
-        vals.put("audio_data", dd.getSpokenData());
-        vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
-        vals.put("meal", dd.getMeal());
-
-        long rowID = db.insert("diary_entries", null, vals);
-    }
-
-    //TakePhoto
-    public void openPhotoPreview(View v) {
-        //System.out.println(v.getId());
-        //System.out.println("It did the thing");
-        CameraController cc = new CameraController();
-        boolean hasCam = cc.checkCameraHardware(this);
-        System.out.println(hasCam);
-        Toast toast;
-        toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
-        //toast.show();
-        // Camera c = cc.getCameraInstance();
-
-        Intent i = new Intent(this, CameraActivity.class);
-        this.startActivity(i);
-
-        //Intent i = new Intent(this, CameraActivity.class);
-        //startActivity(i);
-
-    }
 }

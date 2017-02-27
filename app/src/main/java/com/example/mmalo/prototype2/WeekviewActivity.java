@@ -211,14 +211,19 @@ public class WeekviewActivity extends AppCompatActivity {
         c.setTime(weekStart);
         int week = c.get(Calendar.WEEK_OF_YEAR);
 
+        int difference;
+        if(uniqueDates.size()>0) {
+            Date earliest = Date.valueOf(uniqueDates.get(0));
+            c.setTime(earliest);
+            int earlier = c.get(Calendar.WEEK_OF_YEAR);
+            difference  = -(week - earlier);
+        }
+        else
+        {
+            difference = 0;
+        }
 
-        Date earliest = Date.valueOf(uniqueDates.get(0));
-        c.setTime(earliest);
-        int earlier = c.get(Calendar.WEEK_OF_YEAR);
-
-
-        int difference = week - earlier;
-        return -difference;
+        return difference;
     }
 
 

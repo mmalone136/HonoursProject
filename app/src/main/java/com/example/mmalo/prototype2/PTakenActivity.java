@@ -66,15 +66,9 @@ public class PTakenActivity extends AppCompatActivity {
         initValues();
         Toast t = Toast.makeText(this, "PTAKEN_ACT", Toast.LENGTH_LONG);
         t.show();
-        //ArrayList<DiaryData> seven = doDBThings();
-        //for (DiaryData d:seven) {
-        //    insertEntry(d);
-        //}
-        //readAllEntries();
     }
 
     public ArrayList<DiaryData> doDBThings() {
-
         DBHelper dbh = new DBHelper(getApplicationContext());
 
         SQLiteDatabase db = dbh.getWritableDatabase();
@@ -119,13 +113,12 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
+    //Move to db container
     public long insertEntry(DiaryData dd) {
         DBHelper dbh = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbh.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
-        //vals.put("entry_ID",1);
-        //vals.put("photo_data",dd.getPhotoData());
         vals.put("comment_data", dd.getComment());
         vals.put("audio_data", dd.getSpokenData());
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
@@ -146,10 +139,6 @@ public class PTakenActivity extends AppCompatActivity {
                 "entry_ID", "photo_data", "comment_data", "time_stamp", "meal"
         };
 
-        //String selection = "column_name = ?";
-        //String [] selectionArgs = {"value"};
-        //String sortOrder = "column_name DESC";
-
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
         Cursor cursor = db.query("diary_entries", projection, null, null, null, null, null);
 
@@ -157,25 +146,22 @@ public class PTakenActivity extends AppCompatActivity {
         ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
         ArrayList<String> comments = new ArrayList<String>();
         ArrayList<String> times = new ArrayList<String>();
-        int i = 0;
+
         while (cursor.moveToNext()) {
             DiaryData curr;
-            //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+
             String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
-            //Timestamp tID = new Timestamp(cursor.getLong(cursor.getColumnIndexOrThrow("time_stamp")));
+
             String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
             String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
             String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
             int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
             int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
-            // comments.add(itemId);
-            // times.add(tID);
-            //public DiaryData(byte[]pd, String com, byte[] sp,Timestamp ts, String theMeal ){
+
             Timestamp theTime = Timestamp.valueOf(tID);
             curr = new DiaryData(null, comm, null, theTime, theMeal, file, fvCount, drCount);
 
             entries.add(curr);
-            i++;
         }
         cursor.close();
 
@@ -274,7 +260,6 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-
     public void incCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
@@ -310,7 +295,7 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-
+    //Move to db container
     public void updateCountsDB2(int fvCount, int drinkCount) {
 
         try {
@@ -431,7 +416,6 @@ public class PTakenActivity extends AppCompatActivity {
         String fp = filename;
 
 
-        //commentData =
         DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp, fv, dr);
 
         System.out.print("");
