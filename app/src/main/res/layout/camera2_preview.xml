@@ -18,10 +18,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:visibility="invisible">
-
-
-
     </FrameLayout>
+
+    <TextureView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageTextView"
+        />
 
     <ImageView
         android:id="@+id/frame_taken"
@@ -31,47 +34,62 @@
         android:visibility="invisible" />
 
 
-    <Button
-        android:id="@+id/button_cont"
-        android:text="Continue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="continueForm"
-        android:visibility="invisible"
 
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button_cancel"
-        android:layout_toEndOf="@+id/button_cancel"
-        android:layout_alignTop="@+id/button_capture" />
-
-    <Button
-        android:id="@+id/button_capture"
-        android:text="Capture"
-        android:layout_width="wrap_content"
+    <LinearLayout android:id="@+id/LinLay1"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button_cancel"
-        android:layout_toEndOf="@+id/button_cancel" />
+        android:layout_alignParentLeft="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_cancel"
+            android:text="Cancel"
+            android:onClick="cancelPic"/>
 
-    <Button
-        android:id="@+id/button_cancel"
-        android:text="Cancel"
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_capture"
+            android:text="Capture"
+            android:onClick="showExamples"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/LinLay2"
         android:layout_height="wrap_content"
-        android:onClick="cancelPic"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/button_cancell"
+            android:text="Cancel"
+            android:onClick="cancelPic"
+            android:visibility="invisible"
+            />
 
-    <TextureView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imageTextView"
-        />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_cont"
+            android:text="Continue"
+            android:onClick="continueForm"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+
+
+
 
 
 </RelativeLayout>

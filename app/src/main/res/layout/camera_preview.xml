@@ -28,56 +28,55 @@
 
     </FrameLayout>
 
-
-
-
-    <Button
-        android:id="@+id/button_cont"
-        android:text="Continue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="continueForm"
-        android:visibility="invisible"
-
+    <LinearLayout android:id="@+id/LinLay1" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button_cancel"
-        android:layout_toEndOf="@+id/button_cancel"
-        android:layout_alignTop="@+id/button_capture" />
+        android:layout_alignParentLeft="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_cancel"
+            android:text="Cancel"
+            android:onClick="cancelPic"/>
 
-    <Button
-        android:id="@+id/button_capture"
-        android:text="Capture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button_cancel"
-        android:layout_toEndOf="@+id/button_cancel" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_capture"
+            android:text="Capture"
+            android:onClick="showExamples"/>
 
-    <Button
-        android:id="@+id/button_cancel"
-        android:text="Cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="cancelPic"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    </LinearLayout>
 
-    <SurfaceView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/surface_ptaken"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+    <LinearLayout android:id="@+id/LinLay2" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible"/>
+        android:layout_alignParentLeft="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_cancell"
+            android:text="Cancel"
+            android:onClick="cancelPic"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/button_cont"
+            android:text="Continue"
+            android:onClick="continueForm"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+
+
 
 
 </RelativeLayout>

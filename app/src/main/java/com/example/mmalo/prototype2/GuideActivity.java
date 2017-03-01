@@ -72,7 +72,12 @@ public class GuideActivity extends AppCompatActivity {
         ArrayList<Integer> temp = new ArrayList<>();
         for(int i =0;i<10;i++)
         {
-            int currInt = R.drawable.apple;
+            int currInt;
+            if(i%2==0) {
+                currInt = R.drawable.apple;
+            }else{
+                currInt = R.drawable.orange;
+            }
             temp.add(currInt);
         }
 

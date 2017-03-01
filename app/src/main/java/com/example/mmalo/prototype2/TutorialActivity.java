@@ -37,7 +37,8 @@ public class TutorialActivity extends AppCompatActivity {
     int correctFVCount;
     int correctDRCount;
     TextView finalSum;
-
+    Button nextTutOption;
+    Button submitOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class TutorialActivity extends AppCompatActivity {
         userDR=false;
         buttonFV = (Button) findViewById(R.id.buttonFV);
         buttonDR = (Button) findViewById(R.id.buttonDR);
+        submitOption = (Button) findViewById(R.id.buttonSubmit2);
+
+        nextTutOption = (Button) findViewById(R.id.buttonNextImage);
         finalSum = (TextView) findViewById(R.id.txtViewFinalSummary);
         setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
@@ -155,31 +159,70 @@ public class TutorialActivity extends AppCompatActivity {
         changeButtonColours(buttonDR,"#b0b4b7");
         userFV=false;
         userDR=false;
-        Toast t = Toast.makeText(this, "FV Correct: " + fvResult+ " |DR Correct: " + drResult, Toast.LENGTH_LONG);
-        t.show();
+
+        String review ="";
+
+        if(fvResult && drResult){
+            review = "Correct for both";
+
+            finalSum.setText("Correct!\n\nWell Done, you assigned both categories correctly!");
+            finalSum.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.VISIBLE);
+            buttonFV.setVisibility(View.INVISIBLE);
+            buttonDR.setVisibility(View.INVISIBLE);
+            submitOption.setVisibility(View.INVISIBLE);
+
+        }
+        else if((fvResult) && (!drResult)){
+            review = "Correct For fruit & veg, incorrect for drinks";
+
+
+            finalSum.setText("Almost There!\n\nYou assigned to the Fruit and Vegetable category correctly but the drinks were wrong!");
+            finalSum.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.VISIBLE);
+            buttonFV.setVisibility(View.INVISIBLE);
+            buttonDR.setVisibility(View.INVISIBLE);
+            submitOption.setVisibility(View.INVISIBLE);
+
+        }
+        else if((!fvResult) && (drResult)){
+            review = "Correct for drinks, incorrect for fruit & veg";
+
+
+            finalSum.setText("Almost There!\n\nYou assigned to the Drinks category correctly but the Fruit and Vegetable category was wrong!");
+            finalSum.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.VISIBLE);
+            buttonFV.setVisibility(View.INVISIBLE);
+            buttonDR.setVisibility(View.INVISIBLE);
+            submitOption.setVisibility(View.INVISIBLE);
+        }
+        else{
+            //if(!(fvResult && drResult)){
+            review = "Incorrect for both";
+
+            finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
+            finalSum.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.VISIBLE);
+            buttonFV.setVisibility(View.INVISIBLE);
+            buttonDR.setVisibility(View.INVISIBLE);
+            submitOption.setVisibility(View.INVISIBLE);
+        }
+
+        Toast t = Toast.makeText(this, review, Toast.LENGTH_LONG);
+        //t.show();
 
         if (tutorialDataList.size() > 0) {
             setCurrentPhoto(getNextPhoto());
         }else
         {
-            //Toast to = Toast.makeText(this, "FV Correct: " + correctFVCount, Toast.LENGTH_LONG);
-            //to.show();
-
-            //Toast toa = Toast.makeText(this, "DR Correct: " + correctDRCount, Toast.LENGTH_LONG);
-            //toa.show();
-
             LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
             tutButtons.setVisibility(View.INVISIBLE);
 
-
             Button replay = (Button) findViewById(R.id.buttonReplayTut);
             replay.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.INVISIBLE);
             finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount +"\n\nDrinks Correct: " + correctDRCount);
             finalSum.setVisibility(View.VISIBLE);
-
-
-            //Intent i = new Intent(getBaseContext(), OptionsActivity.class);
-            //this.startActivity(i);
         }
     }
 
@@ -193,5 +236,14 @@ public class TutorialActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
+    public void nextOption(View v){
+        finalSum.setVisibility(View.INVISIBLE);
+        nextTutOption.setVisibility(View.INVISIBLE);
+
+        buttonFV.setVisibility(View.VISIBLE);
+        buttonDR.setVisibility(View.VISIBLE);
+        submitOption.setVisibility(View.VISIBLE);
+
+    }
 
 }

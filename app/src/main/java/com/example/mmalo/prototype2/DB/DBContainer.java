@@ -5,11 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
+import com.example.mmalo.prototype2.OptionsActivity;
 import com.example.mmalo.prototype2.R;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Created by mmalo on 27/02/2017.
@@ -69,20 +74,21 @@ public class DBContainer {
 
     }
 
-    public void insertEntry(DiaryData dd, Context cont) {
+    public long insertEntry(DiaryData dd, Context cont,int theFV, int theDR) {
         DBHelper dbh = new DBHelper(cont);
         SQLiteDatabase db = dbh.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
-        //vals.put("entry_ID",1);
-        vals.put("photo_data", dd.getPhotoData());
         vals.put("comment_data", dd.getComment());
         vals.put("audio_data", dd.getSpokenData());
         vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
         vals.put("meal", dd.getMeal());
+        vals.put("filepath", dd.getFilepath());
+        vals.put("fv_count", theFV);
+        vals.put("drink_count", theDR);
 
         long rowID = db.insert("diary_entries", null, vals);
-        db.close();
+        return rowID;
     }
 
     public int[] readCountData(Context cont){
@@ -132,6 +138,149 @@ public class DBContainer {
 
     }
 
+    //Update called from SummaryActivity
+    public boolean updateCountsDB(Context cont, Date theDate, ContentValues cv, String [] updateArgs) {
+        try {
+            dbh = new DBHelper(cont);
+            db = dbh.getWritableDatabase();
+
+            //String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
+            //String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
+
+            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
+
+            if (a == 0) {
+                cv.put("time_stamp", theDate.toString());
+                long rowID = db.insert("counts", null, cv);
+                db.close();
+            }
+
+            db.close();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public void updateCountsDB2(Context cont, int fvCount, int drinkCount, String mealChoice, Timestamp ts) {
+        try {
+            dbh = new DBHelper(cont);
+            db = dbh.getWritableDatabase();
+            Date theDate = new Date(ts.getTime());
+
+            int f = fvCount + DataHolder.todaysFV;
+            int d = drinkCount + DataHolder.todaysDrinks;
+
+            ContentValues cv = new ContentValues();
+            cv.put("fv_count", f);
+            cv.put("drink_count", d);
+
+            switch(mealChoice)
+            {
+                case"Breakfast":
+                    cv.put("hadBreakfast", true);
+                    break;
+                case"Lunch":
+                    cv.put("hadLunch", true);
+                    break;
+                case"Dinner":
+                    cv.put("hadDinner", true);
+                    break;
+            }
+
+            String[] updateArgs = {theDate.toString()};
+
+            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
+            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
+
+            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
+
+            if (a == 0) {
+                cv.put("time_stamp", theDate.toString());
+                long rowID = db.insert("counts", null, cv);
+                System.out.print("");
+            }
+            DataHolder.todaysFV = f;
+            DataHolder.todaysDrinks = d;
+            db.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateComment(Context cont, ContentValues cv, String [] updateArgs) {
+        try {
+            dbh = new DBHelper(cont);
+            db = dbh.getWritableDatabase();
+
+            db.update("diary_entries", cv, "time_stamp = ?", updateArgs);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    public ArrayList<DiaryData> readEntriesForDate(Context cont, String date) {
+        DBHelper dbh = new DBHelper(cont);
+        SQLiteDatabase db = dbh.getReadableDatabase();
+
+        String[] projection = {
+                "entry_ID", "filepath", "comment_data", "time_stamp", "meal","fv_count","drink_count"
+        };
+        String select = "time_stamp Like ?";
+        String[] selArgs = {"%" + date + "%"};
+        Cursor cursor = db.query("diary_entries", projection, select, selArgs, null, null, null);
+
+        ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
+
+        if(cursor.moveToFirst()) {
+            do {
+                try {
+                    DiaryData curr;
+                    //byte[] pic = cursor.getBlob(cursor.getColumnIndexOrThrow("photo_data"));
+                    String comm = cursor.getString(cursor.getColumnIndexOrThrow("comment_data"));
+                    String file = cursor.getString(cursor.getColumnIndexOrThrow("filepath"));
+                    String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
+                    String theMeal = cursor.getString(cursor.getColumnIndexOrThrow("meal"));
+                    int fvCount = cursor.getInt(cursor.getColumnIndexOrThrow("fv_count"));
+                    int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
+
+                    Timestamp theTime = Timestamp.valueOf(tID);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file,fvCount,drCount);
+
+                    entries.add(curr);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    return null;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return entries;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //---------- TEMP FUNCTIONS ------------
     public void deleteDate(Context cont) {
@@ -155,4 +304,19 @@ public class DBContainer {
 
     }
 
+    public void insertEntryTemp(DiaryData dd, Context cont) {
+        DBHelper dbh = new DBHelper(cont);
+        SQLiteDatabase db = dbh.getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+        //vals.put("entry_ID",1);
+        vals.put("photo_data", dd.getPhotoData());
+        vals.put("comment_data", dd.getComment());
+        vals.put("audio_data", dd.getSpokenData());
+        vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
+        vals.put("meal", dd.getMeal());
+
+        long rowID = db.insert("diary_entries", null, vals);
+        db.close();
+    }
 }

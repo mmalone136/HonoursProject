@@ -11,4 +11,6 @@
 -Physical Activity:
     Aim to do 30 minutes of excercise, at least 5 days per week
 "</string>
+    <string name="sortTime">Sort by time</string>
+    <string name="sortMeal">Sort by meal type</string>
 </resources>

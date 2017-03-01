@@ -226,7 +226,6 @@ public class WeekviewActivity extends AppCompatActivity {
         return difference;
     }
 
-
     public void updateView(int step) {
 
         //Read unique dates if not done

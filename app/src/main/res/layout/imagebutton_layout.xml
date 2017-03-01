@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/explvChildBack"
+    android:orientation="vertical" >
+
+    <TableRow android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/listImage"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            />
+
+
+        <TextView
+            android:id="@+id/tvChild"
+            android:layout_width="fill_parent"
+            android:layout_height="68dp"
+            android:textColor="@color/black"
+            android:textSize="17dip"
+            android:textAlignment="center"
+            android:gravity="center"/>
+    </TableRow>
+
+
+
+
+</RelativeLayout>

@@ -20,7 +20,9 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.io.FileNotFoundException;
@@ -42,12 +44,12 @@ public class SummaryActivity extends AppCompatActivity {
     ListView dataList;
     EditText comments;
     Button editMeal, buttonFV, buttonDR, review, save;
-
+    public DBContainer dbCont;
     String newMeal, currCount;
     String oldMeal;
     int initDR, initFV;
     int dr, fv;
-    int fvDiff,drDiff;
+    int fvDiff, drDiff;
     boolean fvChange, drChange;
 
     @Override
@@ -59,8 +61,9 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     public void initValues() {
+        dbCont = new DBContainer();
         setListView();
-        newMeal="";
+        newMeal = "";
         try {
             currPhoto = readImageFromFile(theentry.getFilepath());//theentry.getPhotoData();
             Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto, 0, currPhoto.length);
@@ -69,32 +72,30 @@ public class SummaryActivity extends AppCompatActivity {
 
             initDR = theentry.getDrCount();
             initFV = theentry.getFvCount();
-            dr=0;
-            fv=0;
+            dr = 0;
+            fv = 0;
             fvChange = false;
             drChange = false;
 
-        }catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
 
         }
     }
 
-    public void backPress(View v){
+    public void backPress(View v) {
         onBackPressed();
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         System.gc();
         finish();
         return;
     }
 
 
-    public void setListView(){
-
+    public void setListView() {
         ArrayList<String> listData = new ArrayList<String>();
 
         String counts = "Fruit & Veg: " + theentry.getFvCount() + " | Drinks: " + theentry.getDrCount();
@@ -126,7 +127,6 @@ public class SummaryActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.buttonSave);
         save.setVisibility(View.VISIBLE);
 
-
         editMeal = (Button) findViewById(R.id.buttonEditMeal);
         editMeal.setVisibility(View.VISIBLE);
         buttonFV = (Button) findViewById(R.id.buttonFVFV);
@@ -135,7 +135,6 @@ public class SummaryActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.VISIBLE);
 
     }
-
 
     public void addToCounts(View v) {
         //Show counter buttons, cancel button and text view
@@ -153,16 +152,13 @@ public class SummaryActivity extends AppCompatActivity {
         tv.setVisibility(View.VISIBLE);
 
         if (currCount.equals("Drink")) {
-            tv.setText(String.valueOf(initDR+dr));
+            tv.setText(String.valueOf(initDR + dr));
         } else {
-            tv.setText(String.valueOf(initFV+fv));
+            tv.setText(String.valueOf(initFV + fv));
         }
-
-
     }
 
     public void updateLocals(int val) {
-
         if (currCount.equals("Drink")) {
             dr = val;
             drChange = true;
@@ -170,10 +166,7 @@ public class SummaryActivity extends AppCompatActivity {
             fv = val;
             fvChange = true;
         }
-
-
     }
-
 
     public void saveCount(View v) {
         Button buttFV = (Button) findViewById(R.id.buttonAdd2);
@@ -187,13 +180,9 @@ public class SummaryActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         tv.setVisibility(View.INVISIBLE);
         tv.setText("0");
-
-
     }
 
-
     public void incCount(View v) {
-
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         int curr = Integer.valueOf(tv.getText().toString());
         if (curr < 8) {
@@ -202,7 +191,6 @@ public class SummaryActivity extends AppCompatActivity {
         tv.setText(String.valueOf(curr));
 
         updateLocals(curr);
-
     }
 
     public void decCount(View v) {
@@ -213,11 +201,9 @@ public class SummaryActivity extends AppCompatActivity {
         }
         tv.setText(String.valueOf(curr));
         updateLocals(curr);
-
     }
 
-
-    public void showMealTypes(View v){
+    public void showMealTypes(View v) {
 
         Button breakfast = (Button) findViewById(R.id.buttonBreak2);
         breakfast.setVisibility(View.VISIBLE);
@@ -238,7 +224,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     }
 
-    public void updateMealTag(View v){
+    public void updateMealTag(View v) {
         String tag = v.getTag().toString();
 
         newMeal = tag;
@@ -266,14 +252,13 @@ public class SummaryActivity extends AppCompatActivity {
         comments.setVisibility(View.VISIBLE);
     }
 
-    public void editMealTag(View v){
+    public void editMealTag(View v) {
         Button food = (Button) findViewById(R.id.buttonChangeFood);
         Button drink = (Button) findViewById(R.id.buttonChangeDrink);
         //hide food, hide drink
         //hide breakfast,lunch,dinner,snack
         food.setVisibility(View.VISIBLE);
         drink.setVisibility(View.VISIBLE);
-
 
 
         editMeal.setVisibility(View.INVISIBLE);
@@ -286,33 +271,22 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
 
-
-    public void updateDatabase(String comment){
-        try {
-            DBHelper dbh = new DBHelper(getApplicationContext());
-            SQLiteDatabase db = dbh.getWritableDatabase();
-
-            ContentValues cv = new ContentValues();
-            cv.put("comment_data", comment);
-            if(!newMeal.equals("")){
-                cv.put("meal", newMeal);
-            }
-
-            cv.put("fv_count",fv);
-            cv.put("drink_count",dr);
-
-            String[] updateArgs = {theentry.getTimestamp().toString()};
-            db.update("diary_entries", cv, "time_stamp = ?", updateArgs);
-        }catch(Exception ex){
-            ex.printStackTrace();
-            ex.printStackTrace();
+    public void updateMealComment(String comment){
+        ContentValues cv = new ContentValues();
+        cv.put("comment_data", comment);
+        if (!newMeal.equals("")) {
+            cv.put("meal", newMeal);
         }
 
+        cv.put("fv_count", fv);
+        cv.put("drink_count", dr);
 
+        String[] updateArgs = {theentry.getTimestamp().toString()};
+        dbCont.updateComment(this,cv,updateArgs);
     }
 
 
-    public void saveReview(View v){
+    public void saveReview(View v) {
         //Send updated comment to database
         review.setVisibility(View.VISIBLE);
         save.setVisibility(View.INVISIBLE);
@@ -323,44 +297,38 @@ public class SummaryActivity extends AppCompatActivity {
         comments.setText(updated);
         comments.setVisibility(View.INVISIBLE);
 
-
         oldMeal = "";
-        if(!newMeal.equals("")) {
+        if (!newMeal.equals("")) {
 
             oldMeal = theentry.getMeal();
             theentry.setMeal(newMeal);
         }
 
-        fvDiff = fv-initFV;
-        drDiff = dr-initDR;
-
-
+        fvDiff = fv - initFV;
+        drDiff = dr - initDR;
 
         int fvToPass = initFV;
         int drToPass = initDR;
 
-        if(fvChange){
-            fvToPass = fvDiff + OptionsActivity.todaysFV;
+        if (fvChange) {
+            fvToPass = fvDiff + DataHolder.todaysFV;
             theentry.setFvCount(fv);
-        }else{
-
-            fv=initFV;
+        } else {
+            fv = initFV;
         }
 
-        if(drChange){
-            drToPass = drDiff+OptionsActivity.todaysDrinks;
+        if (drChange) {
+            drToPass = drDiff + DataHolder.todaysDrinks;
             theentry.setDrCount(dr);
-        }else{
+        } else {
 
             dr = initDR;
         }
 
-
         //Use fvDIff and drDiff to update daily counts
-        if(fvDiff!=0 || drDiff!=0 ||!newMeal.equals(""))
-        {
+        if (fvDiff != 0 || drDiff != 0 || !newMeal.equals("")) {
             Date d = new Date(theentry.getTimestamp().getTime());
-            updateCountsDB(fvToPass,drToPass,d);
+            updateCountsDB(fvToPass, drToPass, d);
         }
 
         editMeal.setVisibility(View.INVISIBLE);
@@ -368,74 +336,50 @@ public class SummaryActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.INVISIBLE);
 
         setListView();
-        updateDatabase(updated);
+        updateMealComment(updated);
     }
 
 
-
-
     public void updateCountsDB(int fvCount, int drinkCount, Date theDate) {
+        ContentValues cv = new ContentValues();
 
-        try {
-            DBHelper dbh = new DBHelper(getApplicationContext());
-            SQLiteDatabase db = dbh.getWritableDatabase();
+        int f = fvCount;
+        int d = drinkCount;
 
-            ContentValues cv = new ContentValues();
-            cv.put("fv_count", fvCount);
-            cv.put("drink_count", drinkCount);
-            String[] updateArgs = {theDate.toString()};
+        cv.put("fv_count", f);
+        cv.put("drink_count", d);
+        String[] updateArgs = {theDate.toString()};
 
 
-            if(!newMeal.equals("")&&!newMeal.equals("Snacks")&&!newMeal.equals("Drinks")){
-                String toAdd = "had" + newMeal;
-                cv.put(toAdd,true);
+        if (!newMeal.equals("") && !newMeal.equals("Snack") && !newMeal.equals("Drink")) {
+            String toAdd = "had" + newMeal;
+            cv.put(toAdd, true);
+        }
+
+        if (!oldMeal.equals("") && !oldMeal.equals("Snack") && !oldMeal.equals("Drink")) {
+            int oldCount = counts.getAsInteger((oldMeal + "Count"));
+            if (!(oldCount > 1)) {
+                String toAdd = "had" + oldMeal;
+                cv.put(toAdd, false);
             }
+        }
 
-            if(!oldMeal.equals("")&&!oldMeal.equals("Snacks")&&!oldMeal.equals("Drinks"))
-            {
-                int oldCount = counts.getAsInteger(oldMeal+"Count");
-                if(!(oldCount >1))
-                {
-                    String toAdd = "had" + oldMeal;
-                    cv.put(toAdd,false);
-                }
-            }
-
-
-            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
-            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
-
-            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
-
-            if (a == 0) {
-                cv.put("time_stamp", theDate.toString());
-                long rowID = db.insert("counts", null, cv);
-                System.out.print("");
-            }
-
-            OptionsActivity.todaysFV = fvCount;
-            OptionsActivity.todaysDrinks = drinkCount;
-
-            db.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            ex.printStackTrace();
+        boolean success = dbCont.updateCountsDB(this, theDate, cv, updateArgs);
+        if (!success) {
+            DataHolder.todaysFV = f;
+            DataHolder.todaysDrinks = d;
         }
     }
 
 
-
-
     public byte[] readImageFromFile(String filename) {
         try {
-
             InputStream is = openFileInput(filename);
 
-            byte[] photodata = org.apache.commons.io.IOUtils.toByteArray(is);
+            byte[] photoData = org.apache.commons.io.IOUtils.toByteArray(is);
 
             System.out.println("");
-            return photodata;
+            return photoData;
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         } catch (IOException ioe) {

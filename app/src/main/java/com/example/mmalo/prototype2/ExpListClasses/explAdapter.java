@@ -10,12 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mmalo.prototype2.R;
-
-//http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
-
-
 import java.util.ArrayList;
 
+//http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
 /**
  * Created by mmalo on 14/02/2017.
  */
@@ -35,8 +32,8 @@ public class ExplAdapter extends BaseExpandableListAdapter {
                              ViewGroup parent) {
         ExpListChild child = (ExpListChild) getChild(groupPosition, childPosition);
         if (view == null) {
-            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            view = infalInflater.inflate(R.layout.explist_child_item, null);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.explist_child_item, null);
         }
         TextView tv = (TextView) view.findViewById(R.id.tvChild);
         tv.setText(child.getName().toString());

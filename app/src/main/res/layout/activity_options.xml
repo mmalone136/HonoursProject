@@ -7,30 +7,46 @@
     tools:context="com.example.mmalo.prototype2.OptionsActivity">
 
     <Button
-        android:text="Take Photo"
+        android:text="          \t\t\t\tTargets"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonPhoto"
-        android:layout_weight="0.09"
-        android:elevation="0dp"
-        android:onClick="openPhotoPreview"
+        android:layout_height="match_parent"
+        android:id="@+id/buttonTargets"
+        android:onClick="loadTargets"
+        android:layout_weight="0.2"
+        android:drawableLeft="@drawable/target"
+        android:gravity="left|center_vertical"
+
         />
 
     <Button
-        android:text="View Diary"
+        android:text="\tCreate Diary Entry"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/buttonPhoto"
+        android:layout_weight="0.2"
+        android:elevation="0dp"
+        android:onClick="openPhotoPreview"
+        android:drawableLeft="@drawable/camera"
+        android:gravity="left|center_vertical"
+        />
+
+    <Button
+        android:text="           View Diary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/buttonSummary"
-        android:layout_weight="0.09"
+        android:layout_weight="0.2"
         android:onClick="viewDates"
+        android:drawableLeft="@drawable/diary1"
+        android:gravity="left|center_vertical"
         />
 
     <Button
         android:text="View Guide"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/buttonGuide"
-        android:layout_weight="0.09"
+        android:layout_weight="0.2"
         android:onClick = "viewGuide"
         />
 
@@ -38,46 +54,12 @@
     <Button
         android:text="Tutorial"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/buttonTut"
-        android:layout_weight="0.09"
+        android:layout_weight="0.2"
         android:onClick="loadTutorial"/>
 
-    <TextView
-        android:text="TextViewFV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewFV"
-        android:layout_weight="0.09" />
 
-
-    <TextView
-        android:text="TextViewDR"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewDrinks"
-        android:layout_weight="0.09" />
-
-    <TextView
-        android:text="TextViewB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvBreak"
-        android:layout_weight="0.09" />
-
-    <TextView
-        android:text="TextViewL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvLunch"
-        android:layout_weight="0.09" />
-
-    <TextView
-        android:text="TextViewD"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDinn"
-        android:layout_weight="0.09" />
 
 
 </LinearLayout>

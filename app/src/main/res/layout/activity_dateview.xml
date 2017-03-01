@@ -28,15 +28,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonInfoTab"
             android:text="Back"
-
             android:onClick="goBack"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonExamplesTab"
+            android:id="@+id/buttonSortEntries"
             android:layout_weight="1"
-            android:text="Sort by Time/Meal"
             android:onClick="flipSort"/>
 
     </LinearLayout>

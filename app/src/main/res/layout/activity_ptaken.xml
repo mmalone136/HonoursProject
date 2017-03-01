@@ -224,7 +224,8 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/imageTaken"
         android:layout_toRightOf="@+id/buttonDin"
-        android:layout_toEndOf="@+id/buttonDin" />
+        android:layout_toEndOf="@+id/buttonDin"
+        />
 
 
     <Button

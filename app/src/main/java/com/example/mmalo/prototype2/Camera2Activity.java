@@ -90,7 +90,7 @@ public class Camera2Activity extends AppCompatActivity {
 
     public void higherAPI() {
         Toast t = Toast.makeText(this, "HIGHER API", Toast.LENGTH_LONG);
-        t.show();
+        //t.show();
         jpegSizes = null;
         Button capture = (Button) findViewById(R.id.button_capture);
         imTextView = (TextureView) findViewById(R.id.imageTextView);

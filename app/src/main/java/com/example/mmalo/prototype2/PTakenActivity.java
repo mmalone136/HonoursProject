@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
@@ -52,7 +53,7 @@ public class PTakenActivity extends AppCompatActivity {
     String mealChoice;
     public static Timestamp timetaken;
     public static String filename;
-
+    public DBContainer dbCont;
     boolean firstClick;
     int fv;
     int dr;
@@ -64,71 +65,9 @@ public class PTakenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ptaken);
         initValues();
+        dbCont = new DBContainer();
         Toast t = Toast.makeText(this, "PTAKEN_ACT", Toast.LENGTH_LONG);
-        t.show();
-    }
-
-    public ArrayList<DiaryData> doDBThings() {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-        ArrayList<DiaryData> DDList = new ArrayList<DiaryData>();
-
-        for (int i = 0; i < 25; i++) {
-            DiaryData dd = new DiaryData();
-
-            byte[] photo = new byte[7];
-            byte[] audio = new byte[7];
-            String comment = "This is the comment : " + i;
-            Timestamp t = new Timestamp(System.currentTimeMillis());
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            java.util.Date date = new java.util.Date();
-            Timestamp ts = new java.sql.Timestamp(date.getTime());
-
-
-            String meal;
-            if (i < 10) {
-                meal = "Breakfast";
-            } else if (i >= 10 && i < 20) {
-                meal = "Lunch";
-            } else {
-
-                meal = "Dinner";
-            }
-
-            dd.setComment(comment);
-            dd.setPhotoData(photo);
-            dd.setSpokenData(audio);
-            dd.setTimestamp(ts);
-            dd.setMeal(meal);
-
-            DDList.add(dd);
-        }
-
-
-        System.out.print("");
-        return DDList;
-    }
-
-
-    //Move to db container
-    public long insertEntry(DiaryData dd) {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-        ContentValues vals = new ContentValues();
-        vals.put("comment_data", dd.getComment());
-        vals.put("audio_data", dd.getSpokenData());
-        vals.put("time_stamp", String.valueOf(dd.getTimestamp()));
-        vals.put("meal", dd.getMeal());
-        vals.put("filepath", dd.getFilepath());
-        vals.put("fv_count", fv);
-        vals.put("drink_count", dr);
-
-        long rowID = db.insert("diary_entries", null, vals);
-        return rowID;
+        //t.show();
     }
 
     public ArrayList<DiaryData> readAllEntries() {
@@ -189,7 +128,6 @@ public class PTakenActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public void mealButton(View v) {
         //if tag == 1,2,3,4 set meal = corresponding value then do:
@@ -281,76 +219,13 @@ public class PTakenActivity extends AppCompatActivity {
 
     }
 
-
     public void updateLocals(int val) {
-
         if (currCount.equals("Drink")) {
             dr = val;
-
         } else {
-
             fv = val;
         }
-
-
     }
-
-    //Move to db container
-    public void updateCountsDB2(int fvCount, int drinkCount) {
-
-        try {
-            DBHelper dbh = new DBHelper(getApplicationContext());
-            SQLiteDatabase db = dbh.getWritableDatabase();
-            Date theDate = new Date(timetaken.getTime());
-
-            int f = fvCount + OptionsActivity.todaysFV;
-            int d = drinkCount + OptionsActivity.todaysDrinks;
-
-            ContentValues cv = new ContentValues();
-            cv.put("fv_count", f);
-            cv.put("drink_count", d);
-
-            switch(mealChoice)
-            {
-                case"Breakfast":
-                    cv.put("hadBreakfast", true);
-                break;
-                case"Lunch":
-                    cv.put("hadBreakfast", true);
-                    break;
-                case"Dinner":
-                    cv.put("hadBreakfast", true);
-                    break;
-            }
-
-
-            String[] updateArgs = {theDate.toString()};
-
-            String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
-            String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
-
-            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
-
-           // Cursor c = db.rawQuery(sql, args);
-
-           // SQLiteStatement statement = db.compileStatement("SELECT changes()");
-           // long a = statement.simpleQueryForLong();
-
-            if (a == 0) {
-                cv.put("time_stamp", theDate.toString());
-                long rowID = db.insert("counts", null, cv);
-                System.out.print("");
-            }
-
-            db.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            ex.printStackTrace();
-        }
-    }
-
-
 
     public int saveImageToFile(byte[] datas) {
         FileOutputStream fos;
@@ -415,20 +290,16 @@ public class PTakenActivity extends AppCompatActivity {
         commentData = comments.getText().toString();
         String fp = filename;
 
-
         DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp, fv, dr);
 
-        System.out.print("");
-        System.out.print("");
-        System.out.print("");
         Toast t;
         int success = saveImageToFile(photoData);
 
         if (success == 7) {
-            long l = insertEntry(entry);
+            long l = dbCont.insertEntry(entry,getApplicationContext(),fv,dr);
             if (l != -1) {
                 t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
-                updateCountsDB2(fv, dr);
+                dbCont.updateCountsDB2(this,fv, dr, mealChoice, timetaken);
             } else {
                 t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
             }

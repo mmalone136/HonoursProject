@@ -7,16 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraController;
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
@@ -29,20 +32,25 @@ import java.util.ArrayList;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    public static int todaysFV;
-    public static int todaysDrinks;
-    public static boolean todayBreak;
-    public static boolean todayLunch;
-    public static boolean todayDinner;
-    public static DBContainer dbCont;
+    public DBContainer dbCont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
         dbCont = new DBContainer();
-        dbCont.createTables(getApplicationContext());
-        readCountData();
+        dbCont.createTables(this);
+        if (DataHolder.dataRead) {
+            DataHolder.readData(this);
+        }
+
+
+        //Button diaryButton = (Button) findViewById(R.id.buttonSummary);
+        //LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        //diaryButton = infalInflater.inflate(R.layout.imagebutton_layout, null);
+
+        //android:drawableLeft="@drawable/diary1"
+        //android:gravity="left|center_vertical"
     }
 
     @Override
@@ -65,14 +73,14 @@ public class OptionsActivity extends AppCompatActivity {
             case R.id.InsertData:
                 ArrayList<DiaryData> seven = doDBThings();
                 for (DiaryData d : seven) {
-                    dbCont.insertEntry(d, getApplicationContext());
+                    dbCont.insertEntryTemp(d, getApplicationContext());
                 }
                 return true;
             case R.id.DeleteMore:
                 dbCont.deleteDate(getApplicationContext());
                 return true;
             case R.id.RefreshTotals:
-                readCountData();
+                //readCountData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -80,64 +88,17 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
 
-    public void readCountData() {
-
-        try {
-            int[] countData = dbCont.readCountData(this);
-
-            todaysFV = countData[0];
-            todaysDrinks = countData[1];
-
-            int hadBreak = countData[2];
-            int hadLunch = countData[3];
-            int hadDinner = countData[4];
-
-            todayBreak = (hadBreak > 0);
-            todayLunch = (hadLunch > 0);
-            todayDinner = (hadDinner > 0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.printStackTrace();
-
-            todaysFV = 0;
-            todaysDrinks = 0;
-
-        }
-
-
-        TextView fv = (TextView) findViewById(R.id.textViewFV);
-        TextView dr = (TextView) findViewById(R.id.textViewDrinks);
-        TextView bf = (TextView) findViewById(R.id.tvBreak);
-        TextView lu = (TextView) findViewById(R.id.tvLunch);
-        TextView dn = (TextView) findViewById(R.id.tvDinn);
-
-
-        fv.setText("Fruit & Veg: " + todaysFV);
-        dr.setText("Drinks: " + todaysDrinks);
-
-        bf.setText("Had Breakfast: " + todayBreak);
-        lu.setText("Had Lunch: " + todayLunch);
-        dn.setText("Had Dinner: " + todayDinner);
-
-    }
-
-
-
 //--------------Functions for changing forms
 
 
     //TakePhoto
     public void openPhotoPreview(View v) {
-        //System.out.println(v.getId());
-        //System.out.println("It did the thing");
         CameraController cc = new CameraController();
         boolean hasCam = cc.checkCameraHardware(this);
         System.out.println(hasCam);
         Toast toast;
         toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
         //toast.show();
-        // Camera c = cc.getCameraInstance();
 
         int apiLevel = Build.VERSION.SDK_INT;
         Intent i;
@@ -145,7 +106,6 @@ public class OptionsActivity extends AppCompatActivity {
             i = new Intent(this, CameraActivity.class);
         } else {
             i = new Intent(this, Camera2Activity.class);
-
         }
         this.startActivity(i);
     }
@@ -167,6 +127,11 @@ public class OptionsActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
+
+    public void loadTargets(View v) {
+        Intent i = new Intent(getBaseContext(), TargetsActivity.class);
+        this.startActivity(i);
+    }
 
 
 //--------------Functions for creating dummy data => Temporary functions
