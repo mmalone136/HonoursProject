@@ -183,7 +183,8 @@ public class DateviewActivity extends AppCompatActivity {
 
 
     public void goBack(View v){
-        onBackPressed();
+        Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
+        this.startActivity(i);
     }
-    ;
+
 }

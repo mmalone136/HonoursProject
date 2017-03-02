@@ -84,7 +84,7 @@ public class GuideActivity extends AppCompatActivity {
         ArrayList<Integer> tempTwo = new ArrayList<>();
         for(int i =0;i<7;i++)
         {
-            int currInt = R.drawable.glass2;
+            int currInt = R.drawable.glassfull;
             tempTwo.add(currInt);
         }
 

@@ -12,15 +12,15 @@
     <ImageView
         android:layout_gravity="center"
         android:id="@+id/listImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         />
 
 
     <TextView
         android:id="@+id/tvChild"
-        android:layout_width="fill_parent"
-        android:layout_height="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
         android:textColor="@color/black"
         android:textSize="17dip"
         android:textAlignment="center"

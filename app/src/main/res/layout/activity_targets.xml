@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_weight="4"
+            android:layout_weight="3.8"
             android:orientation="vertical">
 
             <Button
@@ -134,11 +134,33 @@
                     android:id="@+id/imgDinner"/>
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/LinLayDrinkData"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
                 android:layout_weight="1"
-                android:src="@drawable/glass2" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/emptyglass2"
+                    android:id="@+id/imgDrinkCount"/>
+
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewDrinkCount"
+                    android:textSize="23dip"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

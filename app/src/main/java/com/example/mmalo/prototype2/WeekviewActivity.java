@@ -35,15 +35,28 @@ public class WeekviewActivity extends AppCompatActivity {
     Date weekEnd;
     int step;
     int stepLimit;
+    int todayPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekview);
 
+        Calendar calendar = Calendar.getInstance();
+        todayPosition = calendar.get(Calendar.DAY_OF_WEEK);
         step = 0;
         updateView(step);
         stepLimit = calculateEarliest();
+
+
+        //if(day ==1)
+       // {
+            //todayPosition = 6;
+       // }else
+        //{
+            //todayPosition = day-1;
+        //}
+
     }
 
 
@@ -70,6 +83,11 @@ public class WeekviewActivity extends AppCompatActivity {
 
         weekStart = first;
         weekEnd = last;
+
+
+
+
+
     }
 
     public ArrayList<String> readUniqueDates() {
@@ -168,11 +186,20 @@ public class WeekviewActivity extends AppCompatActivity {
 
             int day = cal.get(Calendar.DAY_OF_WEEK);
             System.out.print("");
+
+            String temp = "";
+
+            if(step==0 && day ==todayPosition){
+                temp = "\tTODAY";
+            }
+
+
+
             if (day > 1) {
-                weekData[day - 2] = dayString + "\t\t\t" + dateString;
+                weekData[day - 2] = dayString + "\t\t\t" + dateString+temp;
             } else if (day == 1) {
                 //Sunday previously at day 1, move to position 6 for end of week
-                weekData[6] = dayString + "\t\t\t" + dateString;
+                weekData[6] = dayString + "\t\t\t" + dateString+temp;
             }
         }
 

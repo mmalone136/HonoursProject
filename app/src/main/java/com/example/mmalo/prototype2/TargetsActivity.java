@@ -16,6 +16,7 @@ import com.example.mmalo.prototype2.Models.DataHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by mmalo on 28/02/2017.
  */
@@ -35,8 +36,17 @@ public class TargetsActivity extends AppCompatActivity {
         try {
             int[] countData = dbCont.readCountData(this);
 
+
             DataHolder.todaysFV = countData[0];
             DataHolder.todaysDrinks = countData[1];
+
+            if( DataHolder.todaysFV <0){
+                DataHolder.todaysFV = 0;
+            }
+            if( DataHolder.todaysDrinks<0){
+                DataHolder.todaysDrinks = 0;
+            }
+
 
             int hadBreak = countData[2];
             int hadLunch = countData[3];
@@ -50,7 +60,7 @@ public class TargetsActivity extends AppCompatActivity {
             e.printStackTrace();
             e.printStackTrace();
 
-            DataHolder.todaysFV = 0;
+            DataHolder.todaysFV =0;
             DataHolder.todaysDrinks = 0;
 
         }
@@ -110,10 +120,58 @@ public class TargetsActivity extends AppCompatActivity {
         currFV = (ImageView) findViewById(R.id.imgFV5);
         fvCounts.add(currFV);
 
-        for(int i = 0;i<DataHolder.todaysFV;i++){
+        for(int i = 0; i< DataHolder.todaysFV; i++){
 
                 fvCounts.get(i).setImageResource(R.drawable.apple);
         }
+
+
+
+        ImageView drinkCount = (ImageView) findViewById(R.id.imgDrinkCount);
+
+        int drinks = DataHolder.todaysDrinks;
+        switch (drinks) {
+            case 0:
+                drinkCount.setImageResource(R.drawable.glassempty1);
+                break;
+            case 1:
+                drinkCount.setImageResource(R.drawable.glass1_8);
+                break;
+            case 2:
+                drinkCount.setImageResource(R.drawable.glass1_4);
+                break;
+            case 3:
+                drinkCount.setImageResource(R.drawable.glass1_4);
+                break;
+            case 4:
+                drinkCount.setImageResource(R.drawable.glasshalf);
+                break;
+            case 5:
+                drinkCount.setImageResource(R.drawable.glass5_8);
+                break;
+            case 6:
+                drinkCount.setImageResource(R.drawable.glass3_4);
+                break;
+            case 7:
+                drinkCount.setImageResource(R.drawable.glass7_8);
+                break;
+            case 8:
+                drinkCount.setImageResource(R.drawable.glassfull);
+                break;
+            default:
+                if(drinks>=8) {
+                    drinkCount.setImageResource(R.drawable.glassfull);
+                }else {
+                    drinkCount.setImageResource(R.drawable.emptyglass2);
+                }
+                    break;
+
+        }
+        TextView tvDrinks = (TextView) findViewById(R.id.textViewDrinkCount);
+        tvDrinks.setText("\n" + drinks + "\n_____\n\n8");
+
+
+
 
     }
 

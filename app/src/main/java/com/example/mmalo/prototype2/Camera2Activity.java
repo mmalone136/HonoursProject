@@ -69,6 +69,7 @@ public class Camera2Activity extends AppCompatActivity {
     private CaptureRequest.Builder prevBuild;
     private CameraCaptureSession prevSesh;
     CameraManager manager;
+    Button cancelButton;
 
     private static final SparseIntArray ORIENT = new SparseIntArray();
 
@@ -128,6 +129,8 @@ public class Camera2Activity extends AppCompatActivity {
 
     @TargetApi(21)
     public void takePictureHigher() {
+        cancelButton = (Button) findViewById(R.id.button_cancel);
+        cancelButton.setEnabled(false);
         try {
             int width = 640, height = 480;
             if (jpegSizes != null && jpegSizes.length > 0) {
@@ -165,7 +168,7 @@ public class Camera2Activity extends AppCompatActivity {
                                 afterTaken(dataToPass);
                             }
                         });
-
+                        cancelButton.setEnabled(true);
                     } catch (Exception ee) {
                         ee.printStackTrace();
                     } finally {
@@ -257,10 +260,12 @@ public class Camera2Activity extends AppCompatActivity {
 
         @Override
         public void onDisconnected(CameraDevice camera) {
+
         }
 
         @Override
         public void onError(CameraDevice camera, int error) {
+
         }
     };
 
@@ -298,6 +303,7 @@ public class Camera2Activity extends AppCompatActivity {
 
                 @Override
                 public void onConfigureFailed(CameraCaptureSession session) {
+
                 }
             }, null);
         } catch (Exception e) {

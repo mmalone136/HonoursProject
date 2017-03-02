@@ -84,7 +84,12 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     public void backPress(View v) {
-        onBackPressed();
+        //onBackPressed();
+        System.gc();
+        Intent i = new Intent(getBaseContext(), DateviewActivity.class);
+        startActivity(i);
+
+
     }
 
     @Override
