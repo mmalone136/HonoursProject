@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.ExpListClasses.CustomAdapter;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
@@ -31,6 +34,7 @@ public class WeekviewActivity extends AppCompatActivity {
     public ArrayList<String> uniqueDates = new ArrayList<String>();
     String[] weekData;
     String[] weekDates;
+    ArrayList<String[]> moreWeekData;
     Date weekStart;
     Date weekEnd;
     int step;
@@ -47,16 +51,6 @@ public class WeekviewActivity extends AppCompatActivity {
         step = 0;
         updateView(step);
         stepLimit = calculateEarliest();
-
-
-        //if(day ==1)
-       // {
-            //todayPosition = 6;
-       // }else
-        //{
-            //todayPosition = day-1;
-        //}
-
     }
 
 
@@ -83,11 +77,6 @@ public class WeekviewActivity extends AppCompatActivity {
 
         weekStart = first;
         weekEnd = last;
-
-
-
-
-
     }
 
     public ArrayList<String> readUniqueDates() {
@@ -162,17 +151,17 @@ public class WeekviewActivity extends AppCompatActivity {
         return toReturn;
     }
 
-    public String[] getListForWeek(ArrayList<String> CurrentWeek) {
+    public ArrayList<String[]> getListForWeek(ArrayList<String> CurrentWeek) {
+
+        ArrayList<String[]> dataLists = new ArrayList<>();
 
         String[] weekData = {"# - No Entries", "# - No Entries", "# - No Entries", "# - No Entries",
                 "# - No Entries", "# - No Entries","# - No Entries"};
 
         weekDates = new String[7];
 
-
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE");
         SimpleDateFormat formDates = new SimpleDateFormat("dd/MM/yyyy");
-
 
         for (String curr : CurrentWeek) {
 
@@ -193,8 +182,6 @@ public class WeekviewActivity extends AppCompatActivity {
                 temp = "\tTODAY";
             }
 
-
-
             if (day > 1) {
                 weekData[day - 2] = dayString + "\t\t\t" + dateString+temp;
             } else if (day == 1) {
@@ -205,6 +192,8 @@ public class WeekviewActivity extends AppCompatActivity {
 
         for(int i = 0;i<weekData.length;i++){
             String curr = weekData[i];
+            String [] currList;
+
             Calendar cal = GregorianCalendar.getInstance();
             cal.setTime(weekStart);
 
@@ -215,22 +204,27 @@ public class WeekviewActivity extends AppCompatActivity {
             temp = cal.getTime();
             current = new Date(temp.getTime());
 
+            java.util.Date currDate = cal.getTime();
+            String dayString = formatter.format(currDate);
+            String dateString = formDates.format(currDate);
+
+
             if(curr.charAt(0)=='#')
             {
-
-                java.util.Date currDate = cal.getTime();
-                String dayString = formatter.format(currDate);
-                String dateString = formDates.format(currDate);
-
                 weekDates[i] = String.valueOf(current);
                 weekData[i] = dayString + "\t\t\t" + dateString + "\t\tNO ENTRIES";
-            }else{
+                String [] newOne = {dayString, dateString, "NO ENTRIES"};
+                currList = newOne;
 
+            }else{
                 weekDates[i] = String.valueOf(current);
+                String [] newOne = {dayString, dateString, ""};
+                currList = newOne;
             }
+            dataLists.add(currList);
         }
 
-        return weekData;
+        return dataLists;
     }
 
     public int calculateEarliest() {
@@ -264,25 +258,39 @@ public class WeekviewActivity extends AppCompatActivity {
         //Read inbetween dates
         ArrayList<String> CurrentWeek = readDatesBetween(weekStart, weekEnd);
         //Set Week Data
-        weekData = getListForWeek(CurrentWeek);
+        moreWeekData = getListForWeek(CurrentWeek);
         //Set adapter
         setListAdapter();
     }
 
     public void setListAdapter() {
+
+
+        //http://stackoverflow.com/questions/19615766/android-custom-layout-for-listview
+        //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
+
+        //THIS ONE?
+        //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
+
         ListView dateList = (ListView) findViewById(R.id.listDates);
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weekData);
+        //ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weekData);
+        //ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.imagebutton_layout,R.id.tvChild,weekData);
+
+        //dateList.setAdapter(adapter);
 
 
-        dateList.setAdapter(adapter);
+        dateList.setAdapter(new CustomAdapter(this, moreWeekData));
+
+
+
+        //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 
         dateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //String curr = uniqueDates.get(position);
                 String curr = weekDates[position];
-                String alsoCurr = weekData[position];
-                String entryCheck = alsoCurr.substring(alsoCurr.length()-10);
+                String entryCheck = moreWeekData.get(position)[2];
 
                 //No Entries
                 if (!entryCheck.equals("NO ENTRIES")) {
@@ -293,8 +301,6 @@ public class WeekviewActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public void updateWeek(View v) {

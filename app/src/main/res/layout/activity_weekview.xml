@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    >
 
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7.7"
         android:id="@+id/listDates"
         android:divider="#c2b35b"
         android:dividerHeight="2dp"
         android:drawSelectorOnTop="false"
-        android:contextClickable="false"
-        android:layout_weight="0.01"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/ButtonLayout"
-         />
 
-
-
-    <Button
-        android:text="Back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonBackToMain"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="backOption"/>
-
+        />
 
     <LinearLayout android:id="@+id/ButtonLayout"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-
-        android:layout_above="@+id/buttonBackToMain"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        >
 
         <Button
             android:layout_width="0dp"
@@ -48,7 +31,6 @@
             android:text="Previous\nWeek"
             android:tag="-"
             android:onClick="updateWeek"/>
-
 
         <Button
             android:text="This\nWeek"
@@ -71,10 +53,17 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
-
-
-
     </LinearLayout>
 
 
-</RelativeLayout>
+    <Button
+        android:text="Back"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/buttonBackToMain"
+        android:onClick="backOption"/>
+
+
+
+</LinearLayout>

@@ -88,8 +88,6 @@ public class SummaryActivity extends AppCompatActivity {
         System.gc();
         Intent i = new Intent(getBaseContext(), DateviewActivity.class);
         startActivity(i);
-
-
     }
 
     @Override
@@ -99,15 +97,20 @@ public class SummaryActivity extends AppCompatActivity {
         return;
     }
 
-
     public void setListView() {
         ArrayList<String> listData = new ArrayList<String>();
 
         String counts = "Fruit & Veg: " + theentry.getFvCount() + " | Drinks: " + theentry.getDrCount();
 
+        String comms = theentry.getComment();
+        if(comms.equals(""))
+        {
+            comms = "No Comment";
+        }
+
         listData.add(theentry.getMeal());
         listData.add(String.valueOf(theentry.getTimestamp()));
-        listData.add(theentry.getComment());
+        listData.add(comms);
         listData.add(counts);
 
         dataList = (ListView) findViewById(R.id.listViewOfDatas);
@@ -124,7 +127,14 @@ public class SummaryActivity extends AppCompatActivity {
 
         comments = (EditText) findViewById(R.id.textComms);
         comments.setVisibility(View.VISIBLE);
-        comments.setText(theentry.getComment());
+
+        String comms = theentry.getComment();
+        if(comms.equals(""))
+        {
+            comms = "Tap here to type a comment";
+        }
+
+        comments.setText(comms);
 
         review = (Button) findViewById(R.id.buttonReview);
         review.setVisibility(View.INVISIBLE);
@@ -341,6 +351,13 @@ public class SummaryActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.INVISIBLE);
 
         setListView();
+
+        String comms = updated;
+        if(comms.equals("Tap here to type a comment"))
+        {
+            updated = "";
+        }
+
         updateMealComment(updated);
     }
 

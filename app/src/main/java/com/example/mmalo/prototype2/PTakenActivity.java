@@ -288,6 +288,11 @@ public class PTakenActivity extends AppCompatActivity {
         EditText comments = (EditText) findViewById(R.id.textComments);
         comments.setVisibility(View.VISIBLE);
         commentData = comments.getText().toString();
+
+        if(commentData.equals("Tap here to type a comment")){
+            commentData="";
+        }
+
         String fp = filename;
 
         DiaryData entry = new DiaryData(null, commentData, null, timetaken, mealChoice, fp, fv, dr);

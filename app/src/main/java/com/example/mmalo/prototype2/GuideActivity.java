@@ -30,7 +30,7 @@ public class GuideActivity extends AppCompatActivity {
     private ExpandableListAdapter explAdapter;
     private ArrayList<ExpListGroup> explItems;
     private ExpandableListView dataList;
-    ArrayList<Integer> [] images;
+    ArrayList<Integer>[] images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +47,17 @@ public class GuideActivity extends AppCompatActivity {
         dataList = (ExpandableListView) findViewById(R.id.expListView);
         explItems = setDataGroups();
         images = setDrawables();
-        explAdapter = new ExplAdapter(GuideActivity.this, explItems,images);
+        explAdapter = new ExplAdapter(GuideActivity.this, explItems, images);
         dataList.setAdapter(explAdapter);
-
 
 
         //http://stackoverflow.com/questions/7862396/show-only-one-child-of-expandable-list-at-a-time?rq=1
         dataList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int prevOpenGroup = -1;
+
             @Override
             public void onGroupExpand(int groupPosition) {
-                if(groupPosition != prevOpenGroup)
+                if (groupPosition != prevOpenGroup)
                     dataList.collapseGroup(prevOpenGroup);
                 prevOpenGroup = groupPosition;
             }
@@ -65,41 +65,79 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<Integer> [] setDrawables(){
+    public ArrayList<Integer>[] setDrawables() {
 
-        ArrayList<Integer> [] drawables = new ArrayList[3];
+        ArrayList<Integer>[] drawables = new ArrayList[3];
 
         ArrayList<Integer> temp = new ArrayList<>();
-        for(int i =0;i<10;i++)
-        {
+        for (int i = 0; i < 10; i++) {
             int currInt;
-            if(i%2==0) {
+            if (i == 0) {
                 currInt = R.drawable.apple;
-            }else{
+            }
+            else if (i == 1)
+            {
+                currInt = R.drawable.orange;
+            }
+            else if (i == 3)
+            {
+                currInt = R.drawable.bananas;
+            }
+            else if (i == 4)
+            {
+                currInt = R.drawable.broccoli;
+            }
+            else if (i == 6)
+            {
+                currInt = R.drawable.repeat;
+            }
+            else if (i == 8)
+            {
+                currInt = R.drawable.cucumber;
+            }
+            else
+            {
                 currInt = R.drawable.orange;
             }
             temp.add(currInt);
         }
 
         ArrayList<Integer> tempTwo = new ArrayList<>();
-        for(int i =0;i<7;i++)
-        {
-            int currInt = R.drawable.glassfull;
-            tempTwo.add(currInt);
-        }
+        for (int i = 0; i < 7; i++) {
 
+            int currInt;
 
-        drawables[0] = temp;
-        drawables[1] = tempTwo;
-        drawables[2] = temp;
+            if (i == 1 || i == 4) {
+                currInt = R.drawable.juice;
+            } else if (i==2) {
+                currInt = R.drawable.teamug;
+            }
+            else if (i==3) {
+                currInt = R.drawable.coffee;
+            }
+            else if (i==5) {
+                currInt = R.drawable.dietbottle;
+            }
+            else if (i==6) {
+                currInt = R.drawable.milk;
+            }
+            else {
+                currInt = R.drawable.glassfull;
+            }
 
-        return drawables;
+        tempTwo.add(currInt);
     }
 
 
+    drawables[0]=temp;
+    drawables[1]=tempTwo;
+    drawables[2]=temp;
+
+    return drawables;
+}
 
 
-    public ArrayList<ExpListGroup> setDataGroups(){
+    public ArrayList<ExpListGroup> setDataGroups() {
         ArrayList<ExpListGroup> groups = new ArrayList<ExpListGroup>();
         ArrayList<ExpListChild> children = new ArrayList<ExpListChild>();
 
@@ -203,7 +241,6 @@ public class GuideActivity extends AppCompatActivity {
         groups.add(g2);
 
 
-
         children = new ArrayList<ExpListChild>();
         ExpListGroup g3 = new ExpListGroup();
         g3.setName("Eat less often, in small amounts");
@@ -266,20 +303,12 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_layout, menu);
         return true;
     }
-
 
 
     @Override
@@ -301,8 +330,7 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-
-    public void showGenInfo(View v){
+    public void showGenInfo(View v) {
         generalInfo.setVisibility(View.VISIBLE);
         explExamples.setVisibility(View.INVISIBLE);
 
@@ -310,7 +338,7 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-    public void showExamples(View v){
+    public void showExamples(View v) {
         generalInfo.setVisibility(View.INVISIBLE);
         explExamples.setVisibility(View.VISIBLE);
 
@@ -322,8 +350,6 @@ public class GuideActivity extends AppCompatActivity {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
     }
-
-
 
 
 }

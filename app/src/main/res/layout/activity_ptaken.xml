@@ -24,7 +24,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/image_back"/>
+        />
 
 
 
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Type Comments"
+        android:text="Tap here to type a comment"
         android:onClick="clearTextBox"
         android:ems="10"
         android:id="@+id/textComments"
@@ -46,68 +46,85 @@
         android:layout_alignParentEnd="true"
         android:visibility="invisible"/>
 
-    <Button
-        android:text="Dinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textComments"
-        android:layout_alignRight="@+id/buttonBreak"
-        android:layout_alignEnd="@+id/buttonBreak"
-        android:id="@+id/buttonDin"
-        android:layout_alignParentBottom="true"
+
+    <LinearLayout
+        android:id="@+id/LinLayLayouts"
+        android:orientation="vertical"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:tag="Dinner"
-        android:onClick="mealButton"
-        />
-
-    <Button
-        android:text="Snack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageTaken"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/buttonLunch"
-        android:layout_alignStart="@+id/buttonLunch"
-        android:id="@+id/buttonSnack"
-        android:layout_below="@+id/textComments"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:tag="Snack"
-        android:onClick="mealButton"
-        />
+        android:visibility="visible"
+        >
 
-    <Button
-        android:text="Breakfast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonBreak"
-        android:layout_below="@+id/imageTaken"
-        android:layout_toLeftOf="@+id/buttonSubmit"
-        android:layout_marginRight="56dp"
-        android:layout_marginEnd="56dp"
-        android:layout_above="@+id/buttonDin"
+
+    <LinearLayout
+        android:id="@+id/LinLayBL"
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:tag="Breakfast"
-        android:onClick="mealButton"
-        />
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        >
 
-    <Button
-        android:text="Lunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonLunch"
-        android:layout_below="@+id/imageTaken"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/buttonSnack"
-        android:layout_toEndOf="@+id/buttonDin"
-        android:layout_toRightOf="@+id/buttonDin"
-        android:tag="Lunch"
-        android:onClick="mealButton"
-        />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Breakfast"
+            android:id="@+id/buttonBreak"
+            android:tag="Breakfast"
+            android:onClick="mealButton"
 
+            />
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Lunch"
+            android:id="@+id/buttonLunch"
+            android:tag="Lunch"
+            android:onClick="mealButton"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinLayDS"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Dinner"
+            android:id="@+id/buttonDin"
+            android:tag="Dinner"
+            android:onClick="mealButton"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Snack"
+            android:id="@+id/buttonSnack"
+            android:tag="Snack"
+            android:onClick="mealButton"
+            />
+
+    </LinearLayout>
+
+    </LinearLayout>
 
 
 
@@ -116,8 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageTaken"
-        android:layout_toLeftOf="@+id/buttonLunch"
-        android:layout_toStartOf="@+id/buttonLunch"
+
         android:id="@+id/buttonMinus"
         android:visibility="invisible"
         android:onClick="decCount"
@@ -128,8 +144,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/buttonMinus"
-        android:layout_toRightOf="@+id/buttonFood"
-        android:layout_toEndOf="@+id/buttonFood"
         android:id="@+id/buttonAdd"
         android:visibility="invisible"
         android:onClick="incCount"/>
@@ -166,81 +180,91 @@
         android:visibility="invisible"/>
 
 
-    <Button
-        android:text="ADD TO DRINKS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonDR"
-        android:onClick="addToCounts"
-        android:tag="Drink"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+
+
+    <LinearLayout
+        android:id="@+id/LinLayNexts"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/textComments"
-        android:visibility="invisible"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
+
+        <Button
+            android:text="ADD TO DRINKS"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonDR"
+            android:onClick="addToCounts"
+            android:tag="Drink"
+            android:visibility="invisible"/>
 
 
         <Button
             android:text="Add To Fruit and Veg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/buttonFV"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/buttonDR"
             android:onClick="addToCounts"
             android:tag="FV"
-            android:layout_below="@+id/textComments"
-            android:layout_toLeftOf="@+id/buttonDR"
             android:visibility="invisible"
             />
 
 
         <Button
-            android:text="Submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:id="@+id/buttonSubmit"
+            android:layout_weight="1"
             android:onClick="submitForm"
+            android:visibility="invisible"
+            />
 
-            android:layout_below="@+id/textComments"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/buttonDR"
-            android:layout_toEndOf="@+id/buttonDR"
-            android:visibility="invisible"/>
-
-    <Button
-        android:text="DRINK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonDrink"
-        android:onClick="doDrink"
-        android:tag="Drink"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageTaken"
-        android:layout_toRightOf="@+id/buttonDin"
-        android:layout_toEndOf="@+id/buttonDin"
-        />
+    </LinearLayout>
 
 
-    <Button
-        android:text="FOOD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageTaken"
+
+
+
+    <LinearLayout
+        android:id="@+id/LinLayFD"
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/buttonFood"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/imageTaken"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/buttonSnack"
-        android:layout_toStartOf="@+id/buttonSnack"
-        android:onClick="doFood"
-        />
+        android:visibility="invisible">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonFood"
+            android:text="FOOD"
+            android:onClick="doFood"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonDrink"
+            android:onClick="doDrink"
+            android:tag="Drink"
+            android:text="DRINK"
+
+            />
+
+    </LinearLayout>
+
+
 
 
 </RelativeLayout>

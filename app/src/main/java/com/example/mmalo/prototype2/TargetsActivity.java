@@ -121,7 +121,6 @@ public class TargetsActivity extends AppCompatActivity {
         fvCounts.add(currFV);
 
         for(int i = 0; i< DataHolder.todaysFV; i++){
-
                 fvCounts.get(i).setImageResource(R.drawable.apple);
         }
 
