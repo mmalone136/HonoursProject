@@ -20,30 +20,57 @@
         android:onClick="backOption"
         android:visibility="invisible"/>
 
+    <LinearLayout android:id="@+id/ButtonLayoutInstr"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageViewTut"
+        android:visibility="visible"
+        >
+
+
+        <Button
+            android:text="{ ---"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonPrevInst"
+            android:onClick="prevInstruct"
+            />
+
+
+        <Button
+            android:text="--- }"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonNextInst"
+            android:onClick="nextInstruct"
+            />
+
+    </LinearLayout>
+
+
     <LinearLayout android:id="@+id/ButtonLayout"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-
         android:layout_above="@+id/buttonBackFromTut"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:visibility="invisible">
 
         <Button
             android:text="Add To\nFruit\n and Veg"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:id="@+id/buttonFV"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/buttonDR"
             android:onClick="addToFV"
             android:tag="FV"
-            android:layout_below="@+id/textComments"
-            android:layout_toLeftOf="@+id/buttonDR"
-
             />
 
 
@@ -55,9 +82,6 @@
             android:id="@+id/buttonDR"
             android:onClick="addToDrinks"
             android:tag="Drink"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textComments"
             />
 
 
@@ -67,14 +91,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/buttonSubmit2"
             android:onClick="goToNext"
-            android:layout_weight="1"
-            android:layout_below="@+id/textComments"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/buttonDR"
-            android:layout_toEndOf="@+id/buttonDR"
-/>
+            android:layout_weight="1" />
 
 
     </LinearLayout>
@@ -133,9 +150,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/buttonReplayTut"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:onClick="replay"
             android:visibility="invisible"/>
 
@@ -145,9 +159,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonBack"
             android:onClick="backOption"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+             />
     </LinearLayout>
 
     <Button
@@ -163,6 +175,19 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/imageViewTut" />
+
+    <Button
+        android:text="   Begin Tutorial       "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/beginTut"
+        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_below="@+id/imageViewTut"
+        android:onClick="beginTutorial"
+        android:visibility="invisible"
+        />
 
 
 </RelativeLayout>

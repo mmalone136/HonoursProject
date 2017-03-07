@@ -40,6 +40,8 @@ public class TutorialActivity extends AppCompatActivity {
     TextView finalSum;
     Button nextTutOption;
     Button submitOption;
+    int[] instructions;
+    int currInstr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class TutorialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial);
         createList();
         randGen = new Random();
-        userFV=false;
-        userDR=false;
+        userFV = false;
+        userDR = false;
         buttonFV = (Button) findViewById(R.id.buttonFV);
         buttonDR = (Button) findViewById(R.id.buttonDR);
         submitOption = (Button) findViewById(R.id.buttonSubmit2);
@@ -58,7 +60,17 @@ public class TutorialActivity extends AppCompatActivity {
         setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
         correctDRCount = 0;
+        currInstr = 0;
         picResult = (ImageView) findViewById(R.id.imageViewResult);
+
+        int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial3,R.drawable.tutorial4};
+        instructions = temp;
+
+        picResult.setImageResource(instructions[currInstr]);
+        picResult.setVisibility(View.VISIBLE);
+
+        pictureView.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -125,48 +137,48 @@ public class TutorialActivity extends AppCompatActivity {
         //toggle drinks on/off
         userDR = !userDR;
         if (userDR) {
-            changeButtonColours(buttonDR,"#50BF0B");
-        }else{
-            changeButtonColours(buttonDR,"#DB2F09");
+            changeButtonColours(buttonDR, "#50BF0B");
+        } else {
+            changeButtonColours(buttonDR, "#DB2F09");
         }
 
     }
+
     public void addToFV(View v) {
         //toggle FV on/off
-        userFV=!userFV;
+        userFV = !userFV;
         if (userFV) {
-            changeButtonColours(buttonFV,"#50BF0B");
-        }else{
-            changeButtonColours(buttonFV,"#DB2F09");
+            changeButtonColours(buttonFV, "#50BF0B");
+        } else {
+            changeButtonColours(buttonFV, "#DB2F09");
         }
     }
 
-    public void changeButtonColours(Button curr,String colour){
+    public void changeButtonColours(Button curr, String colour) {
         curr.setBackgroundColor(Color.parseColor(colour));
     }
 
     public void goToNext(View v) {
-
         //compare user choices to actual value and update score
-
-
         boolean fvResult = (userFV == currHasFV);
         boolean drResult = (userDR == currHasDR);
 
-        if(fvResult){   correctFVCount++;  }
-        if(drResult){   correctDRCount++;  }
+        if (fvResult) {
+            correctFVCount++;
+        }
+        if (drResult) {
+            correctDRCount++;
+        }
 
+        changeButtonColours(buttonFV, "#b0b4b7");
+        changeButtonColours(buttonDR, "#b0b4b7");
+        userFV = false;
+        userDR = false;
 
-        changeButtonColours(buttonFV,"#b0b4b7");
-        changeButtonColours(buttonDR,"#b0b4b7");
-        userFV=false;
-        userDR=false;
+        String review = "";
 
-        String review ="";
-
-        if(fvResult && drResult){
+        if (fvResult && drResult) {
             review = "Correct for both";
-
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.bothcorrect);
@@ -179,10 +191,8 @@ public class TutorialActivity extends AppCompatActivity {
             buttonDR.setVisibility(View.INVISIBLE);
             submitOption.setVisibility(View.INVISIBLE);
 
-        }
-        else if((fvResult) && (!drResult)){
+        } else if ((fvResult) && (!drResult)) {
             review = "Correct For fruit & veg, incorrect for drinks";
-
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.almostfood);
@@ -195,8 +205,7 @@ public class TutorialActivity extends AppCompatActivity {
             buttonDR.setVisibility(View.INVISIBLE);
             submitOption.setVisibility(View.INVISIBLE);
 
-        }
-        else if((!fvResult) && (drResult)){
+        } else if ((!fvResult) && (drResult)) {
             review = "Correct for drinks, incorrect for fruit & veg";
             //things
 
@@ -209,15 +218,13 @@ public class TutorialActivity extends AppCompatActivity {
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
             submitOption.setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             //if(!(fvResult && drResult)){
             review = "Incorrect for both";
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.bothincorrect);
             picResult.setVisibility(View.VISIBLE);
-
 
             //finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
             //finalSum.setVisibility(View.VISIBLE);
@@ -232,22 +239,20 @@ public class TutorialActivity extends AppCompatActivity {
 
         if (tutorialDataList.size() > 0) {
             setCurrentPhoto(getNextPhoto());
-        }else
-        {
+        } else {
             LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
             tutButtons.setVisibility(View.INVISIBLE);
 
             Button replay = (Button) findViewById(R.id.buttonReplayTut);
             replay.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.INVISIBLE);
-            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount +"\n\nDrinks Correct: " + correctDRCount);
+            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
             finalSum.setVisibility(View.VISIBLE);
         }
     }
 
-    public void replay(View v){
+    public void replay(View v) {
         this.recreate();
-
     }
 
     public void backOption(View v) {
@@ -255,7 +260,7 @@ public class TutorialActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
-    public void nextOption(View v){
+    public void nextOption(View v) {
         finalSum.setVisibility(View.INVISIBLE);
         nextTutOption.setVisibility(View.INVISIBLE);
         picResult.setVisibility(View.INVISIBLE);
@@ -263,9 +268,58 @@ public class TutorialActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.VISIBLE);
         submitOption.setVisibility(View.VISIBLE);
         pictureView.setVisibility(View.VISIBLE);
-
-
-
     }
+
+
+    public void nextInstruct(View v) {
+        currInstr++;
+        if(currInstr==instructions.length) {
+            //picResult.setImageResource(instructions[currInstr]);
+            picResult.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            picResult.setImageResource(instructions[currInstr]);
+            picResult.setVisibility(View.VISIBLE);
+
+            if(currInstr==(instructions.length-1))
+            {
+                Button begin = (Button) findViewById(R.id.beginTut);
+                begin.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void prevInstruct(View v) {
+        if (currInstr > 0) {
+            //This may not be correct
+            if(currInstr==(instructions.length-1))
+            {
+                Button begin = (Button) findViewById(R.id.beginTut);
+                begin.setVisibility(View.INVISIBLE);
+            }
+            currInstr--;
+            picResult.setImageResource(instructions[currInstr]);
+            picResult.setVisibility(View.VISIBLE);
+
+
+        }
+    }
+
+    public void beginTutorial(View v){
+        picResult.setVisibility(View.INVISIBLE);
+        Button left = (Button) findViewById(R.id.buttonPrevInst);
+        Button right = (Button) findViewById(R.id.buttonNextInst);
+        left.setVisibility(View.INVISIBLE);
+        right.setVisibility(View.INVISIBLE);
+        Button begin = (Button) findViewById(R.id.beginTut);
+        begin.setVisibility(View.INVISIBLE);
+
+        LinearLayout ll = (LinearLayout) findViewById(R.id.ButtonLayout);
+        ll.setVisibility(View.VISIBLE);
+
+        pictureView.setVisibility(View.VISIBLE);
+    }
+
 
 }
