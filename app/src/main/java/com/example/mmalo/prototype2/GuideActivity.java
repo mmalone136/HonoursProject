@@ -1,6 +1,7 @@
 package com.example.mmalo.prototype2;
 
 import android.content.Intent;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ExpandedMenuView;
@@ -79,6 +80,10 @@ public class GuideActivity extends AppCompatActivity {
             {
                 currInt = R.drawable.orange;
             }
+            else if (i == 2)
+            {
+                currInt = R.drawable.tomato;
+            }
             else if (i == 3)
             {
                 currInt = R.drawable.bananas;
@@ -91,9 +96,17 @@ public class GuideActivity extends AppCompatActivity {
             {
                 currInt = R.drawable.repeat;
             }
+            else if (i == 7)
+            {
+                currInt = R.drawable.mushroom;
+            }
             else if (i == 8)
             {
                 currInt = R.drawable.cucumber;
+            }
+            else if (i == 9)
+            {
+                currInt = R.drawable.carrot;
             }
             else
             {

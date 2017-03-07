@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/countInfo"
+        android:visibility="invisible"
+
+        />
+
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/redcross1"
+        android:id="@+id/crossButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:onClick="hideInfo"
+        android:visibility="invisible"
+        />
+
+
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:id="@+id/linLayIcons"
+    android:visibility="visible"
+    >
 
     <LinearLayout
         android:id="@+id/LinLay1"
@@ -26,19 +58,26 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:text="Fruit\n+ Veg\nCount" />
+                android:text="Fruit\n+ Veg\nCount"
+                android:tag="FVCount"
+                android:onClick="showInfo"
+                />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:text="Meals" />
+                android:text="Meals"
+                android:tag="Meals"
+                android:onClick="showInfo"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:text="Drinks" />
+                android:text="Drinks"
+                android:tag="Drink"
+                android:onClick="showInfo"/>
 
 
         </LinearLayout>
@@ -61,11 +100,12 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/xmark"
+                    android:src="@drawable/greycircle"
                     android:id="@+id/imgFV1"
 
                     />
@@ -73,31 +113,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/xmark"
+                    android:src="@drawable/greycircle"
                     android:id="@+id/imgFV2"
                     />
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/xmark"
+                    android:src="@drawable/greycircle"
                     android:id="@+id/imgFV3"
                     />
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/xmark"
+                    android:src="@drawable/greycircle"
                     android:id="@+id/imgFV4"
                     />
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/xmark"
+                    android:src="@drawable/greycircle"
                     android:id="@+id/imgFV5"
 
                     />
+
+
 
 
             </LinearLayout>
@@ -146,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/emptyglass2"
+                    android:src="@drawable/glassempty1"
                     android:id="@+id/imgDrinkCount"/>
 
                 <TextView
@@ -182,3 +224,5 @@
 
 
 </LinearLayout>
+
+</RelativeLayout>

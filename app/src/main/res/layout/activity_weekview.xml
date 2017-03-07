@@ -11,7 +11,7 @@
         android:layout_weight="7.7"
         android:id="@+id/listDates"
         android:divider="#c2b35b"
-        android:dividerHeight="2dp"
+        android:dividerHeight="5dp"
         android:drawSelectorOnTop="false"
 
         />

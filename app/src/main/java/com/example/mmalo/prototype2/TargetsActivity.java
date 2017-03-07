@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,10 @@ import java.util.List;
 
 public class TargetsActivity extends AppCompatActivity {
     public DBContainer dbCont;
+    ImageView infoView;
+    LinearLayout linLayIcons;
+    ImageButton closeButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,10 @@ public class TargetsActivity extends AppCompatActivity {
         dbCont = new DBContainer();
         readCountData();
         updateTargetImages();
+
+        infoView = (ImageView) findViewById(R.id.countInfo);
+        linLayIcons = (LinearLayout) findViewById(R.id.linLayIcons);
+        closeButton = (ImageButton) findViewById(R.id.crossButton);
     }
 
     public void readCountData() {
@@ -40,10 +50,10 @@ public class TargetsActivity extends AppCompatActivity {
             DataHolder.todaysFV = countData[0];
             DataHolder.todaysDrinks = countData[1];
 
-            if( DataHolder.todaysFV <0){
+            if (DataHolder.todaysFV < 0) {
                 DataHolder.todaysFV = 0;
             }
-            if( DataHolder.todaysDrinks<0){
+            if (DataHolder.todaysDrinks < 0) {
                 DataHolder.todaysDrinks = 0;
             }
 
@@ -60,7 +70,7 @@ public class TargetsActivity extends AppCompatActivity {
             e.printStackTrace();
             e.printStackTrace();
 
-            DataHolder.todaysFV =0;
+            DataHolder.todaysFV = 0;
             DataHolder.todaysDrinks = 0;
 
         }
@@ -80,32 +90,30 @@ public class TargetsActivity extends AppCompatActivity {
 
     }
 
-    public void updateTargetImages(){
+    public void updateTargetImages() {
 
         ImageView bfast = (ImageView) findViewById(R.id.imgBreak);
         ImageView lunch = (ImageView) findViewById(R.id.imgLunch);
         ImageView dinner = (ImageView) findViewById(R.id.imgDinner);
 
 
-        if(DataHolder.todayBreak){
+        if (DataHolder.todayBreak) {
             bfast.setImageResource(R.drawable.breakfast);
-        }else{
+        } else {
             bfast.setImageResource(R.drawable.breakfast_grey);
         }
 
-        if(DataHolder.todayLunch){
+        if (DataHolder.todayLunch) {
             lunch.setImageResource(R.drawable.lunch);
-        }else{
+        } else {
             lunch.setImageResource(R.drawable.lunchgrey);
         }
 
-        if(DataHolder.todayDinner){
+        if (DataHolder.todayDinner) {
             dinner.setImageResource(R.drawable.dinn);
-        }else{
+        } else {
             dinner.setImageResource(R.drawable.dinngrey);
         }
-
-
 
 
         List<ImageView> fvCounts = new ArrayList<>();
@@ -120,10 +128,20 @@ public class TargetsActivity extends AppCompatActivity {
         currFV = (ImageView) findViewById(R.id.imgFV5);
         fvCounts.add(currFV);
 
-        for(int i = 0; i< DataHolder.todaysFV; i++){
+        for (int i = 0; i < DataHolder.todaysFV; i++) {
+            if (i == 0) {
                 fvCounts.get(i).setImageResource(R.drawable.apple);
-        }
+            }else if(i==1){
+                fvCounts.get(i).setImageResource(R.drawable.orange);
+            }else if(i==2){
+                fvCounts.get(i).setImageResource(R.drawable.broccoli);
+            }else if(i==3){
+                fvCounts.get(i).setImageResource(R.drawable.mushroom);
+            }else if(i==4){
+                fvCounts.get(i).setImageResource(R.drawable.carrot);
+            }
 
+        }
 
 
         ImageView drinkCount = (ImageView) findViewById(R.id.imgDrinkCount);
@@ -158,27 +176,50 @@ public class TargetsActivity extends AppCompatActivity {
                 drinkCount.setImageResource(R.drawable.glassfull);
                 break;
             default:
-                if(drinks>=8) {
+                if (drinks >= 8) {
                     drinkCount.setImageResource(R.drawable.glassfull);
-                }else {
+                } else {
                     drinkCount.setImageResource(R.drawable.emptyglass2);
                 }
-                    break;
+                break;
 
         }
         TextView tvDrinks = (TextView) findViewById(R.id.textViewDrinkCount);
         tvDrinks.setText("\n" + drinks + "\n_____\n\n8");
 
 
-
-
     }
-
-
 
     public void backOption(View v) {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
+    }
+
+    public void showInfo(View v) {
+        //FVCount
+        //Meals
+        //Drink
+        String tag = v.getTag().toString();
+
+        if (tag.equals("FVCount")) {
+            infoView.setImageResource(R.drawable.fvinfo);
+        } else if (tag.equals("Meals")) {
+            infoView.setImageResource(R.drawable.mealinfo);
+        } else if (tag.equals("Drink")) {
+            infoView.setImageResource(R.drawable.drinkinfo);
+        }
+
+        infoView.setVisibility(View.VISIBLE);
+        linLayIcons.setVisibility(View.INVISIBLE);
+        closeButton.setVisibility(View.VISIBLE);
+    }
+
+
+    public void hideInfo(View v) {
+        infoView.setVisibility(View.INVISIBLE);
+        linLayIcons.setVisibility(View.VISIBLE);
+        closeButton.setVisibility(View.INVISIBLE);
+
     }
 
 }

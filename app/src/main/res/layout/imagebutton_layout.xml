@@ -5,8 +5,8 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/explvChildBack"
+        android:layout_height="52dp"
+        android:background="@color/common_action_bar_splitter"
         android:orientation="horizontal"
         >
 
@@ -39,4 +39,7 @@
             android:textColor="@color/black" />
 
     </LinearLayout>
+
+
+
 </TableRow>

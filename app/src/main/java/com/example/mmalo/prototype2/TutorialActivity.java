@@ -27,6 +27,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     ArrayList<TutorialData> tutorialDataList;
     ImageView pictureView;
+    ImageView picResult;
     boolean currHasFV;
     boolean currHasDR;
     boolean userFV;
@@ -57,6 +58,7 @@ public class TutorialActivity extends AppCompatActivity {
         setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
         correctDRCount = 0;
+        picResult = (ImageView) findViewById(R.id.imageViewResult);
     }
 
 
@@ -165,8 +167,13 @@ public class TutorialActivity extends AppCompatActivity {
         if(fvResult && drResult){
             review = "Correct for both";
 
-            finalSum.setText("Correct!\n\nWell Done, you assigned both categories correctly!");
-            finalSum.setVisibility(View.VISIBLE);
+
+            pictureView.setVisibility(View.INVISIBLE);
+            picResult.setImageResource(R.drawable.bothcorrect);
+            picResult.setVisibility(View.VISIBLE);
+
+            // finalSum.setText("Correct!\n\nWell Done, you assigned both categories correctly!");
+            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -177,8 +184,12 @@ public class TutorialActivity extends AppCompatActivity {
             review = "Correct For fruit & veg, incorrect for drinks";
 
 
-            finalSum.setText("Almost There!\n\nYou assigned to the Fruit and Vegetable category correctly but the drinks were wrong!");
-            finalSum.setVisibility(View.VISIBLE);
+            pictureView.setVisibility(View.INVISIBLE);
+            picResult.setImageResource(R.drawable.almostfood);
+            picResult.setVisibility(View.VISIBLE);
+
+            //finalSum.setText("Almost There!\n\nYou assigned to the Fruit and Vegetable category correctly but the drinks were wrong!");
+            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -187,10 +198,13 @@ public class TutorialActivity extends AppCompatActivity {
         }
         else if((!fvResult) && (drResult)){
             review = "Correct for drinks, incorrect for fruit & veg";
+            //things
 
-
-            finalSum.setText("Almost There!\n\nYou assigned to the Drinks category correctly but the Fruit and Vegetable category was wrong!");
-            finalSum.setVisibility(View.VISIBLE);
+            pictureView.setVisibility(View.INVISIBLE);
+            picResult.setImageResource(R.drawable.almostdrink);
+            picResult.setVisibility(View.VISIBLE);
+            //finalSum.setText("Almost There!\n\nYou assigned to the Drinks category correctly but the Fruit and Vegetable category was wrong!");
+            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -200,8 +214,13 @@ public class TutorialActivity extends AppCompatActivity {
             //if(!(fvResult && drResult)){
             review = "Incorrect for both";
 
-            finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
-            finalSum.setVisibility(View.VISIBLE);
+            pictureView.setVisibility(View.INVISIBLE);
+            picResult.setImageResource(R.drawable.bothincorrect);
+            picResult.setVisibility(View.VISIBLE);
+
+
+            //finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
+            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -239,10 +258,13 @@ public class TutorialActivity extends AppCompatActivity {
     public void nextOption(View v){
         finalSum.setVisibility(View.INVISIBLE);
         nextTutOption.setVisibility(View.INVISIBLE);
-
+        picResult.setVisibility(View.INVISIBLE);
         buttonFV.setVisibility(View.VISIBLE);
         buttonDR.setVisibility(View.VISIBLE);
         submitOption.setVisibility(View.VISIBLE);
+        pictureView.setVisibility(View.VISIBLE);
+
+
 
     }
 

@@ -95,10 +95,8 @@
     <LinearLayout
         android:id="@+id/LinLayDS"
         android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_weight="1"
         >
 
@@ -128,58 +126,62 @@
 
 
 
-    <Button
-        android:text="-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageTaken"
 
-        android:id="@+id/buttonMinus"
-        android:visibility="invisible"
-        android:onClick="decCount"
-        />
-
-    <Button
-        android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonMinus"
-        android:id="@+id/buttonAdd"
-        android:visibility="invisible"
-        android:onClick="incCount"/>
 
     <TextView
         android:text="0"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textComments"
         android:id="@+id/textViewCount"
-        android:layout_alignRight="@+id/buttonAdd"
-        android:layout_alignEnd="@+id/buttonAdd"
-        android:layout_alignLeft="@+id/buttonMinus"
-        android:layout_alignStart="@+id/buttonMinus"
         android:layout_alignParentTop="true"
         android:textSize="200dp"
         android:textAlignment="center"
         android:visibility="invisible"
         android:background="@drawable/background"
         android:textColor="#FFFFFF"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <LinearLayout
+        android:id="@+id/LinLayInc"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@+id/imageTaken"
+        >
+
+    <Button
+        android:text="-"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMinus"
+        android:visibility="invisible"
+        android:onClick="decCount"
+        android:layout_weight="1"
         />
 
     <Button
-        android:text="Save"
-        android:layout_width="wrap_content"
+        android:text="+"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonMinus"
+        android:id="@+id/buttonAdd"
+        android:visibility="invisible"
+        android:onClick="incCount"
+        android:layout_weight="1"
+        />
+</LinearLayout>
+
+
+    <Button
+        android:text="Save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinLayInc"
         android:id="@+id/buttonCountConfirm"
         android:onClick="saveCount"
-        android:layout_alignLeft="@+id/buttonMinus"
-        android:layout_alignStart="@+id/buttonMinus"
-        android:layout_alignRight="@+id/buttonAdd"
-        android:layout_alignEnd="@+id/buttonAdd"
         android:visibility="invisible"/>
-
-
 
 
     <LinearLayout
@@ -193,17 +195,6 @@
         android:visibility="visible">
 
         <Button
-            android:text="ADD TO DRINKS"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonDR"
-            android:onClick="addToCounts"
-            android:tag="Drink"
-            android:visibility="invisible"/>
-
-
-        <Button
             android:text="Add To Fruit and Veg"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -213,6 +204,16 @@
             android:tag="FV"
             android:visibility="invisible"
             />
+
+        <Button
+            android:text="ADD TO DRINKS"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonDR"
+            android:onClick="addToCounts"
+            android:tag="Drink"
+            android:visibility="invisible"/>
 
 
         <Button
@@ -250,6 +251,7 @@
             android:onClick="doFood"
 
             />
+
 
         <Button
             android:layout_width="0dp"

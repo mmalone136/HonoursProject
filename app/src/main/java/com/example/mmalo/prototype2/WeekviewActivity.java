@@ -3,6 +3,7 @@ package com.example.mmalo.prototype2;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,17 +41,20 @@ public class WeekviewActivity extends AppCompatActivity {
     int step;
     int stepLimit;
     int todayPosition;
+    ListView dateList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekview);
 
+        dateList = (ListView) findViewById(R.id.listDates);
         Calendar calendar = Calendar.getInstance();
         todayPosition = calendar.get(Calendar.DAY_OF_WEEK);
         step = 0;
         updateView(step);
         stepLimit = calculateEarliest();
+
     }
 
 
@@ -271,17 +275,13 @@ public class WeekviewActivity extends AppCompatActivity {
 
         //THIS ONE?
         //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
-
-        ListView dateList = (ListView) findViewById(R.id.listDates);
+        //dateList = (ListView) findViewById(R.id.listDates);
         //ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weekData);
         //ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.imagebutton_layout,R.id.tvChild,weekData);
 
         //dateList.setAdapter(adapter);
 
-
         dateList.setAdapter(new CustomAdapter(this, moreWeekData));
-
-
 
         //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 
@@ -291,7 +291,6 @@ public class WeekviewActivity extends AppCompatActivity {
                 //String curr = uniqueDates.get(position);
                 String curr = weekDates[position];
                 String entryCheck = moreWeekData.get(position)[2];
-
                 //No Entries
                 if (!entryCheck.equals("NO ENTRIES")) {
                     DateviewActivity.date = curr;
