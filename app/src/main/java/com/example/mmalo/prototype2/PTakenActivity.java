@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.io.ByteArrayOutputStream;
@@ -68,6 +69,7 @@ public class PTakenActivity extends AppCompatActivity {
         dbCont = new DBContainer();
         Toast t = Toast.makeText(this, "PTAKEN_ACT", Toast.LENGTH_LONG);
         //t.show();
+        DataHolder.readData(this);
     }
 
     public ArrayList<DiaryData> readAllEntries() {

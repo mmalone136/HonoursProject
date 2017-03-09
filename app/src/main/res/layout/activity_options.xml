@@ -42,22 +42,26 @@
         />
 
     <Button
-        android:text="View Guide"
+        android:text="    Healthy Messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/buttonGuide"
         android:layout_weight="0.2"
         android:onClick = "viewGuide"
+        android:drawableLeft="@drawable/teach"
+        android:gravity="left|center_vertical"
         />
 
 
     <Button
-        android:text="Tutorial"
+        android:text="                Tutorial"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/buttonTut"
         android:layout_weight="0.2"
-        android:onClick="loadTutorial"/>
+        android:onClick="loadTutorial"
+        android:drawableLeft="@drawable/teach"
+        android:gravity="left|center_vertical"/>
 
 
 

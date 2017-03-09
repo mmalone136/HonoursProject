@@ -13,10 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.ExpListClasses.CustomAdapter;
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
@@ -43,6 +46,7 @@ public class DateviewActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dateview);
+        DataHolder.readData(this);
         dbCont = new DBContainer();
         countData = new ContentValues();
         init = dbCont.readEntriesForDate(this,date);
@@ -55,8 +59,16 @@ public class DateviewActivity extends AppCompatActivity {
         sorted = splitLists();
         flag = true;
         initVals(flag);
+        setHeading();
     }
 
+    public void setHeading(){
+
+        SimpleDateFormat headForm = new SimpleDateFormat("EEEE\t\tdd/MM/yyyy");
+        String heading = headForm.format(entries.get(0).getTimestamp());
+        TextView head = (TextView) findViewById(R.id.tvHeader);
+        head.setText(heading);
+    }
 
     public void initVals(Boolean sortFlag){
 
@@ -66,22 +78,20 @@ public class DateviewActivity extends AppCompatActivity {
             entries = sorted;
         }
         setButtonText(sortFlag);
-        SimpleDateFormat sdForm = new SimpleDateFormat("HH:mm:ss\t -\t dd/MM/yyyy");
+        SimpleDateFormat sdForm = new SimpleDateFormat("HH:mm"); //:ss\t -\t dd/MM/yyyy");
 
-        ArrayList<String> listData = new ArrayList<String>();
+        ArrayList<String[]> listData = new ArrayList<>();
         for (DiaryData d : entries) {
-            //TODO: Reformat this for output
             Timestamp dTimestamp = d.getTimestamp();
+
 
             String dateString = sdForm.format(dTimestamp);
             String meal = d.getMeal();
-            String curr;
-            if(meal.equals("Breakfast")) {
-                curr = meal + " \t-\t " + dateString;
-            }else{
-                curr = meal + " \t\t\t-\t " + dateString;
-            }
-                listData.add(curr);
+            String [] curr = new String[2];
+
+            curr[0] = meal;
+            curr[1] = dateString;
+            listData.add(curr);
         }
         System.out.println("");
 
@@ -102,15 +112,15 @@ public class DateviewActivity extends AppCompatActivity {
 
     }
 
-    public void setListAdapter(ArrayList<String> listData){
+    public void setListAdapter(ArrayList<String[]> listData){
         try {
 
             ListView entryList = (ListView) findViewById(R.id.listEntries);
 
-            ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+            //ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
 
-            entryList.setAdapter(adapter);
-
+            //entryList.setAdapter(adapter);
+            entryList.setAdapter(new CustomAdapter(this, listData, 2));
 
             entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

@@ -35,11 +35,13 @@ public class TargetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_targets);
         dbCont = new DBContainer();
         readCountData();
+        DataHolder.readData(this);
         updateTargetImages();
 
         infoView = (ImageView) findViewById(R.id.countInfo);
         linLayIcons = (LinearLayout) findViewById(R.id.linLayIcons);
         closeButton = (ImageButton) findViewById(R.id.crossButton);
+
     }
 
     public void readCountData() {

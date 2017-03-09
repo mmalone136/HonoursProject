@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.TutorialData;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class TutorialActivity extends AppCompatActivity {
         buttonFV = (Button) findViewById(R.id.buttonFV);
         buttonDR = (Button) findViewById(R.id.buttonDR);
         submitOption = (Button) findViewById(R.id.buttonSubmit2);
-
+        DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
         finalSum = (TextView) findViewById(R.id.txtViewFinalSummary);
         setCurrentPhoto(getNextPhoto());

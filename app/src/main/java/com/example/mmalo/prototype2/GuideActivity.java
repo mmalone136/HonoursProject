@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.mmalo.prototype2.ExpListClasses.ExpListChild;
 import com.example.mmalo.prototype2.ExpListClasses.ExpListGroup;
 import com.example.mmalo.prototype2.ExpListClasses.ExplAdapter;
+import com.example.mmalo.prototype2.Models.DataHolder;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class GuideActivity extends AppCompatActivity {
 
         generalInfo = (TextView) findViewById(R.id.tvGenInfo);
         generalInfo.setMovementMethod(new ScrollingMovementMethod());
-
+        DataHolder.readData(this);
 
         explExamples = (ExpandableListView) findViewById(R.id.expListView);
         explExamples.setVisibility(View.INVISIBLE);

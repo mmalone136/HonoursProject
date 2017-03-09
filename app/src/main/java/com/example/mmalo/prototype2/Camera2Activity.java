@@ -107,7 +107,7 @@ public class Camera2Activity extends AppCompatActivity {
             public void onOrientationChanged(int orientation) {
                 if (vals.contains(orientation)) {
                     Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
-                    t.show();
+                    //t.show();
                 }
             }
         };

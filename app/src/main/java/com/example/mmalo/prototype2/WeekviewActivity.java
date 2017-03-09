@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.ExpListClasses.CustomAdapter;
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
 import java.sql.Date;
@@ -47,7 +48,7 @@ public class WeekviewActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekview);
-
+        DataHolder.readData(this);
         dateList = (ListView) findViewById(R.id.listDates);
         Calendar calendar = Calendar.getInstance();
         todayPosition = calendar.get(Calendar.DAY_OF_WEEK);
@@ -281,7 +282,7 @@ public class WeekviewActivity extends AppCompatActivity {
 
         //dateList.setAdapter(adapter);
 
-        dateList.setAdapter(new CustomAdapter(this, moreWeekData));
+        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1));
 
         //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 
@@ -292,10 +293,10 @@ public class WeekviewActivity extends AppCompatActivity {
                 String curr = weekDates[position];
                 String entryCheck = moreWeekData.get(position)[2];
                 //No Entries
+
                 if (!entryCheck.equals("NO ENTRIES")) {
                     DateviewActivity.date = curr;
                     Intent i = new Intent(getBaseContext(), DateviewActivity.class);
-                    //i.putExtra("diary_data", curr);
                     startActivity(i);
                 }
             }
@@ -305,7 +306,7 @@ public class WeekviewActivity extends AppCompatActivity {
     public void updateWeek(View v) {
         String tag = v.getTag().toString();
 
-        if (tag.equals("+") && step < 1) {
+        if (tag.equals("+") && step < 0) {
             step++;
             updateView(step);
         } else if (tag.equals("-")) {

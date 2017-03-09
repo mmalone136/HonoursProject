@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
+import com.example.mmalo.prototype2.ExpListClasses.CustomAdapter;
 import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.Models.DiaryData;
 
@@ -65,6 +66,7 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.summary_activity);
         initValues();
         System.gc();
+        DataHolder.readData(this);
     }
 
     public void initValues() {
@@ -115,24 +117,40 @@ public class SummaryActivity extends AppCompatActivity {
 
     public void setListView() {
         ArrayList<String> listData = new ArrayList<String>();
+        String[] moreListData = new String[4];
 
-        String counts = "Fruit & Veg: " + theentry.getFvCount() + " | Drinks: " + theentry.getDrCount();
+
+        String count1 = "Fruit & Veg: " + theentry.getFvCount();
+        String count2 = "Drinks: " + theentry.getDrCount();
 
         String comms = theentry.getComment();
-        if(comms.equals(""))
-        {
+        if (comms.equals("")) {
             comms = "No Comment";
         }
 
         listData.add(theentry.getMeal());
-        listData.add(String.valueOf(theentry.getTimestamp()));
+        //listData.add(String.valueOf(theentry.getTimestamp()));
         listData.add(comms);
-        listData.add(counts);
+        listData.add(count1);
+        listData.add(count2);
+
+        moreListData[0] = theentry.getMeal();
+        moreListData[1] = comms;
+        moreListData[2] = count1;
+        moreListData[3] = count2;
+
 
         dataList = (ListView) findViewById(R.id.listViewOfDatas);
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+        //ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
 
-        dataList.setAdapter(adapter);
+        try {
+            dataList.setAdapter(new CustomAdapter(this, moreListData, 3));
+        } catch (Exception exp) {
+            exp.printStackTrace();
+            System.out.print(exp.getCause());
+            System.out.print(exp.getCause());
+
+        }
     }
 
     public void reviewData(View v) {
@@ -145,14 +163,11 @@ public class SummaryActivity extends AppCompatActivity {
         comments.setVisibility(View.VISIBLE);
 
         String comms = theentry.getComment();
-        if(comms.equals(""))
-        {
+        if (comms.equals("")) {
             comms = "Tap here to type a comment";
         }
 
         comments.setText(comms);
-
-
 
         //review = (Button) findViewById(R.id.buttonReview);
         reviewLay.setVisibility(View.INVISIBLE);
@@ -160,17 +175,8 @@ public class SummaryActivity extends AppCompatActivity {
         //save = (Button) findViewById(R.id.buttonSave);
         saveLay.setVisibility(View.VISIBLE);
 
-
-
         //LinearLayout edits = (LinearLayout) findViewById(R.id.LinLayEdits);
         edits.setVisibility(View.VISIBLE);
-
-        //editMeal = (Button) findViewById(R.id.buttonEditMeal);
-        //editMeal.setVisibility(View.VISIBLE);
-       // buttonFV = (Button) findViewById(R.id.buttonFVFV);
-       // buttonFV.setVisibility(View.VISIBLE);
-       // buttonDR = (Button) findViewById(R.id.buttonDRDR);
-       // buttonDR.setVisibility(View.VISIBLE);
 
     }
 
@@ -248,86 +254,29 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     public void showMealTypes(View v) {
-
-    System.out.print("");
-
-    //        Button breakfast = (Button) findViewById(R.id.buttonBreak2);
-    //        breakfast.setVisibility(View.VISIBLE);
-    //
-    //        Button lunch = (Button) findViewById(R.id.buttonLunch2);
-    //        lunch.setVisibility(View.VISIBLE);
-    //
-    //        Button dinner = (Button) findViewById(R.id.buttonDin2);
-    //        dinner.setVisibility(View.VISIBLE);
-    //
-    //        Button snack = (Button) findViewById(R.id.buttonSnack2);
-    //        snack.setVisibility(View.VISIBLE);
-
-    ForDLay.setVisibility(View.INVISIBLE);
-   // blLay.setVisibility(View.VISIBLE);
-    //dsLay.setVisibility(View.VISIBLE);
-    meals.setVisibility(View.VISIBLE);
-
-
+        ForDLay.setVisibility(View.INVISIBLE);
+        meals.setVisibility(View.VISIBLE);
     }
 
     public void updateMealTag(View v) {
         String tag = v.getTag().toString();
-
         newMeal = tag;
-
-        //Button food = (Button) findViewById(R.id.buttonChangeFood);
-        //Button drink = (Button) findViewById(R.id.buttonChangeDrink);
-            //hide food, hide drink
-            //hide breakfast,lunch,dinner,snack
-        //food.setVisibility(View.INVISIBLE);
-       // drink.setVisibility(View.INVISIBLE);
-
-        //ForDLay.setVisibility(View.INVISIBLE);
-
-        //Button breakfast = (Button) findViewById(R.id.buttonBreak2);
-        //breakfast.setVisibility(View.INVISIBLE);
-        //Button lunch = (Button) findViewById(R.id.buttonLunch2);
-        //lunch.setVisibility(View.INVISIBLE);
-        //Button dinner = (Button) findViewById(R.id.buttonDin2);
-        //dinner.setVisibility(View.INVISIBLE);
-        //Button snack = (Button) findViewById(R.id.buttonSnack2);
-        //snack.setVisibility(View.INVISIBLE);
-
-       // blLay.setVisibility(View.INVISIBLE);
-       // dsLay.setVisibility(View.INVISIBLE);
         meals.setVisibility(View.INVISIBLE);
-
         edits.setVisibility(View.VISIBLE);
-
         saveLay.setVisibility(View.VISIBLE);
         comments.setVisibility(View.VISIBLE);
     }
 
     public void editMealTag(View v) {
-        //Button food = (Button) findViewById(R.id.buttonChangeFood);
-        //Button drink = (Button) findViewById(R.id.buttonChangeDrink);
-        //hide food, hide drink
-        //hide breakfast,lunch,dinner,snack
-        //food.setVisibility(View.VISIBLE);
-        //drink.setVisibility(View.VISIBLE);
-
         //LinLayForD
         ForDLay.setVisibility(View.VISIBLE);
 
         edits.setVisibility(View.INVISIBLE);
-        //editMeal.setVisibility(View.INVISIBLE);
-        //buttonFV.setVisibility(View.INVISIBLE);
-        //buttonDR.setVisibility(View.INVISIBLE);
-
-
-        //saveLay.setVisibility(View.INVISIBLE);
         comments.setVisibility(View.INVISIBLE);
-
     }
 
 
-    public void updateMealComment(String comment){
+    public void updateMealComment(String comment) {
         ContentValues cv = new ContentValues();
         cv.put("comment_data", comment);
         if (!newMeal.equals("")) {
@@ -338,7 +287,7 @@ public class SummaryActivity extends AppCompatActivity {
         cv.put("drink_count", dr);
 
         String[] updateArgs = {theentry.getTimestamp().toString()};
-        dbCont.updateComment(this,cv,updateArgs);
+        dbCont.updateComment(this, cv, updateArgs);
     }
 
 
@@ -390,15 +339,11 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
         edits.setVisibility(View.INVISIBLE);
-        //editMeal.setVisibility(View.INVISIBLE);
-       // buttonFV.setVisibility(View.INVISIBLE);
-        //buttonDR.setVisibility(View.INVISIBLE);
 
         setListView();
 
         String comms = updated;
-        if(comms.equals("Tap here to type a comment"))
-        {
+        if (comms.equals("Tap here to type a comment")) {
             updated = "";
         }
 

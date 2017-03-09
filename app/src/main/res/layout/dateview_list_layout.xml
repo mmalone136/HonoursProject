@@ -5,10 +5,17 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="75dp"
         android:background="@color/common_action_bar_splitter"
         android:orientation="horizontal"
         >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:id="@+id/ivMeal"
+            />
 
 
         <TextView
@@ -19,7 +26,8 @@
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            />
 
         <TextView
             android:id="@+id/tvChild1"
@@ -31,15 +39,7 @@
             android:textSize="20sp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/tvChild2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textColor="@color/black" />
+
 
     </LinearLayout>
 

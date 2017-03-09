@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <ListView
@@ -11,7 +12,7 @@
         android:layout_weight="7.7"
         android:id="@+id/listDates"
         android:divider="#c2b35b"
-        android:dividerHeight="5dp"
+        android:dividerHeight="6dp"
         android:drawSelectorOnTop="false"
 
         />
@@ -23,13 +24,14 @@
         android:layout_width="fill_parent"
         >
 
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/buttonInfoTab"
             android:text="Previous\nWeek"
             android:tag="-"
+            app:srcCompat="@drawable/leftarrow"
             android:onClick="updateWeek"/>
 
         <Button
@@ -41,28 +43,28 @@
             android:tag="0"
             android:onClick="updateWeek"/>
 
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/buttonExamplesTab"
             android:layout_weight="1"
             android:text="Next\nWeek"
             android:tag="+"
-            android:onClick="updateWeek"
-            android:layout_above="@+id/buttonBackToMain"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            app:srcCompat="@drawable/rightarrow"
+            android:onClick="updateWeek" />
 
     </LinearLayout>
 
 
-    <Button
+    <ImageButton
         android:text="Back"
+        app:srcCompat="@drawable/backarrow"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/buttonBackToMain"
-        android:onClick="backOption"/>
+        android:onClick="backOption"
+        />
 
 
 

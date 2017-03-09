@@ -87,7 +87,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="262dp"
+        android:layout_height="250dp"
         android:id="@+id/imagePhoto"
         android:padding = "10sp"
         android:layout_alignParentTop="true"
@@ -164,7 +164,7 @@
         android:id="@+id/listViewOfDatas"
         android:layout_weight="0.84"
         android:divider="#c2b35b"
-        android:dividerHeight="2dp"
+        android:dividerHeight="3dp"
         android:drawSelectorOnTop="false"
         android:visibility="visible"
         android:layout_alignParentLeft="true"
