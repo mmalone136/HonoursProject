@@ -125,9 +125,6 @@
     </LinearLayout>
 
 
-
-
-
     <TextView
         android:text="0"
         android:layout_width="match_parent"
@@ -240,7 +237,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/imageTaken"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <Button
             android:layout_width="0dp"
@@ -249,7 +246,6 @@
             android:id="@+id/buttonFood"
             android:text="FOOD"
             android:onClick="doFood"
-
             />
 
 
@@ -261,7 +257,6 @@
             android:onClick="doDrink"
             android:tag="Drink"
             android:text="DRINK"
-
             />
 
     </LinearLayout>

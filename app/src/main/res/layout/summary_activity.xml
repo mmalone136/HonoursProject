@@ -5,58 +5,91 @@
     android:layout_height="match_parent">
 
 
+
+    <LinearLayout
+        android:id="@+id/LinLayBottomOptions2"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LinLayEdits"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
+
+
+        <Button
+            android:text="Back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonBack2"
+            android:layout_weight="1"
+            android:onClick="backPress"
+            />
+
+
+        <Button
+            android:text="Review"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonReview"
+            android:onClick="reviewData"
+            />
+
+
+
+    </LinearLayout>
+
     <Button
         android:text="Review"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonReview"
-        android:onClick="reviewData"
+        android:id="@+id/placeholder"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button3"
-        android:layout_toEndOf="@+id/button3"
-
-        android:layout_alignTop="@+id/button3"
-        android:visibility="visible"
-        />
+        android:visibility="invisible" />
 
 
 
-    <Button
-        android:text="Save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonSave"
-        android:onClick="saveReview"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:width="200sp"
-        android:visibility="invisible"
-        android:layout_below="@+id/listViewOfDatas" />
-
-    <Button
-        android:text="Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:onClick="backPress"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
+        android:id="@+id/LinLayBottomOptions"
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/buttonSave"
-        android:layout_toStartOf="@+id/buttonSave" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LinLayEdits"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible">
 
+
+        <Button
+            android:text="Back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+            android:onClick="backPress"
+            />
+
+
+        <Button
+            android:text="Save"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonSave"
+            android:onClick="saveReview"/>
+
+
+
+    </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="262dp"
-
         android:id="@+id/imagePhoto"
         android:padding = "10sp"
-
-        android:background="@drawable/image_back"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -81,47 +114,48 @@
 
 
 
-    <Button
-        android:text=" Add To Fruit\n+ Veg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonFVFV"
-        android:layout_below="@+id/textComms"
+    <LinearLayout
+        android:id="@+id/LinLayEdits"
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonReview"
-        android:visibility="invisible"
-        android:onClick="addToCounts"
-        android:tag="FV"
-        />
-
-    <Button
-        android:text="         ADD TO          \nDRINKS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/textComms"
-        android:layout_toRightOf="@+id/buttonFVFV"
-        android:layout_toEndOf="@+id/buttonFVFV"
-        android:visibility="invisible"
-        android:id="@+id/buttonDRDR"
-        android:layout_above="@+id/buttonReview"
-        android:onClick="addToCounts"
-        android:tag="Drink"/>
+        android:layout_above="@+id/placeholder"
+        android:visibility="invisible">
 
-    <Button
-        android:text="Edit Meal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonEditMeal"
-        android:layout_below="@+id/textComms"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/buttonDRDR"
-        android:layout_toEndOf="@+id/buttonDRDR"
-        android:layout_above="@+id/buttonReview"
-        android:visibility="invisible"
-        android:onClick="editMealTag"
-        />
+        <Button
+            android:text=" Add To Fruit\n+ Veg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonFVFV"
+            android:onClick="addToCounts"
+            android:tag="FV"
+
+            />
+
+        <Button
+            android:text="  ADD TO \nDRINKS"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonDRDR"
+            android:onClick="addToCounts"
+            android:tag="Drink"/>
+
+
+
+        <Button
+            android:text="Edit Meal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonEditMeal"
+            android:layout_weight="1"
+            android:onClick="editMealTag"
+            />
+
+    </LinearLayout>
 
 
     <ListView
@@ -132,134 +166,170 @@
         android:divider="#c2b35b"
         android:dividerHeight="2dp"
         android:drawSelectorOnTop="false"
-        android:contextClickable="false"
-
         android:visibility="visible"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonReview"
+        android:layout_above="@+id/placeholder"
         android:layout_below="@+id/imagePhoto" />
+
+
+
+    <LinearLayout
+        android:id="@+id/LinLayForD"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/placeholder"
+        android:visibility="invisible"
+        android:layout_below="@+id/imagePhoto">
+
 
     <Button
         android:text="Food"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:id="@+id/buttonChangeFood"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_toLeftOf="@+id/buttonReview"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonFVFV"
-        android:visibility="invisible"
         android:onClick="showMealTypes"
 
         />
 
     <Button
         android:text="Drink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_toRightOf="@+id/buttonChangeFood"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:id="@+id/buttonChangeDrink"
         android:tag="Drink"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/buttonDRDR"
         android:onClick="updateMealTag"
-        android:visibility="invisible"
         />
 
-    <Button
-        android:text="Dinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonDin2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@id/buttonFVFV"
-        android:layout_toLeftOf="@+id/buttonChangeDrink"
-        android:layout_toStartOf="@+id/buttonChangeDrink"
-        android:layout_below="@+id/buttonFVFV"
-        android:layout_above="@+id/buttonReview"
-        android:visibility="invisible"
-        android:onClick="updateMealTag"
-        android:tag="Dinner"/>
+
+
+    </LinearLayout>
 
     <TextView
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewCount2"
-        android:layout_alignRight="@+id/buttonAdd2"
-        android:layout_alignEnd="@+id/buttonAdd2"
-        android:layout_alignLeft="@+id/buttonMinus2"
-        android:layout_alignStart="@+id/buttonMinus2"
         android:layout_alignParentTop="true"
         android:textSize="200dp"
         android:textAlignment="center"
         android:visibility="invisible"
         android:background="@drawable/background"
         android:textColor="#FFFFFF"
-        android:layout_above="@+id/textComms" />
+        android:layout_above="@+id/textComms"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
+    <LinearLayout
+        android:id="@+id/LinLayMeals"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/placeholder"
+        android:visibility="invisible"
+        android:layout_below="@+id/imagePhoto">
+
+
+
+    <LinearLayout
+        android:id="@+id/LinLayBL1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_above="@+id/placeholder"
+        android:visibility="visible"
+        >
+
+        <Button
+            android:text="Breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonBreak2"
+            android:visibility="visible"
+            android:onClick="updateMealTag"
+            android:tag="Breakfast"/>
+
+        <Button
+            android:text="Lunch"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonLunch2"
+            android:visibility="visible"
+            android:onClick="updateMealTag"
+            android:tag="Lunch"/>
+
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/LinLayDS1"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        >
+
+    <Button
+        android:text="Dinner"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/buttonDin2"
+        android:onClick="updateMealTag"
+        android:tag="Dinner"/>
 
     <Button
         android:text="Snack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:id="@+id/buttonSnack2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@id/buttonDRDR"
-        android:layout_toRightOf="@+id/buttonChangeFood"
-        android:layout_toEndOf="@+id/buttonChangeFood"
-        android:layout_below="@+id/buttonDRDR"
-        android:layout_above="@+id/buttonReview"
-        android:visibility="invisible"
         android:onClick="updateMealTag"
         android:tag="Snack"/>
 
-    <Button
-        android:text="Breakfast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/buttonBreak2"
-        android:layout_above="@+id/buttonFVFV"
-        android:layout_toLeftOf="@+id/buttonChangeDrink"
-        android:layout_toStartOf="@+id/buttonChangeDrink"
-        android:visibility="invisible"
-        android:onClick="updateMealTag"
-        android:tag="Breakfast"/>
+</LinearLayout>
 
-    <Button
-        android:text="Lunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_toRightOf="@+id/buttonChangeFood"
-        android:id="@+id/buttonLunch2"
-        android:layout_above="@+id/buttonDRDR"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:onClick="updateMealTag"
-        android:tag="Lunch"/>
 
-    <Button
-        android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAdd2"
-        android:visibility="invisible"
-        android:onClick="incCount"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_toRightOf="@+id/buttonChangeFood"
-        android:layout_toEndOf="@+id/buttonChangeFood" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinLayInc"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@+id/imagePhoto"
+        >
+
+        <Button
+            android:text="-"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMinus2"
+            android:visibility="invisible"
+            android:onClick="decCount"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:text="+"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAdd2"
+            android:visibility="invisible"
+            android:onClick="incCount"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
     <Button
         android:text="Save"
@@ -268,23 +338,10 @@
         android:id="@+id/buttonCountConfirm2"
         android:onClick="saveCount"
         android:visibility="invisible"
-        android:layout_above="@+id/buttonFVFV"
-        android:layout_alignRight="@+id/buttonAdd2"
-        android:layout_alignEnd="@+id/buttonAdd2"
-        android:layout_alignLeft="@+id/buttonMinus2"
-        android:layout_alignStart="@+id/buttonMinus2" />
-
-    <Button
-        android:text="-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonMinus2"
-        android:visibility="invisible"
-        android:onClick="decCount"
-        android:layout_alignBaseline="@+id/buttonAdd2"
-        android:layout_alignBottom="@+id/buttonAdd2"
-        android:layout_toLeftOf="@+id/buttonChangeDrink"
-        android:layout_toStartOf="@+id/buttonChangeDrink" />
-
+        android:layout_above="@+id/LinLayEdits"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

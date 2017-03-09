@@ -40,9 +40,9 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         dbCont = new DBContainer();
         dbCont.createTables(this);
-        if (DataHolder.dataRead) {
+        //if (DataHolder.dataRead) {
             DataHolder.readData(this);
-        }
+       // }
 
 
         //Button diaryButton = (Button) findViewById(R.id.buttonSummary);

@@ -4,12 +4,14 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.hardware.SensorManager;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
@@ -24,9 +26,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -70,8 +74,9 @@ public class Camera2Activity extends AppCompatActivity {
     private CameraCaptureSession prevSesh;
     CameraManager manager;
     Button cancelButton;
-
+    OrientationEventListener mOrientationListener;
     private static final SparseIntArray ORIENT = new SparseIntArray();
+    List<Integer> vals;
 
     static {
         ORIENT.append(Surface.ROTATION_0, 90);
@@ -85,6 +90,38 @@ public class Camera2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera2_preview);
         cancelFlag = false;
+
+
+        vals=new ArrayList<Integer>();
+        vals.add(0);
+        vals.add(90);
+        vals.add(180);
+        vals.add(270);
+
+
+
+        mOrientationListener = new OrientationEventListener(this,
+                SensorManager.SENSOR_DELAY_NORMAL) {
+
+            @Override
+            public void onOrientationChanged(int orientation) {
+                if (vals.contains(orientation)) {
+                    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
+                    t.show();
+                }
+            }
+        };
+
+        if (mOrientationListener.canDetectOrientation() == true) {
+          //  Log.v(DEBUG_TAG, "Can detect orientation");
+            mOrientationListener.enable();
+        } else {
+        //    Log.v(DEBUG_TAG, "Cannot detect orientation");
+            mOrientationListener.disable();
+        }
+
+
+
         higherAPI();
     }
 
@@ -126,6 +163,12 @@ public class Camera2Activity extends AppCompatActivity {
 
         );
     }
+
+
+
+
+
+
 
     @TargetApi(21)
     public void takePictureHigher() {
