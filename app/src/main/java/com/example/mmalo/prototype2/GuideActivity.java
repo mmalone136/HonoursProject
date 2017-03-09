@@ -138,14 +138,60 @@ public class GuideActivity extends AppCompatActivity {
             else {
                 currInt = R.drawable.glassfull;
             }
-
         tempTwo.add(currInt);
     }
 
 
+        ArrayList<Integer> tempthree = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            int currInt;
+            if (i == 0) {
+                currInt = R.drawable.chocolate;
+            }
+            else if (i == 1)
+            {
+                currInt = R.drawable.crisps;
+            }
+            else if (i == 2)
+            {
+                currInt = R.drawable.dietbottle;
+            }
+            else if (i == 3)
+            {
+                currInt = R.drawable.biscuit;
+            }
+            else if (i == 4)
+            {
+                currInt = R.drawable.icecream;
+            }
+            else if (i == 5)
+            {
+                currInt = R.drawable.ketchup;
+            }
+            else if (i == 6)
+            {
+                currInt = R.drawable.candy;
+            }
+            else if (i == 7)
+            {
+                currInt = R.drawable.fastfood;
+            }
+            else if (i == 8)
+            {
+                currInt = R.drawable.fries;
+            }
+            else
+            {
+                currInt = R.drawable.cake;
+            }
+            tempthree.add(currInt);
+        }
+
+
+
     drawables[0]=temp;
     drawables[1]=tempTwo;
-    drawables[2]=temp;
+    drawables[2]=tempthree;
 
     return drawables;
 }
