@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.Models.DataHolder;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,11 @@ public class TargetsActivity extends AppCompatActivity {
 
     public void readCountData() {
         try {
-            int[] countData = dbCont.readCountData(this);
+
+            java.util.Date theDate = new java.util.Date();
+            Date today = new Date(theDate.getTime());
+
+            int[] countData = dbCont.readCountData(this,today);
 
 
             DataHolder.todaysFV = countData[0];

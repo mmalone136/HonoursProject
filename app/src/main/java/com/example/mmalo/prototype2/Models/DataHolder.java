@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 
+import java.sql.Date;
+
 /**
  * Created by mmalo on 28/02/2017.
  */
@@ -21,7 +23,11 @@ public class DataHolder {
     public static void readData(Context cont){
         try {
             DBContainer dbCont = new DBContainer();
-            int[] countData = dbCont.readCountData(cont);
+
+            java.util.Date theDate = new java.util.Date();
+            Date today = new Date(theDate.getTime());
+
+            int[] countData = dbCont.readCountData(cont, today);
 
             DataHolder.todaysFV = countData[0];
             DataHolder.todaysDrinks = countData[1];

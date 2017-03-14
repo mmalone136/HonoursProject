@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mmalo.prototype2.Models.DataHolder;
 import com.example.mmalo.prototype2.R;
 
 import java.util.ArrayList;
@@ -24,12 +25,23 @@ public class CustomAdapter extends BaseAdapter {
     ArrayList<String[]> data;
     String[] moreData;
     int selector;
+    boolean[] starFlags;
     private static LayoutInflater inflater = null;
 
     public CustomAdapter(Context context, ArrayList<String[]> data, int sel) {
         this.context = context;
         this.data = data;
         this.selector = sel;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+
+    public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage) {
+        this.context = context;
+        this.data = data;
+        this.selector = sel;
+        this.starFlags = forImage;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -69,16 +81,27 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (selector == 1) {
             String[] stringList = data.get(position);
+            boolean current = starFlags[position];
 
             convertView = LayoutInflater.from(context).inflate(R.layout.imagebutton_layout, null);
 
             TextView day = (TextView) convertView.findViewById(R.id.tvChild);
             TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
             TextView other = (TextView) convertView.findViewById(R.id.tvChild2);
+            ImageView star = (ImageView) convertView.findViewById(R.id.ivStar);
 
             day.setText(stringList[0]);
             date.setText(stringList[1]);
             other.setText(stringList[2]);
+
+            //if(DataHolder.todaysFV ==1 && DataHolder.todaysDrinks ==1 && (DataHolder.todayBreak&&DataHolder.todayLunch&&DataHolder.todayDinner))
+            if (current) {
+                star.setImageResource(R.drawable.goldstar);
+            } else {
+                star.setImageResource(R.drawable.greystar);
+            }
+
+
         } else if (selector == 2) {
 
             String[] stringList = data.get(position);
@@ -111,6 +134,7 @@ public class CustomAdapter extends BaseAdapter {
             TextView day = (TextView) convertView.findViewById(R.id.tvChild);
             TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
 
+
             day.setText(stringList[0]);
             date.setText(stringList[1]);
             ivMeal.setImageResource(seven);
@@ -119,8 +143,43 @@ public class CustomAdapter extends BaseAdapter {
 
             convertView = LayoutInflater.from(context).inflate(R.layout.summary_list_layout, null);
 
+            int symb;
+
+            if (position == 0) {
+                switch (str) {
+                    case "Breakfast":
+                        symb = R.drawable.breakfast;
+                        break;
+                    case "Lunch":
+                        symb = R.drawable.lunch;
+                        break;
+                    case "Dinner":
+                        symb = R.drawable.dinn;
+                        break;
+                    case "Drink":
+                        symb = R.drawable.glassfull;
+                        break;
+                    case "Snack":
+                        symb = R.drawable.teamug;
+                        break;
+                    default:
+                        symb = R.drawable.glassempty1;
+                        break;
+                }
+            } else if (position == 1) {
+                symb = R.drawable.comments;
+
+            } else if (position == 2) {
+                symb = R.drawable.apple;
+            } else {
+                symb = R.drawable.glassfull;
+            }
+
+
+            ImageView symbol = (ImageView) convertView.findViewById(R.id.ivSymbol);
             TextView day = (TextView) convertView.findViewById(R.id.tvChild);
             day.setText(str);
+            symbol.setImageResource(symb);
         }
 
         return convertView;

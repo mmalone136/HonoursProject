@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
 import com.example.mmalo.prototype2.ExpListClasses.CustomAdapter;
 import com.example.mmalo.prototype2.Models.DataHolder;
@@ -42,20 +45,30 @@ public class WeekviewActivity extends AppCompatActivity {
     int step;
     int stepLimit;
     int todayPosition;
+    boolean[] starBools;
+    boolean checkArrows;
     ListView dateList;
+    ImageButton weekPlus, weekBack;
+    DBContainer dbCont;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekview);
         DataHolder.readData(this);
+        boolean[] temp = {false, false, false, false, false, false, false};
+        starBools = temp;
+        checkArrows=false;
+        dbCont = new DBContainer();
         dateList = (ListView) findViewById(R.id.listDates);
         Calendar calendar = Calendar.getInstance();
         todayPosition = calendar.get(Calendar.DAY_OF_WEEK);
         step = 0;
+        weekPlus= (ImageButton) findViewById(R.id.rightWeek);
+        weekBack= (ImageButton) findViewById(R.id.leftWeek);
+
         updateView(step);
         stepLimit = calculateEarliest();
-
     }
 
 
@@ -85,52 +98,9 @@ public class WeekviewActivity extends AppCompatActivity {
     }
 
     public ArrayList<String> readUniqueDates() {
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbh.getReadableDatabase();
 
-        String[] projection = {
-                "time_stamp"
-        };
-        String sort = "time_stamp ASC";
-
-        //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
-        Cursor cursor = db.query("diary_entries", projection, null, null, null, null, sort);
-        //db.close();
-        System.out.print("");
-        ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
-
-        ArrayList<Timestamp> times = new ArrayList<Timestamp>();
         ArrayList<String> dates = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            do {
-                try {
-                    String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
-
-                    Timestamp theTime = Timestamp.valueOf(tID);
-                    times.add(theTime);
-
-                    Date seven = new Date(theTime.getTime());
-
-                    SimpleDateFormat s = new SimpleDateFormat("EEEE");
-
-                    String day = s.format(seven);
-
-                    if (!dates.contains(seven.toString())) {
-                        dates.add(seven.toString());//+ " | " + day
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.printStackTrace();
-
-                }
-
-
-            } while (cursor.moveToNext());
-
-        }
-
-        db.close();
-        cursor.close();
+        dates = dbCont.readUniqueDates(this);
 
         return dates;
     }
@@ -161,7 +131,7 @@ public class WeekviewActivity extends AppCompatActivity {
         ArrayList<String[]> dataLists = new ArrayList<>();
 
         String[] weekData = {"# - No Entries", "# - No Entries", "# - No Entries", "# - No Entries",
-                "# - No Entries", "# - No Entries","# - No Entries"};
+                "# - No Entries", "# - No Entries", "# - No Entries"};
 
         weekDates = new String[7];
 
@@ -183,21 +153,21 @@ public class WeekviewActivity extends AppCompatActivity {
 
             String temp = "";
 
-            if(step==0 && day ==todayPosition){
+            if (step == 0 && day == todayPosition) {
                 temp = "\tTODAY";
             }
 
             if (day > 1) {
-                weekData[day - 2] = dayString + "\t\t\t" + dateString+temp;
+                weekData[day - 2] = dayString + "\t\t\t" + dateString + temp;
             } else if (day == 1) {
                 //Sunday previously at day 1, move to position 6 for end of week
-                weekData[6] = dayString + "\t\t\t" + dateString+temp;
+                weekData[6] = dayString + "\t\t\t" + dateString + temp;
             }
         }
 
-        for(int i = 0;i<weekData.length;i++){
+        for (int i = 0; i < weekData.length; i++) {
             String curr = weekData[i];
-            String [] currList;
+            String[] currList;
 
             Calendar cal = GregorianCalendar.getInstance();
             cal.setTime(weekStart);
@@ -209,21 +179,26 @@ public class WeekviewActivity extends AppCompatActivity {
             temp = cal.getTime();
             current = new Date(temp.getTime());
 
+            if(i<=todayPosition) {
+                boolean currDayCounts = getTheBools(current);
+                starBools[i] = currDayCounts;
+            }
+
+
             java.util.Date currDate = cal.getTime();
             String dayString = formatter.format(currDate);
             String dateString = formDates.format(currDate);
 
 
-            if(curr.charAt(0)=='#')
-            {
+            if (curr.charAt(0) == '#') {
                 weekDates[i] = String.valueOf(current);
                 weekData[i] = dayString + "\t\t\t" + dateString + "\t\tNO ENTRIES";
-                String [] newOne = {dayString, dateString, "NO ENTRIES"};
+                String[] newOne = {dayString, dateString, "NO ENTRIES"};
                 currList = newOne;
 
-            }else{
+            } else {
                 weekDates[i] = String.valueOf(current);
-                String [] newOne = {dayString, dateString, ""};
+                String[] newOne = {dayString, dateString, ""};
                 currList = newOne;
             }
             dataLists.add(currList);
@@ -238,14 +213,12 @@ public class WeekviewActivity extends AppCompatActivity {
         int week = c.get(Calendar.WEEK_OF_YEAR);
 
         int difference;
-        if(uniqueDates.size()>0) {
+        if (uniqueDates.size() > 0) {
             Date earliest = Date.valueOf(uniqueDates.get(0));
             c.setTime(earliest);
             int earlier = c.get(Calendar.WEEK_OF_YEAR);
-            difference  = -(week - earlier);
-        }
-        else
-        {
+            difference = -(week - earlier);
+        } else {
             difference = 0;
         }
 
@@ -258,6 +231,13 @@ public class WeekviewActivity extends AppCompatActivity {
         if (uniqueDates.size() == 0) {
             uniqueDates = readUniqueDates();
         }
+
+        if (checkArrows) {
+            setArrowVis(step);
+        }else{
+            checkArrows = true;
+        }
+
         //Set week start and end
         getCurrentWeek(step);
         //Read inbetween dates
@@ -266,6 +246,23 @@ public class WeekviewActivity extends AppCompatActivity {
         moreWeekData = getListForWeek(CurrentWeek);
         //Set adapter
         setListAdapter();
+    }
+
+
+    public void setArrowVis(int step){
+        if(step==stepLimit)
+        {
+            weekBack.setEnabled(false);
+        }else{
+            weekBack.setEnabled(true);
+        }
+
+        if(step==0)
+        {
+            weekPlus.setEnabled(false);
+        }else{
+            weekPlus.setEnabled(true);
+        }
     }
 
     public void setListAdapter() {
@@ -282,7 +279,8 @@ public class WeekviewActivity extends AppCompatActivity {
 
         //dateList.setAdapter(adapter);
 
-        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1));
+
+        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1, starBools));
 
         //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 
@@ -301,6 +299,29 @@ public class WeekviewActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    public boolean getTheBools(Date curr) {
+        String dateStr = String.valueOf(curr);
+        int[] countValues = dbCont.readCountData(this, curr);
+        boolean completed;
+        int fv = countValues[0];
+        int dr = countValues[1];
+        int hasB = countValues[2];
+        int hasL = countValues[3];
+        int hasD = countValues[4];
+
+        if (fv >= 5 && dr >= 8 && hasB > 0 && hasL > 0 && hasD > 0) {
+            completed = true;
+        } else {
+            completed = false;
+        }
+
+
+        System.out.print("");
+
+        return completed;
     }
 
     public void updateWeek(View v) {

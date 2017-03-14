@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonInfoTab"
+            android:id="@+id/leftWeek"
             android:text="Previous\nWeek"
             android:tag="-"
             app:srcCompat="@drawable/leftarrow"
@@ -46,7 +46,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonExamplesTab"
+            android:id="@+id/rightWeek"
             android:layout_weight="1"
             android:text="Next\nWeek"
             android:tag="+"

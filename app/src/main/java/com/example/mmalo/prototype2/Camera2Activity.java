@@ -73,10 +73,12 @@ public class Camera2Activity extends AppCompatActivity {
     private CaptureRequest.Builder prevBuild;
     private CameraCaptureSession prevSesh;
     CameraManager manager;
+    Button captureButton;
     Button cancelButton;
     OrientationEventListener mOrientationListener;
     private static final SparseIntArray ORIENT = new SparseIntArray();
     List<Integer> vals;
+    ImageView turn;
 
     static {
         ORIENT.append(Surface.ROTATION_0, 90);
@@ -90,7 +92,7 @@ public class Camera2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera2_preview);
         cancelFlag = false;
-
+        turn = (ImageView) findViewById(R.id.frame_taken);
 
         vals=new ArrayList<Integer>();
         vals.add(0);
@@ -105,9 +107,19 @@ public class Camera2Activity extends AppCompatActivity {
 
             @Override
             public void onOrientationChanged(int orientation) {
-                if (vals.contains(orientation)) {
-                    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
+                //if (vals.contains(orientation)) {
+                //    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
                     //t.show();
+                //}
+                if(orientation<200||orientation>320){
+                    turn.setVisibility(View.VISIBLE);
+                    captureButton.setEnabled(false);
+                            //setVisibility(View.VISIBLE);
+                }else
+                {
+                    turn.setVisibility(View.INVISIBLE);
+                    captureButton.setEnabled(true);
+                            //.setVisibility(View.INVISIBLE);
                 }
             }
         };
@@ -130,7 +142,7 @@ public class Camera2Activity extends AppCompatActivity {
         Toast t = Toast.makeText(this, "HIGHER API", Toast.LENGTH_LONG);
         //t.show();
         jpegSizes = null;
-        Button capture = (Button) findViewById(R.id.button_capture);
+        captureButton = (Button) findViewById(R.id.button_capture);
         imTextView = (TextureView) findViewById(R.id.imageTextView);
         imTextView.setSurfaceTextureListener(surfaceTextureListener);
         rotationMat = new Matrix();
@@ -147,7 +159,7 @@ public class Camera2Activity extends AppCompatActivity {
         }
 
 
-        capture.setOnClickListener(new View.OnClickListener() {
+        captureButton.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
                                            if (camDevice == null) {
@@ -389,8 +401,8 @@ public class Camera2Activity extends AppCompatActivity {
             Button confirm = (Button) findViewById(R.id.button_cont);
             confirm.setVisibility(View.VISIBLE);
 
-            Button capture = (Button) findViewById(R.id.button_capture);
-            capture.setVisibility(View.INVISIBLE);
+            captureButton = (Button) findViewById(R.id.button_capture);
+            captureButton.setVisibility(View.INVISIBLE);
 
             dataToPass = photoData;
         } catch (Exception e) {

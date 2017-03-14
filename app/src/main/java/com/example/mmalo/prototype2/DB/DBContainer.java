@@ -14,6 +14,7 @@ import com.example.mmalo.prototype2.R;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -91,14 +92,16 @@ public class DBContainer {
         return rowID;
     }
 
-    public int[] readCountData(Context cont){
+    public int[] readCountData(Context cont, Date curr){
         dbh = new DBHelper(cont);
         db = dbh.getReadableDatabase();
 
         int[] returnFields = new int[5];
 
-        java.util.Date theDate = new java.util.Date();
-        Date today = new Date(theDate.getTime());
+        //java.util.Date theDate = new java.util.Date();
+        //Date today = new Date(theDate.getTime());
+
+        Date today = curr;
 
         String[] projection = {
                 "entry_ID", "fv_count", "time_stamp", "drink_count","hadBreakfast", "hadLunch","hadDinner"
@@ -265,7 +268,56 @@ public class DBContainer {
         return entries;
     }
 
+    public ArrayList<String> readUniqueDates(Context cont) {
+        dbh = new DBHelper(cont);
+        db = dbh.getReadableDatabase();
 
+        String[] projection = {
+                "time_stamp"
+        };
+        String sort = "time_stamp ASC";
+
+        //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
+        Cursor cursor = db.query("diary_entries", projection, null, null, null, null, sort);
+        //db.close();
+        System.out.print("");
+        ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
+
+        ArrayList<Timestamp> times = new ArrayList<Timestamp>();
+        ArrayList<String> dates = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
+
+                    Timestamp theTime = Timestamp.valueOf(tID);
+                    times.add(theTime);
+
+                    Date seven = new Date(theTime.getTime());
+
+                    SimpleDateFormat s = new SimpleDateFormat("EEEE");
+
+                    String day = s.format(seven);
+
+                    if (!dates.contains(seven.toString())) {
+                        dates.add(seven.toString());//+ " | " + day
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    e.printStackTrace();
+
+                }
+
+
+            } while (cursor.moveToNext());
+
+        }
+
+        db.close();
+        cursor.close();
+
+        return dates;
+    }
 
 
 
