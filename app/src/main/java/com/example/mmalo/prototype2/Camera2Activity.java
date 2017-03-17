@@ -36,7 +36,10 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraPreview;
@@ -73,8 +76,8 @@ public class Camera2Activity extends AppCompatActivity {
     private CaptureRequest.Builder prevBuild;
     private CameraCaptureSession prevSesh;
     CameraManager manager;
-    Button captureButton;
-    Button cancelButton;
+    ImageButton captureButton;
+    ImageButton cancelButton;
     OrientationEventListener mOrientationListener;
     private static final SparseIntArray ORIENT = new SparseIntArray();
     List<Integer> vals;
@@ -92,14 +95,13 @@ public class Camera2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera2_preview);
         cancelFlag = false;
-        turn = (ImageView) findViewById(R.id.frame_taken);
+        turn = (ImageView) findViewById(R.id.turnImage);
 
-        vals=new ArrayList<Integer>();
+        vals = new ArrayList<Integer>();
         vals.add(0);
         vals.add(90);
         vals.add(180);
         vals.add(270);
-
 
 
         mOrientationListener = new OrientationEventListener(this,
@@ -109,29 +111,29 @@ public class Camera2Activity extends AppCompatActivity {
             public void onOrientationChanged(int orientation) {
                 //if (vals.contains(orientation)) {
                 //    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
-                    //t.show();
+                //t.show();
                 //}
-                if(orientation<200||orientation>320){
-                    turn.setVisibility(View.VISIBLE);
-                    captureButton.setEnabled(false);
-                            //setVisibility(View.VISIBLE);
-                }else
-                {
-                    turn.setVisibility(View.INVISIBLE);
-                    captureButton.setEnabled(true);
-                            //.setVisibility(View.INVISIBLE);
+                if (!cancelFlag) {
+                    if (orientation < 200 || orientation > 320) {
+                        turn.setVisibility(View.VISIBLE);
+                        captureButton.setEnabled(false);
+                        //setVisibility(View.VISIBLE);
+                    } else {
+                        turn.setVisibility(View.INVISIBLE);
+                        captureButton.setEnabled(true);
+                        //.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         };
 
         if (mOrientationListener.canDetectOrientation() == true) {
-          //  Log.v(DEBUG_TAG, "Can detect orientation");
+            //  Log.v(DEBUG_TAG, "Can detect orientation");
             mOrientationListener.enable();
         } else {
-        //    Log.v(DEBUG_TAG, "Cannot detect orientation");
+            //    Log.v(DEBUG_TAG, "Cannot detect orientation");
             mOrientationListener.disable();
         }
-
 
 
         higherAPI();
@@ -142,7 +144,7 @@ public class Camera2Activity extends AppCompatActivity {
         Toast t = Toast.makeText(this, "HIGHER API", Toast.LENGTH_LONG);
         //t.show();
         jpegSizes = null;
-        captureButton = (Button) findViewById(R.id.button_capture);
+        captureButton = (ImageButton) findViewById(R.id.button_capture);
         imTextView = (TextureView) findViewById(R.id.imageTextView);
         imTextView.setSurfaceTextureListener(surfaceTextureListener);
         rotationMat = new Matrix();
@@ -160,31 +162,26 @@ public class Camera2Activity extends AppCompatActivity {
 
 
         captureButton.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           if (camDevice == null) {
-                                               Toast t = Toast.makeText(getApplicationContext(), "camDevice is NULL", Toast.LENGTH_LONG);
-                                               t.show();
-                                               return;
-                                           } else {
-                                               takePictureHigher();
-                                           }
-                                       }
-                                   }
+                                             @Override
+                                             public void onClick(View v) {
+                                                 if (camDevice == null) {
+                                                     Toast t = Toast.makeText(getApplicationContext(), "camDevice is NULL", Toast.LENGTH_LONG);
+                                                     t.show();
+                                                     return;
+                                                 } else {
+                                                     takePictureHigher();
+                                                 }
+                                             }
+                                         }
 
 
         );
     }
 
 
-
-
-
-
-
     @TargetApi(21)
     public void takePictureHigher() {
-        cancelButton = (Button) findViewById(R.id.button_cancel);
+        cancelButton = (ImageButton) findViewById(R.id.button_cancel);
         cancelButton.setEnabled(false);
         try {
             int width = 640, height = 480;
@@ -210,7 +207,7 @@ public class Camera2Activity extends AppCompatActivity {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
                     Image image = null;
-                    try{
+                    try {
                         image = reader.acquireLatestImage();
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                         byte[] bytes = new byte[buffer.capacity()];
@@ -398,11 +395,20 @@ public class Camera2Activity extends AppCompatActivity {
 
             cancelFlag = !cancelFlag;
 
-            Button confirm = (Button) findViewById(R.id.button_cont);
-            confirm.setVisibility(View.VISIBLE);
+            //Button confirm = (Button) findViewById(R.id.button_cont);
+            //confirm.setVisibility(View.VISIBLE);
+            //captureButton = (ImageButton) findViewById(R.id.button_capture);
+            //captureButton.setVisibility(View.INVISIBLE);
 
-            captureButton = (Button) findViewById(R.id.button_capture);
-            captureButton.setVisibility(View.INVISIBLE);
+
+            RelativeLayout seven = (RelativeLayout) findViewById(R.id.RelLay1);
+            LinearLayout options = (LinearLayout) seven.findViewById(R.id.LinLay2);
+            options.setVisibility(View.VISIBLE);
+            LinearLayout toHide = (LinearLayout) seven.findViewById(R.id.LinLay1);
+            toHide.setVisibility(View.INVISIBLE);
+
+
+            //LinLay1
 
             dataToPass = photoData;
         } catch (Exception e) {

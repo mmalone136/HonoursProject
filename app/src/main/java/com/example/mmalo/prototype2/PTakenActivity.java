@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -137,26 +138,26 @@ public class PTakenActivity extends AppCompatActivity {
         mealChoice = v.getTag().toString();
 
 
-        Button button = (Button) findViewById(R.id.buttonDin);
-        button.setVisibility(View.INVISIBLE);
-        Button button2 = (Button) findViewById(R.id.buttonSnack);
-        button2.setVisibility(View.INVISIBLE);
-        Button button3 = (Button) findViewById(R.id.buttonLunch);
-        button3.setVisibility(View.INVISIBLE);
-        Button button4 = (Button) findViewById(R.id.buttonBreak);
-        button4.setVisibility(View.INVISIBLE);
+        TextView prompt = (TextView) findViewById(R.id.textPrompts);
+        prompt.setVisibility(View.INVISIBLE);
 
+        LinearLayout lays = (LinearLayout) findViewById(R.id.LinLayLayouts);
+        lays.setVisibility(View.INVISIBLE);
 
         EditText comments = (EditText) findViewById(R.id.textComments);
         comments.setVisibility(View.VISIBLE);
 
-        Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
-        buttonSubmit.setVisibility(View.VISIBLE);
 
-        Button buttonFV = (Button) findViewById(R.id.buttonFV);
-        buttonFV.setVisibility(View.VISIBLE);
-        Button buttonDR = (Button) findViewById(R.id.buttonDR);
-        buttonDR.setVisibility(View.VISIBLE);
+        LinearLayout nexts = (LinearLayout) findViewById(R.id.LinLayNexts);
+        nexts.setVisibility(View.VISIBLE);
+
+        //Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        //buttonSubmit.setVisibility(View.VISIBLE);
+
+        //Button buttonFV = (Button) findViewById(R.id.buttonFV);
+        //buttonFV.setVisibility(View.VISIBLE);
+        //Button buttonDR = (Button) findViewById(R.id.buttonDR);
+        //buttonDR.setVisibility(View.VISIBLE);
 
     }
 
@@ -167,6 +168,10 @@ public class PTakenActivity extends AppCompatActivity {
         Button buttFV = (Button) findViewById(R.id.buttonAdd);
         Button buttDR = (Button) findViewById(R.id.buttonMinus);
         Button buttConf = (Button) findViewById(R.id.buttonCountConfirm);
+
+        EditText comments = (EditText) findViewById(R.id.textComments);
+        comments.setVisibility(View.INVISIBLE);
+
 
         buttFV.setVisibility(View.VISIBLE);
         buttDR.setVisibility(View.VISIBLE);
@@ -245,44 +250,42 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
     public void doFood(View v) {
-        Button buttFood = (Button) findViewById(R.id.buttonFood);
-        buttFood.setVisibility(View.INVISIBLE);
-
-        Button buttDrink = (Button) findViewById(R.id.buttonDrink);
-        buttDrink.setVisibility(View.INVISIBLE);
-
+        LinearLayout fd = (LinearLayout) findViewById(R.id.LinLayFD);
+        fd.setVisibility(View.INVISIBLE);
     }
 
     public void doDrink(View v) {
+
+        //TODO: Refactor this, getting layouts instead of individual views
+        //TODO: Combine with mealButton()
+
         mealChoice = v.getTag().toString();
 
-        Button buttFood = (Button) findViewById(R.id.buttonFood);
-        buttFood.setVisibility(View.INVISIBLE);
+        LinearLayout fd = (LinearLayout) findViewById(R.id.LinLayFD);
+        fd.setVisibility(View.INVISIBLE);
 
-        Button buttDrink = (Button) findViewById(R.id.buttonDrink);
-        buttDrink.setVisibility(View.INVISIBLE);
-
-        Button button = (Button) findViewById(R.id.buttonDin);
-        button.setVisibility(View.INVISIBLE);
-        Button button2 = (Button) findViewById(R.id.buttonSnack);
-        button2.setVisibility(View.INVISIBLE);
-        Button button3 = (Button) findViewById(R.id.buttonLunch);
-        button3.setVisibility(View.INVISIBLE);
-        Button button4 = (Button) findViewById(R.id.buttonBreak);
-        button4.setVisibility(View.INVISIBLE);
-
+        LinearLayout lays = (LinearLayout) findViewById(R.id.LinLayLayouts);
+        lays.setVisibility(View.INVISIBLE);
 
         EditText comments = (EditText) findViewById(R.id.textComments);
         comments.setVisibility(View.VISIBLE);
 
-        Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
-        buttonSubmit.setVisibility(View.VISIBLE);
 
-        Button buttonFV = (Button) findViewById(R.id.buttonFV);
-        buttonFV.setVisibility(View.VISIBLE);
-        Button buttonDR = (Button) findViewById(R.id.buttonDR);
-        buttonDR.setVisibility(View.VISIBLE);
+        LinearLayout nexts = (LinearLayout) findViewById(R.id.LinLayNexts);
+        nexts.setVisibility(View.VISIBLE);
 
+
+        //Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        //buttonSubmit.setVisibility(View.VISIBLE);
+
+        //Button buttonFV = (Button) findViewById(R.id.buttonFV);
+        //buttonFV.setVisibility(View.VISIBLE);
+        //Button buttonDR = (Button) findViewById(R.id.buttonDR);
+        //buttonDR.setVisibility(View.VISIBLE);
+
+
+        TextView prompt = (TextView) findViewById(R.id.textPrompts);
+        prompt.setVisibility(View.INVISIBLE);
 
     }
 
@@ -291,8 +294,8 @@ public class PTakenActivity extends AppCompatActivity {
         comments.setVisibility(View.VISIBLE);
         commentData = comments.getText().toString();
 
-        if(commentData.equals("Tap here to type a comment")){
-            commentData="";
+        if (commentData.equals("Tap here to type a comment")) {
+            commentData = "";
         }
 
         String fp = filename;
@@ -303,10 +306,10 @@ public class PTakenActivity extends AppCompatActivity {
         int success = saveImageToFile(photoData);
 
         if (success == 7) {
-            long l = dbCont.insertEntry(entry,getApplicationContext(),fv,dr);
+            long l = dbCont.insertEntry(entry, getApplicationContext(), fv, dr);
             if (l != -1) {
                 t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
-                dbCont.updateCountsDB2(this,fv, dr, mealChoice, timetaken);
+                dbCont.updateCountsDB2(this, fv, dr, mealChoice, timetaken);
             } else {
                 t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
             }

@@ -48,32 +48,35 @@
 
         <LinearLayout
             android:id="@+id/LinLayLEFT"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_weight="3.8"
             android:orientation="vertical">
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <ImageButton
+                app:srcCompat="@drawable/myfv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Fruit\n+ Veg\nCount"
                 android:tag="FVCount"
                 android:onClick="showInfo"
                 />
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <ImageButton
+                app:srcCompat="@drawable/mymeals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Meals"
                 android:tag="Meals"
                 android:onClick="showInfo"/>
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <ImageButton
+                app:srcCompat="@drawable/mydrinks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Drinks"
                 android:tag="Drink"
@@ -109,6 +112,8 @@
                     android:id="@+id/imgFV1"
 
                     />
+
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -116,6 +121,7 @@
                     android:src="@drawable/greycircle"
                     android:id="@+id/imgFV2"
                     />
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -123,6 +129,8 @@
                     android:src="@drawable/greycircle"
                     android:id="@+id/imgFV3"
                     />
+
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

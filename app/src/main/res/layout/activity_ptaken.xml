@@ -14,9 +14,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="262dp"
-
         android:id="@+id/imageTaken"
-
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:layout_alignParentTop="true"
@@ -38,13 +36,28 @@
         android:ems="10"
         android:id="@+id/textComments"
         android:minHeight="100dp"
-        android:layout_below="@+id/imageTaken"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_below="@+id/imageTaken" />
+
+    <TextView
+        android:text="What type of entry is this?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textPrompts"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:visibility="visible"
+
+        android:textColor="#000000"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageTaken"
+        android:layout_above="@+id/buttonCountConfirm" />
+
 
 
     <LinearLayout
@@ -53,10 +66,9 @@
         android:layout_alignParentLeft="true"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imageTaken"
         android:layout_alignParentBottom="true"
         android:visibility="visible"
-        >
+        android:layout_below="@+id/textPrompts">
 
 
     <LinearLayout
@@ -69,7 +81,8 @@
         android:layout_weight="1"
         >
 
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/bfast"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -80,7 +93,9 @@
 
             />
 
-        <Button
+
+        <ImageButton
+            app:srcCompat="@drawable/lunch2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -100,7 +115,8 @@
         android:layout_weight="1"
         >
 
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/thedinn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -110,7 +126,8 @@
             android:onClick="mealButton"
             />
 
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/snacks"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -140,36 +157,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <LinearLayout
-        android:id="@+id/LinLayInc"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_below="@+id/imageTaken"
-        >
-
-    <Button
-        android:text="-"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonMinus"
-        android:visibility="invisible"
-        android:onClick="decCount"
-        android:layout_weight="1"
-        />
-
-    <Button
-        android:text="+"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAdd"
-        android:visibility="invisible"
-        android:onClick="incCount"
-        android:layout_weight="1"
-        />
-</LinearLayout>
-
 
     <Button
         android:text="Save"
@@ -180,7 +167,6 @@
         android:onClick="saveCount"
         android:visibility="invisible"/>
 
-
     <LinearLayout
         android:id="@+id/LinLayNexts"
         android:orientation="horizontal"
@@ -189,20 +175,21 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/textComments"
         android:layout_alignParentBottom="true"
-        android:visibility="visible">
+        android:visibility="invisible">
 
-        <Button
-            android:text="Add To Fruit and Veg"
+        <ImageButton
+            app:srcCompat="@drawable/addfruitbowl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/buttonFV"
             android:onClick="addToCounts"
             android:tag="FV"
-            android:visibility="invisible"
+            android:visibility="visible"
             />
 
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/adddrinks"
             android:text="ADD TO DRINKS"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -210,36 +197,66 @@
             android:id="@+id/buttonDR"
             android:onClick="addToCounts"
             android:tag="Drink"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
-
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/savebutton"
             android:text="Save"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonSubmit"
             android:layout_weight="1"
             android:onClick="submitForm"
-            android:visibility="invisible"
+            android:visibility="visible"
             />
 
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/LinLayInc"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageTaken">
 
+        <Button
+            android:text="-"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMinus"
+            android:visibility="invisible"
+            android:onClick="decCount"
+            android:layout_weight="1"
+            />
 
+        <Button
+            android:text="+"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAdd"
+            android:visibility="invisible"
+            android:onClick="incCount"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinLayFD"
         android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/imageTaken"
+        android:visibility="visible"
         android:layout_alignParentBottom="true"
-        android:visibility="visible">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textPrompts">
 
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/foodbutton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -248,8 +265,8 @@
             android:onClick="doFood"
             />
 
-
-        <Button
+        <ImageButton
+            app:srcCompat="@drawable/drinkbutton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -260,8 +277,6 @@
             />
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

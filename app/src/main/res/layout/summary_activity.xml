@@ -1,347 +1,342 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:id="@+id/LinLayBottomOptions2"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/LinLayEdits"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinLayEdits"
+        android:orientation="horizontal"
         android:visibility="visible">
 
 
-        <Button
-            android:text="Back"
+        <ImageButton
+            app:srcCompat="@drawable/backarrow"
+            android:id="@+id/buttonBack2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonBack2"
             android:layout_weight="1"
             android:onClick="backPress"
-            />
+            android:text="Back" />
 
 
         <Button
-            android:text="Review"
-            android:layout_weight="1"
+            android:id="@+id/buttonReview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonReview"
+            android:layout_weight="1"
             android:onClick="reviewData"
-            />
-
+            android:text="CHANGE ENTRY" />
 
 
     </LinearLayout>
 
     <Button
-        android:text="Review"
+        android:id="@+id/placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/placeholder"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Review"
         android:visibility="invisible" />
-
 
 
     <LinearLayout
         android:id="@+id/LinLayBottomOptions"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/LinLayEdits"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinLayEdits"
+        android:orientation="horizontal"
         android:visibility="invisible">
 
 
-        <Button
-            android:text="Back"
+        <ImageButton
+            app:srcCompat="@drawable/backarrow"
+            android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/button3"
             android:layout_weight="1"
             android:onClick="backPress"
-            />
+            android:text="Back" />
 
 
-        <Button
-            android:text="Save"
-            android:layout_weight="1"
+        <ImageButton
+            app:srcCompat="@drawable/save2"
+            android:id="@+id/buttonSave"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonSave"
-            android:onClick="saveReview"/>
-
+            android:layout_weight="1"
+            android:onClick="saveReview"
+            android:text="Save" />
 
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/imagePhoto"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:id="@+id/imagePhoto"
-        android:padding = "10sp"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="10sp" />
 
     <EditText
+        android:id="@+id/textComms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/textComms"
-
-        android:minHeight="100dp"
-        android:visibility="invisible"
-        android:layout_below="@+id/imagePhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-         />
+        android:layout_alignParentLeft="true"
 
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imagePhoto"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="100dp"
+        android:visibility="invisible" />
 
 
     <LinearLayout
         android:id="@+id/LinLayEdits"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textComms"
         android:layout_above="@+id/placeholder"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textComms"
+        android:orientation="horizontal"
         android:visibility="invisible">
 
-        <Button
-            android:text=" Add To Fruit\n+ Veg"
+        <ImageButton
+            app:srcCompat="@drawable/addfruitbowl2"
+            android:id="@+id/buttonFVFV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/buttonFVFV"
             android:onClick="addToCounts"
             android:tag="FV"
-
+            android:text=" Add To Fruit\n+ Veg"
             />
 
-        <Button
-            android:text="  ADD TO \nDRINKS"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <ImageButton
+            app:srcCompat="@drawable/adddrinks2"
             android:id="@+id/buttonDRDR"
-            android:onClick="addToCounts"
-            android:tag="Drink"/>
-
-
-
-        <Button
-            android:text="Edit Meal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="addToCounts"
+            android:tag="Drink"
+            android:text="  ADD TO \nDRINKS" />
+
+
+        <ImageButton
+            app:srcCompat="@drawable/editmeal"
             android:id="@+id/buttonEditMeal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="editMealTag"
-            />
+            android:text="Edit Meal" />
 
     </LinearLayout>
 
 
     <ListView
+        android:id="@+id/listViewOfDatas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewOfDatas"
+        android:layout_above="@+id/placeholder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imagePhoto"
         android:layout_weight="0.84"
         android:divider="#c2b35b"
         android:dividerHeight="3dp"
         android:drawSelectorOnTop="false"
-        android:visibility="visible"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/placeholder"
-        android:layout_below="@+id/imagePhoto" />
-
+        android:visibility="visible" />
 
 
     <LinearLayout
         android:id="@+id/LinLayForD"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/placeholder"
-        android:visibility="invisible"
-        android:layout_below="@+id/imagePhoto">
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imagePhoto"
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
 
-    <Button
-        android:text="Food"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/buttonChangeFood"
-        android:onClick="showMealTypes"
 
-        />
+        <ImageButton
+            app:srcCompat="@drawable/foodbutton"
+            android:id="@+id/buttonChangeFood"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="showMealTypes"
+            android:text="Food"
 
-    <Button
-        android:text="Drink"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/buttonChangeDrink"
-        android:tag="Drink"
-        android:onClick="updateMealTag"
-        />
+            />
 
+        <ImageButton
+            app:srcCompat="@drawable/drinkbutton"
+            android:id="@+id/buttonChangeDrink"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="updateMealTag"
+            android:tag="Drink"
+            android:text="Drink" />
 
 
     </LinearLayout>
 
     <TextView
-        android:text="0"
+        android:id="@+id/textViewCount2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewCount2"
-        android:layout_alignParentTop="true"
-        android:textSize="200dp"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        android:background="@drawable/background"
-        android:textColor="#FFFFFF"
         android:layout_above="@+id/textComms"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="200dp"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/LinLayMeals"
-        android:orientation="vertical"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/placeholder"
-        android:visibility="invisible"
-        android:layout_below="@+id/imagePhoto">
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imagePhoto"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
 
-
-    <LinearLayout
-        android:id="@+id/LinLayBL1"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_above="@+id/placeholder"
-        android:visibility="visible"
-        >
-
-        <Button
-            android:text="Breakfast"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:id="@+id/LinLayBL1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@+id/placeholder"
             android:layout_weight="1"
-            android:id="@+id/buttonBreak2"
-            android:visibility="visible"
-            android:onClick="updateMealTag"
-            android:tag="Breakfast"/>
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-        <Button
-            android:text="Lunch"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonLunch2"
-            android:visibility="visible"
-            android:onClick="updateMealTag"
-            android:tag="Lunch"/>
+            <ImageButton
+                android:id="@+id/buttonBreak2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="updateMealTag"
+                android:tag="Breakfast"
+                android:text="Breakfast"
+                android:visibility="visible"
+                app:srcCompat="@drawable/bfast" />
+
+            <ImageButton
+                android:id="@+id/buttonLunch2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="updateMealTag"
+                android:tag="Lunch"
+                android:text="Lunch"
+                android:visibility="visible"
+                app:srcCompat="@drawable/lunch2" />
 
         </LinearLayout>
-    <LinearLayout
-        android:id="@+id/LinLayDS1"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        >
 
-    <Button
-        android:text="Dinner"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/buttonDin2"
-        android:onClick="updateMealTag"
-        android:tag="Dinner"/>
+        <LinearLayout
+            android:id="@+id/LinLayDS1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    <Button
-        android:text="Snack"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:id="@+id/buttonSnack2"
-        android:onClick="updateMealTag"
-        android:tag="Snack"/>
+            <ImageButton
+                android:id="@+id/buttonDin2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="updateMealTag"
+                android:tag="Dinner"
+                android:text="Dinner"
+                app:srcCompat="@drawable/thedinn" />
 
-</LinearLayout>
+
+            <ImageButton
+                android:id="@+id/buttonSnack2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="updateMealTag"
+                android:tag="Snack"
+                android:text="Snack"
+                app:srcCompat="@drawable/snacks" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinLayInc"
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_below="@+id/imagePhoto"
-        >
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
-            android:text="-"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:id="@+id/buttonMinus2"
-            android:visibility="invisible"
-            android:onClick="decCount"
-            android:layout_weight="1"
-            />
-
-        <Button
-            android:text="+"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonAdd2"
-            android:visibility="invisible"
-            android:onClick="incCount"
             android:layout_weight="1"
-            />
+            android:onClick="decCount"
+            android:text="-"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/buttonAdd2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="incCount"
+            android:text="+"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <Button
-        android:text="Save"
+        android:id="@+id/buttonCountConfirm2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonCountConfirm2"
-        android:onClick="saveCount"
-        android:visibility="invisible"
         android:layout_above="@+id/LinLayEdits"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:onClick="saveCount"
+        android:text="Save"
+        android:visibility="invisible" />
 
 </RelativeLayout>
