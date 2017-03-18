@@ -26,7 +26,8 @@ public class DBContainer {
     DBHelper dbh;
     SQLiteDatabase db;
 
-    public DBContainer() {}
+    public DBContainer() {
+    }
 
     public void dropTables(Context cont) {
         dbh = new DBHelper(cont);
@@ -75,7 +76,7 @@ public class DBContainer {
 
     }
 
-    public long insertEntry(DiaryData dd, Context cont,int theFV, int theDR) {
+    public long insertEntry(DiaryData dd, Context cont, int theFV, int theDR) {
         DBHelper dbh = new DBHelper(cont);
         SQLiteDatabase db = dbh.getWritableDatabase();
 
@@ -92,7 +93,7 @@ public class DBContainer {
         return rowID;
     }
 
-    public int[] readCountData(Context cont, Date curr){
+    public int[] readCountData(Context cont, Date curr) {
         dbh = new DBHelper(cont);
         db = dbh.getReadableDatabase();
 
@@ -104,14 +105,14 @@ public class DBContainer {
         Date today = curr;
 
         String[] projection = {
-                "entry_ID", "fv_count", "time_stamp", "drink_count","hadBreakfast", "hadLunch","hadDinner"
+                "entry_ID", "fv_count", "time_stamp", "drink_count", "hadBreakfast", "hadLunch", "hadDinner"
         };
         String select = "time_stamp Like ?";
         String[] selArgs = {"%" + today + "%"};
         //ArgOrder => Table,Columns, Columns From Where, Values from where, togroup, tofilter groups, sortorder
         Cursor cursor = db.query("counts", projection, select, selArgs, null, null, null);
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 try {
                     String tID = cursor.getString(cursor.getColumnIndexOrThrow("time_stamp"));
@@ -142,7 +143,7 @@ public class DBContainer {
     }
 
     //Update called from SummaryActivity
-    public boolean updateCountsDB(Context cont, Date theDate, ContentValues cv, String [] updateArgs) {
+    public boolean updateCountsDB(Context cont, Date theDate, ContentValues cv, String[] updateArgs) {
         try {
             dbh = new DBHelper(cont);
             db = dbh.getWritableDatabase();
@@ -150,7 +151,7 @@ public class DBContainer {
             //String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
             //String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
 
-            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
+            long a = db.update("counts", cv, "time_stamp = ?", updateArgs);
 
             if (a == 0) {
                 cv.put("time_stamp", theDate.toString());
@@ -179,15 +180,14 @@ public class DBContainer {
             cv.put("fv_count", f);
             cv.put("drink_count", d);
 
-            switch(mealChoice)
-            {
-                case"Breakfast":
+            switch (mealChoice) {
+                case "Breakfast":
                     cv.put("hadBreakfast", true);
                     break;
-                case"Lunch":
+                case "Lunch":
                     cv.put("hadLunch", true);
                     break;
-                case"Dinner":
+                case "Dinner":
                     cv.put("hadDinner", true);
                     break;
             }
@@ -197,7 +197,7 @@ public class DBContainer {
             String sql = "UPDATE counts SET fv_count = fv_count + ?, drink_count = drink_count + ? WHERE time_stamp = ?";
             String[] args = {String.valueOf(fvCount), String.valueOf(drinkCount), String.valueOf(theDate)};
 
-            long a = db.update("counts",cv,"time_stamp = ?", updateArgs);
+            long a = db.update("counts", cv, "time_stamp = ?", updateArgs);
 
             if (a == 0) {
                 cv.put("time_stamp", theDate.toString());
@@ -214,7 +214,7 @@ public class DBContainer {
         }
     }
 
-    public void updateComment(Context cont, ContentValues cv, String [] updateArgs) {
+    public void updateComment(Context cont, ContentValues cv, String[] updateArgs) {
         try {
             dbh = new DBHelper(cont);
             db = dbh.getWritableDatabase();
@@ -231,7 +231,7 @@ public class DBContainer {
         SQLiteDatabase db = dbh.getReadableDatabase();
 
         String[] projection = {
-                "entry_ID", "filepath", "comment_data", "time_stamp", "meal","fv_count","drink_count"
+                "entry_ID", "filepath", "comment_data", "time_stamp", "meal", "fv_count", "drink_count"
         };
         String select = "time_stamp Like ?";
         String[] selArgs = {"%" + date + "%"};
@@ -239,7 +239,7 @@ public class DBContainer {
 
         ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 try {
                     DiaryData curr;
@@ -252,7 +252,7 @@ public class DBContainer {
                     int drCount = cursor.getInt(cursor.getColumnIndexOrThrow("drink_count"));
 
                     Timestamp theTime = Timestamp.valueOf(tID);
-                    curr = new DiaryData(null, comm, null, theTime, theMeal, file,fvCount,drCount);
+                    curr = new DiaryData(null, comm, null, theTime, theMeal, file, fvCount, drCount);
 
                     entries.add(curr);
                 } catch (Exception e) {
@@ -320,20 +320,6 @@ public class DBContainer {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //---------- TEMP FUNCTIONS ------------
     public void deleteDate(Context cont) {
         try
@@ -341,14 +327,15 @@ public class DBContainer {
         {
             dbh = new DBHelper(cont);
             db = dbh.getWritableDatabase();
-            String date = "2017-01-31";
-            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-02-01%'");
+            String date = "2017-03-18";
+            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-03-18%'");
+
+            db.execSQL("DELETE FROM counts WHERE time_stamp LIKE '2017-03-18%'");
+
+
             System.out.print("");
             db.close();
-        } catch (
-                Exception ex
-                )
-
+        } catch (Exception ex)
         {
             ex.printStackTrace();
             ex.printStackTrace();

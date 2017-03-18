@@ -8,6 +8,7 @@
         android:layout_height="52dp"
         android:background="@color/common_action_bar_splitter"
         android:orientation="horizontal"
+        android:id="@+id/thing"
         >
 
         <ImageView

@@ -56,6 +56,7 @@ public class SummaryActivity extends AppCompatActivity {
     String newMeal, currCount;
     String oldMeal;
     int initDR, initFV;
+    int currFV, currDR;
     int dr, fv;
     int fvDiff, drDiff;
     boolean fvChange, drChange;
@@ -64,9 +65,9 @@ public class SummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary_activity);
+        DataHolder.readData(this);
         initValues();
         System.gc();
-        DataHolder.readData(this);
     }
 
     public void initValues() {
@@ -90,8 +91,10 @@ public class SummaryActivity extends AppCompatActivity {
 
             initDR = theentry.getDrCount();
             initFV = theentry.getFvCount();
-            dr = 0;
-            fv = 0;
+            dr =initDR;
+            fv = initFV;
+            currFV = 0;
+            currDR = 0;
             fvChange = false;
             drChange = false;
 
@@ -180,6 +183,23 @@ public class SummaryActivity extends AppCompatActivity {
 
     }
 
+    public void saveCount(View v) {
+        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
+        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
+
+        buttFV.setVisibility(View.INVISIBLE);
+        buttDR.setVisibility(View.INVISIBLE);
+        buttConf.setVisibility(View.INVISIBLE);
+
+        comments.setVisibility(View.VISIBLE);
+        edits.setVisibility(View.VISIBLE);
+
+        TextView tv = (TextView) findViewById(R.id.textViewCount2);
+        tv.setVisibility(View.INVISIBLE);
+        tv.setText("0");
+    }
+
     public void addToCounts(View v) {
         //Show counter buttons, cancel button and text view
         currCount = v.getTag().toString();
@@ -199,9 +219,11 @@ public class SummaryActivity extends AppCompatActivity {
         tv.setVisibility(View.VISIBLE);
 
         if (currCount.equals("Drink")) {
-            tv.setText(String.valueOf(initDR + dr));
+            tv.setText(String.valueOf(dr));
+            //tv.setText(String.valueOf(initDR + drDiff));
         } else {
-            tv.setText(String.valueOf(initFV + fv));
+            tv.setText(String.valueOf(fv));
+           // tv.setText(String.valueOf(initFV + fvDiff));
         }
     }
 
@@ -215,29 +237,26 @@ public class SummaryActivity extends AppCompatActivity {
         }
     }
 
-    public void saveCount(View v) {
-        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
-        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
-        Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
-
-        buttFV.setVisibility(View.INVISIBLE);
-        buttDR.setVisibility(View.INVISIBLE);
-        buttConf.setVisibility(View.INVISIBLE);
-
-        comments.setVisibility(View.VISIBLE);
-        edits.setVisibility(View.VISIBLE);
-
-        TextView tv = (TextView) findViewById(R.id.textViewCount2);
-        tv.setVisibility(View.INVISIBLE);
-        tv.setText("0");
-    }
-
     public void incCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         int curr = Integer.valueOf(tv.getText().toString());
+        //int curr=0;
+        //if (currCount.equals("Drink")) {
+        //    if (currDR < 8) {
+        //        currDR++;
+         //   }
+         //   curr=initDR+currDR;
+        //}else {
+        //    if (currFV < 8) {
+        //        currFV++;
+        //    }
+        //    curr=initFV+currFV;
+        //}
+
+
         if (curr < 8) {
-            curr++;
-        }
+                    curr++;
+               }
         tv.setText(String.valueOf(curr));
 
         updateLocals(curr);
@@ -317,15 +336,21 @@ public class SummaryActivity extends AppCompatActivity {
         int fvToPass = initFV;
         int drToPass = initDR;
 
+
+
+
+        fvToPass = fvDiff + DataHolder.todaysFV;
         if (fvChange) {
-            fvToPass = fvDiff + DataHolder.todaysFV;
+
             theentry.setFvCount(fv);
         } else {
             fv = initFV;
         }
 
+
+        drToPass = drDiff + DataHolder.todaysDrinks;
         if (drChange) {
-            drToPass = drDiff + DataHolder.todaysDrinks;
+
             theentry.setDrCount(dr);
         } else {
 

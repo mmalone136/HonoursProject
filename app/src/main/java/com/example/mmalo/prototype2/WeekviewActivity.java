@@ -62,7 +62,16 @@ public class WeekviewActivity extends AppCompatActivity {
         dbCont = new DBContainer();
         dateList = (ListView) findViewById(R.id.listDates);
         Calendar calendar = Calendar.getInstance();
-        todayPosition = calendar.get(Calendar.DAY_OF_WEEK);
+
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        if(day==0||day==1)
+        {
+            todayPosition= 5+day;
+        }else{
+            todayPosition= day-2;
+        }
+
+
         step = 0;
         weekPlus= (ImageButton) findViewById(R.id.rightWeek);
         weekBack= (ImageButton) findViewById(R.id.leftWeek);
@@ -280,7 +289,7 @@ public class WeekviewActivity extends AppCompatActivity {
         //dateList.setAdapter(adapter);
 
 
-        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1, starBools));
+        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1, starBools,todayPosition));
 
         //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 
@@ -317,7 +326,6 @@ public class WeekviewActivity extends AppCompatActivity {
         } else {
             completed = false;
         }
-
 
         System.out.print("");
 

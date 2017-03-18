@@ -93,6 +93,10 @@ public class GuideActivity extends AppCompatActivity {
             {
                 currInt = R.drawable.broccoli;
             }
+            else if (i == 5)
+            {
+                currInt = R.drawable.corn;
+            }
             else if (i == 6)
             {
                 currInt = R.drawable.repeat;

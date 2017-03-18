@@ -44,7 +44,6 @@ public class OptionsActivity extends AppCompatActivity {
             DataHolder.readData(this);
        // }
 
-
         //Button diaryButton = (Button) findViewById(R.id.buttonSummary);
         //LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
         //diaryButton = infalInflater.inflate(R.layout.imagebutton_layout, null);

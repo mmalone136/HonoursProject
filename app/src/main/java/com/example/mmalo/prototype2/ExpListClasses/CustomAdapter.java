@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mmalo.prototype2.Models.DataHolder;
@@ -24,6 +25,7 @@ public class CustomAdapter extends BaseAdapter {
     Context context;
     ArrayList<String[]> data;
     String[] moreData;
+    int todayPosition;
     int selector;
     boolean[] starFlags;
     private static LayoutInflater inflater = null;
@@ -37,10 +39,11 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
-    public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage) {
+    public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage, int today) {
         this.context = context;
         this.data = data;
         this.selector = sel;
+        todayPosition = today;
         this.starFlags = forImage;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -94,6 +97,15 @@ public class CustomAdapter extends BaseAdapter {
             date.setText(stringList[1]);
             other.setText(stringList[2]);
 
+
+            if(position==todayPosition){
+                //convertView.setBackgroundResource(R.color.explvGroupBackGood);
+                LinearLayout poo = (LinearLayout) convertView.findViewById(R.id.thing);
+                poo.setBackgroundResource(R.color.explvGroupBackGood);
+                other.setText("TODAY");
+            }
+            //getResources().getColor(R.color.explvGroupBackGood)
+
             //if(DataHolder.todaysFV ==1 && DataHolder.todaysDrinks ==1 && (DataHolder.todayBreak&&DataHolder.todayLunch&&DataHolder.todayDinner))
             if (current) {
                 star.setImageResource(R.drawable.goldstar);
@@ -110,19 +122,19 @@ public class CustomAdapter extends BaseAdapter {
             int seven;
             switch (stringList[0]) {
                 case "Breakfast":
-                    seven = R.drawable.breakfast;
+                    seven = R.drawable.breakfasticon;
                     break;
                 case "Lunch":
-                    seven = R.drawable.lunch;
+                    seven = R.drawable.lunchicon;
                     break;
                 case "Dinner":
-                    seven = R.drawable.dinn;
+                    seven = R.drawable.dinnicon;
                     break;
                 case "Drink":
                     seven = R.drawable.glassfull;
                     break;
                 case "Snack":
-                    seven = R.drawable.teamug;
+                    seven = R.drawable.snackicon;
                     break;
                 default:
                     seven = R.drawable.glassempty1;
@@ -148,19 +160,19 @@ public class CustomAdapter extends BaseAdapter {
             if (position == 0) {
                 switch (str) {
                     case "Breakfast":
-                        symb = R.drawable.breakfast;
+                        symb = R.drawable.breakfasticon;
                         break;
                     case "Lunch":
-                        symb = R.drawable.lunch;
+                        symb = R.drawable.lunchicon;
                         break;
                     case "Dinner":
-                        symb = R.drawable.dinn;
+                        symb = R.drawable.dinnicon;
                         break;
                     case "Drink":
                         symb = R.drawable.glassfull;
                         break;
                     case "Snack":
-                        symb = R.drawable.teamug;
+                        symb = R.drawable.snackicon;
                         break;
                     default:
                         symb = R.drawable.glassempty1;
@@ -170,7 +182,7 @@ public class CustomAdapter extends BaseAdapter {
                 symb = R.drawable.comments;
 
             } else if (position == 2) {
-                symb = R.drawable.apple;
+                symb = R.drawable.fruitbowl;
             } else {
                 symb = R.drawable.glassfull;
             }

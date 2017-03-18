@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,8 +35,8 @@ public class TutorialActivity extends AppCompatActivity {
     boolean userFV;
     boolean userDR;
     private Random randGen;
-    Button buttonFV;
-    Button buttonDR;
+    ImageButton buttonFV;
+    ImageButton buttonDR;
     int correctFVCount;
     int correctDRCount;
     TextView finalSum;
@@ -52,8 +53,8 @@ public class TutorialActivity extends AppCompatActivity {
         randGen = new Random();
         userFV = false;
         userDR = false;
-        buttonFV = (Button) findViewById(R.id.buttonFV);
-        buttonDR = (Button) findViewById(R.id.buttonDR);
+        buttonFV = (ImageButton) findViewById(R.id.buttonFV);
+        buttonDR = (ImageButton) findViewById(R.id.buttonDR);
         submitOption = (Button) findViewById(R.id.buttonSubmit2);
         DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
@@ -64,7 +65,7 @@ public class TutorialActivity extends AppCompatActivity {
         currInstr = 0;
         picResult = (ImageView) findViewById(R.id.imageViewResult);
 
-        int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial3,R.drawable.tutorial4};
+        int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial3, R.drawable.tutorial4};
         instructions = temp;
 
         picResult.setImageResource(instructions[currInstr]);
@@ -138,9 +139,9 @@ public class TutorialActivity extends AppCompatActivity {
         //toggle drinks on/off
         userDR = !userDR;
         if (userDR) {
-            changeButtonColours(buttonDR, "#50BF0B");
+            changeButtonColours(buttonDR, "#50BF0B", 2);
         } else {
-            changeButtonColours(buttonDR, "#DB2F09");
+            changeButtonColours(buttonDR, "#DB2F09", 2);
         }
 
     }
@@ -149,14 +150,31 @@ public class TutorialActivity extends AppCompatActivity {
         //toggle FV on/off
         userFV = !userFV;
         if (userFV) {
-            changeButtonColours(buttonFV, "#50BF0B");
+            changeButtonColours(buttonFV, "#50BF0B", 1);
         } else {
-            changeButtonColours(buttonFV, "#DB2F09");
+            changeButtonColours(buttonFV, "#DB2F09", 1);
         }
     }
 
     public void changeButtonColours(Button curr, String colour) {
         curr.setBackgroundColor(Color.parseColor(colour));
+    }
+
+
+    public void changeButtonColours(ImageButton curr, String colour, int flag) {
+        if (colour.equals("#50BF0B")) {//curr.setBackgroundColor(Color.parseColor(colour));
+            if (flag == 1) {
+                curr.setImageResource(R.drawable.bowltick);
+            } else {
+                curr.setImageResource(R.drawable.glasstick);
+            }
+        } else {
+            if (flag == 1) {
+                curr.setImageResource(R.drawable.bowlcross);
+            } else {
+                curr.setImageResource(R.drawable.glasscross);
+            }
+        }
     }
 
     public void goToNext(View v) {
@@ -171,8 +189,8 @@ public class TutorialActivity extends AppCompatActivity {
             correctDRCount++;
         }
 
-        changeButtonColours(buttonFV, "#b0b4b7");
-        changeButtonColours(buttonDR, "#b0b4b7");
+        changeButtonColours(buttonFV, "#b0b4b7", 1);
+        changeButtonColours(buttonDR, "#b0b4b7", 2);
         userFV = false;
         userDR = false;
 
@@ -274,17 +292,14 @@ public class TutorialActivity extends AppCompatActivity {
 
     public void nextInstruct(View v) {
         currInstr++;
-        if(currInstr==instructions.length) {
+        if (currInstr == instructions.length) {
             //picResult.setImageResource(instructions[currInstr]);
             picResult.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+        } else {
             picResult.setImageResource(instructions[currInstr]);
             picResult.setVisibility(View.VISIBLE);
 
-            if(currInstr==(instructions.length-1))
-            {
+            if (currInstr == (instructions.length - 1)) {
                 Button begin = (Button) findViewById(R.id.beginTut);
                 begin.setVisibility(View.VISIBLE);
             }
@@ -294,8 +309,7 @@ public class TutorialActivity extends AppCompatActivity {
     public void prevInstruct(View v) {
         if (currInstr > 0) {
             //This may not be correct
-            if(currInstr==(instructions.length-1))
-            {
+            if (currInstr == (instructions.length - 1)) {
                 Button begin = (Button) findViewById(R.id.beginTut);
                 begin.setVisibility(View.INVISIBLE);
             }
@@ -307,7 +321,7 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-    public void beginTutorial(View v){
+    public void beginTutorial(View v) {
         picResult.setVisibility(View.INVISIBLE);
         Button left = (Button) findViewById(R.id.buttonPrevInst);
         Button right = (Button) findViewById(R.id.buttonNextInst);
