@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
@@ -373,6 +374,26 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
         updateMealComment(updated);
+
+        checkTargetProgress();
+    }
+
+
+
+    public void checkTargetProgress(){
+
+        boolean targetCheck = DataHolder.checkCompleted(this);
+
+        Toast seven;
+        if(targetCheck)
+        {
+            seven = Toast.makeText(this, "Well done, you've completed your daily goals!", Toast.LENGTH_LONG);
+        }else
+        {
+            seven = Toast.makeText(this, "Not quite done", Toast.LENGTH_LONG);
+        }
+
+        seven.show();
     }
 
 

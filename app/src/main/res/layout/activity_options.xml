@@ -48,7 +48,7 @@
         android:id="@+id/buttonGuide"
         android:layout_weight="0.2"
         android:onClick = "viewGuide"
-        android:drawableLeft="@drawable/teach"
+        android:drawableLeft="@drawable/healthmess"
         android:gravity="left|center_vertical"
         />
 

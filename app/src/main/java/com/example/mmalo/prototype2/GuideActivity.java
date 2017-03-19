@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.mmalo.prototype2.ExpListClasses.ExpListChild;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class GuideActivity extends AppCompatActivity {
 
 
-    TextView generalInfo;
+    ScrollView generalInfo;
     ExpandableListView explExamples;
     //int prevOpenGroup = 0;
 
@@ -39,8 +40,9 @@ public class GuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        generalInfo = (TextView) findViewById(R.id.tvGenInfo);
-        generalInfo.setMovementMethod(new ScrollingMovementMethod());
+        generalInfo = (ScrollView) findViewById(R.id.generalInfo);
+        //generalInfo.setMovementMethod(new ScrollingMovementMethod());
+
         DataHolder.readData(this);
 
         explExamples = (ExpandableListView) findViewById(R.id.expListView);

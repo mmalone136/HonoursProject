@@ -37,11 +37,12 @@ public class TutorialActivity extends AppCompatActivity {
     private Random randGen;
     ImageButton buttonFV;
     ImageButton buttonDR;
+    ImageButton left;
     int correctFVCount;
     int correctDRCount;
     TextView finalSum;
     Button nextTutOption;
-    Button submitOption;
+    ImageButton submitOption;
     int[] instructions;
     int currInstr;
 
@@ -55,7 +56,7 @@ public class TutorialActivity extends AppCompatActivity {
         userDR = false;
         buttonFV = (ImageButton) findViewById(R.id.buttonFV);
         buttonDR = (ImageButton) findViewById(R.id.buttonDR);
-        submitOption = (Button) findViewById(R.id.buttonSubmit2);
+        submitOption = (ImageButton) findViewById(R.id.buttonSubmit2);
         DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
         finalSum = (TextView) findViewById(R.id.txtViewFinalSummary);
@@ -70,7 +71,8 @@ public class TutorialActivity extends AppCompatActivity {
 
         picResult.setImageResource(instructions[currInstr]);
         picResult.setVisibility(View.VISIBLE);
-
+        left = (ImageButton) findViewById(R.id.buttonPrevInst);
+        left.setVisibility(View.INVISIBLE);
         pictureView.setVisibility(View.INVISIBLE);
 
     }
@@ -262,7 +264,7 @@ public class TutorialActivity extends AppCompatActivity {
             LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
             tutButtons.setVisibility(View.INVISIBLE);
 
-            Button replay = (Button) findViewById(R.id.buttonReplayTut);
+            ImageButton replay = (ImageButton) findViewById(R.id.buttonReplayTut);
             replay.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.INVISIBLE);
             finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
@@ -300,9 +302,14 @@ public class TutorialActivity extends AppCompatActivity {
             picResult.setVisibility(View.VISIBLE);
 
             if (currInstr == (instructions.length - 1)) {
-                Button begin = (Button) findViewById(R.id.beginTut);
+                ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
                 begin.setVisibility(View.VISIBLE);
             }
+        }
+        if(currInstr>0){
+            //ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
+            left.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -310,7 +317,7 @@ public class TutorialActivity extends AppCompatActivity {
         if (currInstr > 0) {
             //This may not be correct
             if (currInstr == (instructions.length - 1)) {
-                Button begin = (Button) findViewById(R.id.beginTut);
+                ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
                 begin.setVisibility(View.INVISIBLE);
             }
             currInstr--;
@@ -319,15 +326,20 @@ public class TutorialActivity extends AppCompatActivity {
 
 
         }
+        if(currInstr==0){
+            //left = (ImageButton) findViewById(R.id.buttonPrevInst);
+            left.setVisibility(View.INVISIBLE);
+
+        }
     }
 
     public void beginTutorial(View v) {
         picResult.setVisibility(View.INVISIBLE);
-        Button left = (Button) findViewById(R.id.buttonPrevInst);
-        Button right = (Button) findViewById(R.id.buttonNextInst);
+        ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
+        ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
         left.setVisibility(View.INVISIBLE);
         right.setVisibility(View.INVISIBLE);
-        Button begin = (Button) findViewById(R.id.beginTut);
+        ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
         begin.setVisibility(View.INVISIBLE);
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.ButtonLayout);

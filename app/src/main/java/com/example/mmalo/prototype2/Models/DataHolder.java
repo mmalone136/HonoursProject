@@ -18,6 +18,9 @@ public class DataHolder {
     public static boolean todayLunch;
     public static boolean todayDinner;
 
+    public static boolean todayComplete;
+    public boolean doneNotification;
+
     public static boolean dataRead = false;
 
     public static void readData(Context cont){
@@ -48,6 +51,23 @@ public class DataHolder {
             DataHolder.todaysDrinks = 0;
         }
 
+    }
+
+
+    public static boolean checkCompleted(Context cont){
+
+        readData(cont);
+
+        if(todaysFV>=5&&todaysDrinks>=8&&todayBreak&&todayLunch&&todayDinner)
+        {
+            todayComplete = true;
+        }
+        else
+        {
+            todayComplete = false;
+        }
+
+        return todayComplete;
     }
 
 

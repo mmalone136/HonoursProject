@@ -308,18 +308,34 @@ public class PTakenActivity extends AppCompatActivity {
         if (success == 7) {
             long l = dbCont.insertEntry(entry, getApplicationContext(), fv, dr);
             if (l != -1) {
-                t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_LONG);
+                t = Toast.makeText(this, "Entry Submitted Successfully", Toast.LENGTH_SHORT);
                 dbCont.updateCountsDB2(this, fv, dr, mealChoice, timetaken);
             } else {
-                t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
+                t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_SHORT);
             }
         } else {
-            t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_LONG);
+            t = Toast.makeText(this, "ERROR Submitting Entry", Toast.LENGTH_SHORT);
         }
 
         thePic.recycle();
         photoData = null;
         t.show();
+
+
+        boolean targetCheck = DataHolder.checkCompleted(this);
+
+        Toast seven;
+        if(targetCheck)
+        {
+            seven = Toast.makeText(this, "Well done, you've completed your daily goals!", Toast.LENGTH_LONG);
+        }else
+        {
+            seven = Toast.makeText(this, "Not quite done", Toast.LENGTH_LONG);
+        }
+
+        seven.show();
+
+
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
 
