@@ -13,8 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mmalo.prototype2.DB.DBContainer;
 import com.example.mmalo.prototype2.DB.DBHelper;
@@ -37,6 +40,7 @@ public class WeekviewActivity extends AppCompatActivity {
 
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
     public ArrayList<String> uniqueDates = new ArrayList<String>();
+    public static boolean showNotif;
     String[] weekData;
     String[] weekDates;
     ArrayList<String[]> moreWeekData;
@@ -71,15 +75,32 @@ public class WeekviewActivity extends AppCompatActivity {
             todayPosition= day-2;
         }
 
-
         step = 0;
         weekPlus= (ImageButton) findViewById(R.id.rightWeek);
         weekBack= (ImageButton) findViewById(R.id.leftWeek);
 
         updateView(step);
         stepLimit = calculateEarliest();
+
+        if(showNotif)
+        {
+            showNotif();
+        }
     }
 
+    public void showNotif(){
+        ImageView congrats = (ImageView) findViewById(R.id.congratsImage);
+        congrats.setVisibility(View.VISIBLE);
+        congrats.bringToFront();
+
+        congrats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.INVISIBLE);
+            }
+        });
+        WeekviewActivity.showNotif = false;
+    }
 
     public void getCurrentWeek(int step) {
         //TODO: Refactor
@@ -197,8 +218,6 @@ public class WeekviewActivity extends AppCompatActivity {
             java.util.Date currDate = cal.getTime();
             String dayString = formatter.format(currDate);
             String dateString = formDates.format(currDate);
-
-
             if (curr.charAt(0) == '#') {
                 weekDates[i] = String.valueOf(current);
                 weekData[i] = dayString + "\t\t\t" + dateString + "\t\tNO ENTRIES";
@@ -289,7 +308,16 @@ public class WeekviewActivity extends AppCompatActivity {
         //dateList.setAdapter(adapter);
 
 
-        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1, starBools,todayPosition));
+        int toPass;
+        if (step==0){
+            toPass = todayPosition;
+        }else{
+            toPass = 77;
+        }
+
+        TextView thing = (TextView) findViewById(R.id.textOfThings);
+
+        dateList.setAdapter(new CustomAdapter(this, moreWeekData, 1, starBools,toPass, thing));
 
         //dateList.setAdapter(new CustomAdapter(this, new String[] { "data1","data2" }));
 

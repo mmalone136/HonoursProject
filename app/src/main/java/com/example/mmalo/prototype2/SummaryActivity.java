@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -48,9 +49,9 @@ public class SummaryActivity extends AppCompatActivity {
     EditText comments;
     LinearLayout edits, saveLay, reviewLay, ForDLay, blLay, dsLay, meals;
     //May be unneeded
-    Button editMeal, buttonFV, buttonDR;
+    //Button editMeal, buttonFV, buttonDR;
 
-    Button review, save;
+    //Button review, save;
 
 
     public DBContainer dbCont;
@@ -101,7 +102,6 @@ public class SummaryActivity extends AppCompatActivity {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-
         }
     }
 
@@ -185,16 +185,24 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     public void saveCount(View v) {
-        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
-        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+        //Button buttFV = (Button) findViewById(R.id.buttonAdd2);
+        //Button buttDR = (Button) findViewById(R.id.buttonMinus2);
         Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
 
-        buttFV.setVisibility(View.INVISIBLE);
-        buttDR.setVisibility(View.INVISIBLE);
+        //buttFV.setVisibility(View.INVISIBLE);
+        //buttDR.setVisibility(View.INVISIBLE);
+        LinearLayout plusMinus = (LinearLayout) findViewById(R.id.LinLayInc);
+        plusMinus.setVisibility(View.INVISIBLE);
+
+
+
         buttConf.setVisibility(View.INVISIBLE);
+
 
         comments.setVisibility(View.VISIBLE);
         edits.setVisibility(View.VISIBLE);
+
+        saveLay.setVisibility(View.VISIBLE);
 
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         tv.setVisibility(View.INVISIBLE);
@@ -205,19 +213,24 @@ public class SummaryActivity extends AppCompatActivity {
         //Show counter buttons, cancel button and text view
         currCount = v.getTag().toString();
 
-        Button buttFV = (Button) findViewById(R.id.buttonAdd2);
-        Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+       // Button buttFV = (Button) findViewById(R.id.buttonAdd2);
+        //Button buttDR = (Button) findViewById(R.id.buttonMinus2);
+
+        LinearLayout plusMinus = (LinearLayout) findViewById(R.id.LinLayInc);
+
         Button buttConf = (Button) findViewById(R.id.buttonCountConfirm2);
 
-        buttFV.setVisibility(View.VISIBLE);
-        buttDR.setVisibility(View.VISIBLE);
+        //buttFV.setVisibility(View.VISIBLE);
+        //buttDR.setVisibility(View.VISIBLE);
+        plusMinus.setVisibility(View.VISIBLE);
         buttConf.setVisibility(View.VISIBLE);
-
-        comments.setVisibility(View.INVISIBLE);
-        edits.setVisibility(View.INVISIBLE);
 
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         tv.setVisibility(View.VISIBLE);
+
+        comments.setVisibility(View.INVISIBLE);
+        edits.setVisibility(View.INVISIBLE);
+        saveLay.setVisibility(View.INVISIBLE);
 
         if (currCount.equals("Drink")) {
             tv.setText(String.valueOf(dr));
@@ -241,19 +254,6 @@ public class SummaryActivity extends AppCompatActivity {
     public void incCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         int curr = Integer.valueOf(tv.getText().toString());
-        //int curr=0;
-        //if (currCount.equals("Drink")) {
-        //    if (currDR < 8) {
-        //        currDR++;
-         //   }
-         //   curr=initDR+currDR;
-        //}else {
-        //    if (currFV < 8) {
-        //        currFV++;
-        //    }
-        //    curr=initFV+currFV;
-        //}
-
 
         if (curr < 8) {
                     curr++;
@@ -285,12 +285,15 @@ public class SummaryActivity extends AppCompatActivity {
         edits.setVisibility(View.VISIBLE);
         saveLay.setVisibility(View.VISIBLE);
         comments.setVisibility(View.VISIBLE);
+        ForDLay.setVisibility(View.INVISIBLE);
+
+
     }
 
     public void editMealTag(View v) {
         //LinLayForD
         ForDLay.setVisibility(View.VISIBLE);
-
+        saveLay.setVisibility(View.INVISIBLE);
         edits.setVisibility(View.INVISIBLE);
         comments.setVisibility(View.INVISIBLE);
     }
@@ -309,7 +312,6 @@ public class SummaryActivity extends AppCompatActivity {
         String[] updateArgs = {theentry.getTimestamp().toString()};
         dbCont.updateComment(this, cv, updateArgs);
     }
-
 
     public void saveReview(View v) {
         //Send updated comment to database
@@ -336,8 +338,6 @@ public class SummaryActivity extends AppCompatActivity {
 
         int fvToPass = initFV;
         int drToPass = initDR;
-
-
 
 
         fvToPass = fvDiff + DataHolder.todaysFV;
@@ -378,24 +378,32 @@ public class SummaryActivity extends AppCompatActivity {
         checkTargetProgress();
     }
 
+    public void checkTargetProgress() {
+
+        String temp;
+        SimpleDateFormat formDates = new SimpleDateFormat("yyyy-MM-dd");
+        temp = formDates.format(theentry.getTimestamp());
+
+        if (temp.equals(DataHolder.strCurrentDate)){
+            boolean targetCheck = DataHolder.checkCompleted(this);
 
 
-    public void checkTargetProgress(){
+                Intent i;
 
-        boolean targetCheck = DataHolder.checkCompleted(this);
+                if(targetCheck)
+                {
+                    WeekviewActivity.showNotif = true;
+                    i = new Intent(getBaseContext(), WeekviewActivity.class);
+                    this.startActivity(i);
+                }else
+                {
+                    //i = new Intent(getBaseContext(), OptionsActivity.class);
+                }
 
-        Toast seven;
-        if(targetCheck)
-        {
-            seven = Toast.makeText(this, "Well done, you've completed your daily goals!", Toast.LENGTH_LONG);
-        }else
-        {
-            seven = Toast.makeText(this, "Not quite done", Toast.LENGTH_LONG);
+
+
         }
-
-        seven.show();
     }
-
 
     public void updateCountsDB(int fvCount, int drinkCount, Date theDate) {
         ContentValues cv = new ContentValues();

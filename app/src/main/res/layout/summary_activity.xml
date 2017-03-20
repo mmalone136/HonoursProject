@@ -305,7 +305,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imagePhoto"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <Button
             android:id="@+id/buttonMinus2"
@@ -314,7 +315,7 @@
             android:layout_weight="1"
             android:onClick="decCount"
             android:text="-"
-            android:visibility="invisible" />
+             />
 
         <Button
             android:id="@+id/buttonAdd2"
@@ -322,21 +323,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="incCount"
-            android:text="+"
-            android:visibility="invisible" />
+            android:text="+"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonCountConfirm2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/LinLayEdits"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
         android:onClick="saveCount"
         android:text="Save"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_above="@+id/LinLayEdits"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -322,24 +322,22 @@ public class PTakenActivity extends AppCompatActivity {
         t.show();
 
 
-        boolean targetCheck = DataHolder.checkCompleted(this);
 
-        Toast seven;
+        //WeekviewActivity.showNotif = false;
+
+        boolean targetCheck = DataHolder.checkCompleted(this);
+        Intent i;
+
         if(targetCheck)
         {
-            seven = Toast.makeText(this, "Well done, you've completed your daily goals!", Toast.LENGTH_LONG);
+            WeekviewActivity.showNotif = true;
+            i = new Intent(getBaseContext(), WeekviewActivity.class);
         }else
         {
-            seven = Toast.makeText(this, "Not quite done", Toast.LENGTH_LONG);
+            i = new Intent(getBaseContext(), OptionsActivity.class);
         }
 
-        seven.show();
-
-
-        Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
-
-
     }
 
 

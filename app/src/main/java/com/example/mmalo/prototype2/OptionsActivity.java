@@ -117,6 +117,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     //ViewDiary
     public void viewDates(View v) {
+        WeekviewActivity.showNotif = false;
         Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
         this.startActivity(i);
     }

@@ -35,6 +35,12 @@ public class DBHelper extends SQLiteOpenHelper{
                     " hadLunch BOOLEAN" +
                     " hadDinner BOOLEAN)";
 
+    private static final String SQL_CREATE_NOTIF =
+            "CREATE TABLE IF NOT EXISTS notif_track (" +
+                    " time_stamp text,"+
+                    " had_notif INT" +
+                    " is_complete INT";
+
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS diary_entries";
@@ -48,6 +54,7 @@ public class DBHelper extends SQLiteOpenHelper{
     {
         sdb.execSQL(SQL_CREATE_ENTRIES);
         sdb.execSQL(SQL_CREATE_COUNTS);
+        //sdb.execSQL(SQL_CREATE_NOTIF);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

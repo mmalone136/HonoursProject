@@ -12,6 +12,10 @@ import com.example.mmalo.prototype2.Models.DiaryData;
 import com.example.mmalo.prototype2.OptionsActivity;
 import com.example.mmalo.prototype2.R;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -71,14 +75,22 @@ public class DBContainer {
 
         db.execSQL(SQL_CREATE_COUNTS);
 
+        String SQL_CREATE_NOTIF =
+                "CREATE TABLE IF NOT EXISTS notif_track (" +
+                        " time_stamp text PRIMARY KEY,"+
+                        " had_notif INT" +
+                        " is_complete INT";
+
+        //db.execSQL(SQL_CREATE_NOTIF);
+
         System.out.print("");
         db.close();
 
     }
 
     public long insertEntry(DiaryData dd, Context cont, int theFV, int theDR) {
-        DBHelper dbh = new DBHelper(cont);
-        SQLiteDatabase db = dbh.getWritableDatabase();
+        dbh = new DBHelper(cont);
+        db = dbh.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
         vals.put("comment_data", dd.getComment());
@@ -92,6 +104,70 @@ public class DBContainer {
         long rowID = db.insert("diary_entries", null, vals);
         return rowID;
     }
+
+
+    public void insertNotifData(Context cont, int hadNotif, int isComplete, Timestamp ts ){
+
+        ContentValues vals = new ContentValues();
+        Date theDate = new Date(ts.getTime());
+        vals.put("had_notif", hadNotif);
+        vals.put("is_complete", isComplete);
+        vals.put("time_stamp", String.valueOf(theDate));
+
+        long rowID = db.insert("notif_track", null, vals);
+    }
+
+
+    public void writeToNotifFile(Context cont,String date,int notif, int completed){
+        try {
+            String data=date+","+notif+"," + completed + "\n";
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("notif.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.append(data);
+            outputStreamWriter.close();
+        }
+        catch (Exception e) {
+          //  Log.e("Exception", "File write failed: " + e.toString());
+        }
+
+    }
+
+
+    public int[] readFromNotifFile(Context cont,String targetDate) {
+
+        int[] toReturn = {10,10};
+        try {
+            InputStream inputStream = cont.openFileInput("notif.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                String [] splitLine;
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    //stringBuilder.append(receiveString);
+                    splitLine = receiveString.split(",");
+                    if(splitLine!=null){
+                        if(splitLine.equals(targetDate)){
+                            toReturn[0] = Integer.parseInt(splitLine[1]);
+                            toReturn[1] = Integer.parseInt(splitLine[2]);
+                        }
+                    }
+                }
+
+
+                inputStream.close();
+                //ret = stringBuilder.toString();
+            }
+
+        } catch (Exception e) {
+           // Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return toReturn;
+    }
+
 
     public int[] readCountData(Context cont, Date curr) {
         dbh = new DBHelper(cont);
@@ -226,6 +302,7 @@ public class DBContainer {
     }
 
 
+
     public ArrayList<DiaryData> readEntriesForDate(Context cont, String date) {
         DBHelper dbh = new DBHelper(cont);
         SQLiteDatabase db = dbh.getReadableDatabase();
@@ -327,11 +404,10 @@ public class DBContainer {
         {
             dbh = new DBHelper(cont);
             db = dbh.getWritableDatabase();
-            String date = "2017-03-18";
-            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-03-18%'");
+            String date = "2017-03-20";
+            db.execSQL("DELETE FROM diary_entries WHERE time_stamp LIKE '2017-03-20%'");
 
-            db.execSQL("DELETE FROM counts WHERE time_stamp LIKE '2017-03-18%'");
-
+            db.execSQL("DELETE FROM counts WHERE time_stamp LIKE '2017-03-20%'");
 
             System.out.print("");
             db.close();

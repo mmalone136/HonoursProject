@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.mmalo.prototype2.DB.DBContainer;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by mmalo on 28/02/2017.
@@ -17,14 +18,19 @@ public class DataHolder {
     public static boolean todayBreak;
     public static boolean todayLunch;
     public static boolean todayDinner;
+    public static String strCurrentDate;
 
     public static boolean todayComplete;
-    public boolean doneNotification;
 
     public static boolean dataRead = false;
 
     public static void readData(Context cont){
         try {
+            java.util.Date date = new java.util.Date();
+
+            SimpleDateFormat formDates = new SimpleDateFormat("yyyy-MM-dd");
+            strCurrentDate = formDates.format(date);
+
             DBContainer dbCont = new DBContainer();
 
             java.util.Date theDate = new java.util.Date();
@@ -67,7 +73,25 @@ public class DataHolder {
             todayComplete = false;
         }
 
-        return todayComplete;
+        boolean shouldNotif = false;
+        DBContainer dbCont = new DBContainer();
+        int[] notif = dbCont.readFromNotifFile(cont, strCurrentDate);
+
+        if(todayComplete) {
+            //if notif null or (10) found nothing in file or (0) found previous entry to say not done
+            if (notif == null || (notif[0] == 10 || notif[1] == 10) || (notif[0] == 0 || notif[1] == 0) ) {
+                dbCont.writeToNotifFile(cont,strCurrentDate,1,1);
+                shouldNotif = true;
+            }
+        }else{
+            //if not found in file or previous entry to say not done
+            if ((notif[0] != 10 || notif[1] != 10 ) || (notif[0] == 1 || notif[1] ==1)) {
+                dbCont.writeToNotifFile(cont,strCurrentDate,0,0);
+            }
+        }
+
+
+        return (todayComplete && shouldNotif);
     }
 
 
