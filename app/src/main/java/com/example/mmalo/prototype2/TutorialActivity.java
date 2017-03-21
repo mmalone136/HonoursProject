@@ -66,7 +66,8 @@ public class TutorialActivity extends AppCompatActivity {
         currInstr = 0;
         picResult = (ImageView) findViewById(R.id.imageViewResult);
 
-        int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial3, R.drawable.tutorial4};
+        int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial2_5,R.drawable.tutorial3,
+                R.drawable.tutorial3_5,R.drawable.tutorial4, R.drawable.tutorial5};
         instructions = temp;
 
         picResult.setImageResource(instructions[currInstr]);
@@ -258,18 +259,7 @@ public class TutorialActivity extends AppCompatActivity {
         Toast t = Toast.makeText(this, review, Toast.LENGTH_LONG);
         //t.show();
 
-        if (tutorialDataList.size() > 0) {
-            setCurrentPhoto(getNextPhoto());
-        } else {
-            LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
-            tutButtons.setVisibility(View.INVISIBLE);
 
-            ImageButton replay = (ImageButton) findViewById(R.id.buttonReplayTut);
-            replay.setVisibility(View.VISIBLE);
-            nextTutOption.setVisibility(View.INVISIBLE);
-            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
-            finalSum.setVisibility(View.VISIBLE);
-        }
     }
 
     public void replay(View v) {
@@ -289,6 +279,21 @@ public class TutorialActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.VISIBLE);
         submitOption.setVisibility(View.VISIBLE);
         pictureView.setVisibility(View.VISIBLE);
+
+
+
+        if (tutorialDataList.size() > 0) {
+            setCurrentPhoto(getNextPhoto());
+        } else {
+            LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
+            tutButtons.setVisibility(View.INVISIBLE);
+
+            ImageButton replay = (ImageButton) findViewById(R.id.buttonReplayTut);
+            replay.setVisibility(View.VISIBLE);
+            nextTutOption.setVisibility(View.INVISIBLE);
+            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
+            finalSum.setVisibility(View.VISIBLE);
+        }
     }
 
 

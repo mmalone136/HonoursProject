@@ -180,6 +180,14 @@ public class PTakenActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         tv.setVisibility(View.VISIBLE);
 
+        TextView tv2 = (TextView) findViewById(R.id.portionPrompt);
+        tv2.setVisibility(View.VISIBLE);
+
+        ImageView taken = (ImageView) findViewById(R.id.imageTaken);
+        taken.setVisibility(View.INVISIBLE);
+
+
+
         if (currCount.equals("Drink")) {
             tv.setText(String.valueOf(dr));
         } else {
@@ -200,7 +208,15 @@ public class PTakenActivity extends AppCompatActivity {
 
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         tv.setVisibility(View.INVISIBLE);
+        TextView tv2 = (TextView) findViewById(R.id.portionPrompt);
+        tv2.setVisibility(View.INVISIBLE);
         tv.setText("0");
+
+        ImageView taken = (ImageView) findViewById(R.id.imageTaken);
+        taken.setVisibility(View.VISIBLE);
+
+        EditText comments = (EditText) findViewById(R.id.textComments);
+        comments.setVisibility(View.VISIBLE);
 
 
     }

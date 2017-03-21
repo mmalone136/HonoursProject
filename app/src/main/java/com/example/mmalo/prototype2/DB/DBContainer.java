@@ -400,7 +400,6 @@ public class DBContainer {
     //---------- TEMP FUNCTIONS ------------
     public void deleteDate(Context cont) {
         try
-
         {
             dbh = new DBHelper(cont);
             db = dbh.getWritableDatabase();

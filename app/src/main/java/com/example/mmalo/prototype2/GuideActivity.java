@@ -160,7 +160,7 @@ public class GuideActivity extends AppCompatActivity {
             }
             else if (i == 2)
             {
-                currInt = R.drawable.dietbottle;
+                currInt = R.drawable.notdietbottle;
             }
             else if (i == 3)
             {
@@ -266,7 +266,7 @@ public class GuideActivity extends AppCompatActivity {
 
         children = new ArrayList<ExpListChild>();
         ExpListGroup g2 = new ExpListGroup();
-        g2.setName("Drinks");
+        g2.setName("Healthy Drinks");
 
         child = new ExpListChild();
         child.setName("Water");

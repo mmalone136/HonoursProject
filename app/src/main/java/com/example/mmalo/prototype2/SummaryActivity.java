@@ -194,10 +194,7 @@ public class SummaryActivity extends AppCompatActivity {
         LinearLayout plusMinus = (LinearLayout) findViewById(R.id.LinLayInc);
         plusMinus.setVisibility(View.INVISIBLE);
 
-
-
         buttConf.setVisibility(View.INVISIBLE);
-
 
         comments.setVisibility(View.VISIBLE);
         edits.setVisibility(View.VISIBLE);
@@ -207,6 +204,13 @@ public class SummaryActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         tv.setVisibility(View.INVISIBLE);
         tv.setText("0");
+
+
+        TextView tv2 = (TextView) findViewById(R.id.portionPrompt);
+        tv2.setVisibility(View.INVISIBLE);
+
+        ImageView taken = (ImageView) findViewById(R.id.imagePhoto);
+        taken.setVisibility(View.VISIBLE);
     }
 
     public void addToCounts(View v) {
@@ -227,6 +231,14 @@ public class SummaryActivity extends AppCompatActivity {
 
         TextView tv = (TextView) findViewById(R.id.textViewCount2);
         tv.setVisibility(View.VISIBLE);
+
+
+        TextView tv2 = (TextView) findViewById(R.id.portionPrompt);
+        tv2.setVisibility(View.VISIBLE);
+
+        ImageView taken = (ImageView) findViewById(R.id.imagePhoto);
+        taken.setVisibility(View.INVISIBLE);
+
 
         comments.setVisibility(View.INVISIBLE);
         edits.setVisibility(View.INVISIBLE);

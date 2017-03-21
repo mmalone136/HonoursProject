@@ -99,21 +99,37 @@ public class CustomAdapter extends BaseAdapter {
 
             TextView day = (TextView) convertView.findViewById(R.id.tvChild);
             TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
-            TextView other = (TextView) convertView.findViewById(R.id.tvChild2);
+            //TextView other = (TextView) convertView.findViewById(R.id.tvChild2);
             //ImageButton star = (ImageButton) convertView.findViewById(R.id.ivStar);
             ImageView star = (ImageView) convertView.findViewById(R.id.ivStar);
 
             day.setText(stringList[0]);
             date.setText(stringList[1]);
-            other.setText(stringList[2]);
+            //other.setText(stringList[2]);
 
 
             if (position == todayPosition) {
                 //convertView.setBackgroundResource(R.color.explvGroupBackGood);
                 LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
                 ll.setBackgroundResource(R.color.explvGroupBackGood);
-                other.setText("TODAY");
+                //other.setText("TODAY");
+                String str = stringList[1] + "  TODAY";
+                date.setText(str);
+
             }
+            else if(stringList[2].equals("NO ENTRIES")){
+                //LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
+                //ll.setBackgroundResource(R.color.colorPrimaryDark);
+
+            }else{
+                LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
+                ll.setBackgroundResource(R.color.aBlue);
+
+
+
+            }
+
+
 
              if (current) {
                 star.setImageResource(R.drawable.goldstar);

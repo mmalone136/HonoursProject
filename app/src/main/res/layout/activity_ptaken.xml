@@ -34,6 +34,7 @@
         android:text="Tap here to type a comment"
         android:onClick="clearTextBox"
         android:ems="10"
+        android:maxLength="50"
         android:id="@+id/textComments"
         android:minHeight="100dp"
         android:layout_alignParentLeft="true"
@@ -142,20 +143,35 @@
     </LinearLayout>
 
 
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How many Portions does this contain?"
+        android:id="@+id/portionPrompt"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        />
+
+
     <TextView
         android:text="0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/textComments"
         android:id="@+id/textViewCount"
-        android:layout_alignParentTop="true"
-        android:textSize="200dp"
+        android:textSize="150sp"
         android:textAlignment="center"
+        android:gravity="center"
         android:visibility="invisible"
         android:background="@drawable/background"
         android:textColor="#FFFFFF"
+
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/portionPrompt" />
 
 
     <Button
