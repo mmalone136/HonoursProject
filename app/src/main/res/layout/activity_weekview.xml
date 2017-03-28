@@ -46,7 +46,9 @@
         android:divider="#c2b35b"
         android:dividerHeight="6dp"
         android:drawSelectorOnTop="false"
-
+        android:paddingTop="5sp"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
         />
 
     <LinearLayout android:id="@+id/ButtonLayout"
@@ -59,7 +61,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/leftWeek"
             android:text="Previous\nWeek"
             android:tag="-"
@@ -69,15 +71,18 @@
         <Button
             android:text="This\nWeek"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/buttonCurrWeek"
             android:layout_weight="1"
             android:tag="0"
-            android:onClick="updateWeek"/>
+            android:onClick="updateWeek"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
 
         <ImageButton
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/rightWeek"
             android:layout_weight="1"
             android:text="Next\nWeek"

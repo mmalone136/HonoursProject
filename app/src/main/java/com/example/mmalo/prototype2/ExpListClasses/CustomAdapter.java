@@ -113,7 +113,7 @@ public class CustomAdapter extends BaseAdapter {
                 LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
                 ll.setBackgroundResource(R.color.explvGroupBackGood);
                 //other.setText("TODAY");
-                String str = stringList[1] + "  TODAY";
+                String str = stringList[1] + "\nTODAY";
                 date.setText(str);
 
             }

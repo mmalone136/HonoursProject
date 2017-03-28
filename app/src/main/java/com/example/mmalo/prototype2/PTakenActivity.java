@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -16,7 +17,10 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
 import android.text.method.DateTimeKeyListener;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -111,11 +115,53 @@ public class PTakenActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+
+        Intent i = new Intent(getBaseContext(), OptionsActivity.class);
+        this.startActivity(i);
+    }
+
+
     public void initValues() {
+
+        int apiLevel = Build.VERSION.SDK_INT;
+        Bitmap bitmap;
         thePic = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
 
+        if (apiLevel ==19 ||apiLevel ==21) {
+            bitmap = thePic;
+        }else {
+            Matrix rotationMat = new Matrix();
+            rotationMat.postRotate(270);
+            bitmap = Bitmap.createBitmap(thePic, 0, 0, thePic.getWidth(), thePic.getHeight(), rotationMat, true);
+        }
+
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
-        taken.setImageBitmap(thePic);
+        taken.setImageBitmap(bitmap);
+
+        //View par = (View) taken.getParent();
+        //int height = par.getHeight();
+
+        int takenHeight = taken.getHeight();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = metrics.heightPixels;
+        int theHeight;
+        if (height < 1200) {
+
+        } else {
+            theHeight = height / 2;
+            ViewGroup.LayoutParams params = taken.getLayoutParams();
+            params.height = theHeight;
+            taken.requestLayout();
+        }
+
+        //taken.setMinimumHeight(height);
+        //taken.setMaxHeight(height);
+
         fv = 0;
         dr = 0;
         firstClick = true;
@@ -185,7 +231,6 @@ public class PTakenActivity extends AppCompatActivity {
 
         ImageView taken = (ImageView) findViewById(R.id.imageTaken);
         taken.setVisibility(View.INVISIBLE);
-
 
 
         if (currCount.equals("Drink")) {
@@ -338,18 +383,15 @@ public class PTakenActivity extends AppCompatActivity {
         t.show();
 
 
-
         //WeekviewActivity.showNotif = false;
 
         boolean targetCheck = DataHolder.checkCompleted(this);
         Intent i;
 
-        if(targetCheck)
-        {
+        if (targetCheck) {
             WeekviewActivity.showNotif = true;
             i = new Intent(getBaseContext(), WeekviewActivity.class);
-        }else
-        {
+        } else {
             i = new Intent(getBaseContext(), OptionsActivity.class);
         }
 

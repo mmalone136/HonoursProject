@@ -5,7 +5,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
         android:background="@color/common_action_bar_splitter"
         android:orientation="horizontal"
         >
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textColor="@color/black"
             />
 
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textColor="@color/black" />
 
 

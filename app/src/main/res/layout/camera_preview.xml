@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1"
-    android:baselineAligned="false"
-    >
+    android:baselineAligned="false">
 
 
     <FrameLayout
@@ -15,72 +15,126 @@
         android:layout_weight="1.14"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/frame_taken"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
 
-            android:visibility="invisible"
-            />
 
     </FrameLayout>
 
-    <LinearLayout android:id="@+id/LinLay1" android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_cancel"
-            android:text="Cancel"
-            android:onClick="cancelPic"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:id="@+id/LinLayOfLays"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="match_parent">
+
+
+
+        <RelativeLayout
+             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5.5"
+            android:padding="10sp"
+
+            >
+
+        <ImageView
+            android:id="@+id/frame_taken"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+             />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/turnImage"
+                app:srcCompat="@drawable/turn2"
+                android:visibility="invisible"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelLay1"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/button_capture"
-            android:text="Capture"
-            android:onClick="showExamples"/>
+            android:orientation="horizontal"
+            android:layout_width="fill_parent">
+
+            <LinearLayout android:id="@+id/LinLay1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                >
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/button_cancel"
+                    android:text="Cancel"
+                    android:onClick="cancelPic"
+                    android:src="@drawable/back3"
+                    />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/button_capture"
+                    android:text="Capture"
+                    android:src="@drawable/camera3"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/LinLay2"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+
+                android:visibility="invisible"
+                >
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/button_cancell"
+                    android:text="Cancel"
+                    android:onClick="cancelPic"
+                    android:src="@drawable/retake3"
+                    />
+
+                <ImageButton
+                    android:src="@drawable/arrow3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/button_cont"
+                    android:text="Continue"
+                    android:onClick="continueForm"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
-
-    <LinearLayout android:id="@+id/LinLay2" android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_cancell"
-            android:text="Cancel"
-            android:onClick="cancelPic"
-            android:visibility="invisible"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/button_cont"
-            android:text="Continue"
-            android:onClick="continueForm"
-            android:visibility="invisible"/>
-    </LinearLayout>
-
-
-
 
 
 </RelativeLayout>
-
-
 
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.hardware.SensorManager;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
@@ -17,14 +18,18 @@ import android.os.Bundle;
 
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.OrientationEventListener;
 import android.view.Surface;
 
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mmalo.prototype2.Controllers.CameraPreview;
@@ -52,7 +57,9 @@ public class CameraActivity extends Activity {
     int apiLevel;
     FrameLayout preview;
     TextureView imTextView;
-
+    OrientationEventListener mOrientationListener;
+    ImageButton captureButton;
+    ImageView turn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,19 +73,57 @@ public class CameraActivity extends Activity {
 
         rotationMat = new Matrix();
         rotationMat.postRotate(90);
+
+
+        turn = (ImageView) findViewById(R.id.turnImage);
+        mOrientationListener = new OrientationEventListener(this,
+                SensorManager.SENSOR_DELAY_NORMAL) {
+
+            @Override
+            public void onOrientationChanged(int orientation) {
+                //if (vals.contains(orientation)) {
+                //    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
+                //t.show();
+                //}
+                if (!cancelFlag) {
+                    if (orientation < 200 || orientation > 320) {
+                        turn.setVisibility(View.VISIBLE);
+                        turn.bringToFront();
+                        captureButton.setEnabled(false);
+                        //setVisibility(View.VISIBLE);
+                    } else {
+                        turn.setVisibility(View.INVISIBLE);
+                        captureButton.setEnabled(true);
+                        //.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        };
+
+        if (mOrientationListener.canDetectOrientation() == true) {
+            //  Log.v(DEBUG_TAG, "Can detect orientation");
+            mOrientationListener.enable();
+        } else {
+            //    Log.v(DEBUG_TAG, "Cannot detect orientation");
+            mOrientationListener.disable();
+        }
+
+
+
+
+
     }
 
 
     public void lowerAPI() {
         // Create an instance of Camera
-        Button capture = (Button) findViewById(R.id.button_capture);
-        capture.setOnClickListener(new View.OnClickListener() {
+        captureButton = (ImageButton) findViewById(R.id.button_capture);
+        captureButton.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
                                            takePicClick(v);
                                        }
                                    }
-
         );
 
         mCamera = getCameraInstance();
@@ -111,8 +156,9 @@ public class CameraActivity extends Activity {
 
     public void afterTaken(byte[] photoData) {
         try {
-            Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
-            bitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), rotationMat, true);
+            bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), rotationMat, true);
+
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
             theTime = ts;
@@ -131,11 +177,20 @@ public class CameraActivity extends Activity {
 
             cancelFlag = !cancelFlag;
 
-            Button confirm = (Button) findViewById(R.id.button_cont);
-            confirm.setVisibility(View.VISIBLE);
 
-            Button capture = (Button) findViewById(R.id.button_capture);
-            capture.setVisibility(View.INVISIBLE);
+
+            //ImageButton confirm = (ImageButton) findViewById(R.id.button_cont);
+            //confirm.setVisibility(View.VISIBLE);
+
+            //ImageButton capture = (ImageButton) findViewById(R.id.button_capture);
+            //capture.setVisibility(View.INVISIBLE);
+
+            RelativeLayout seven = (RelativeLayout) findViewById(R.id.RelLay1);
+            LinearLayout options = (LinearLayout) seven.findViewById(R.id.LinLay2);
+            options.setVisibility(View.VISIBLE);
+            LinearLayout toHide = (LinearLayout) seven.findViewById(R.id.LinLay1);
+            toHide.setVisibility(View.INVISIBLE);
+
 
             dataToPass = photoData;
         }catch(Exception e){

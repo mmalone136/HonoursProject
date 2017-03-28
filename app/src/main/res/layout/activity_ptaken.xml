@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     tools:context="com.example.mmalo.prototype2.PTakenActivity"
+
     >
 
 
@@ -148,7 +149,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How many Portions does this contain?"
+        android:text="How many portions does this contain?"
         android:id="@+id/portionPrompt"
         android:textAlignment="center"
         android:textSize="30sp"

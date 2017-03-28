@@ -40,7 +40,7 @@ public class TutorialActivity extends AppCompatActivity {
     ImageButton left;
     int correctFVCount;
     int correctDRCount;
-    TextView finalSum;
+    ImageView finalSum;
     Button nextTutOption;
     ImageButton submitOption;
     int[] instructions;
@@ -59,7 +59,7 @@ public class TutorialActivity extends AppCompatActivity {
         submitOption = (ImageButton) findViewById(R.id.buttonSubmit2);
         DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
-        finalSum = (TextView) findViewById(R.id.txtViewFinalSummary);
+        finalSum = (ImageView) findViewById(R.id.txtViewFinalSummary);
         setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
         correctDRCount = 0;
@@ -83,28 +83,44 @@ public class TutorialActivity extends AppCompatActivity {
         tutorialDataList = new ArrayList<TutorialData>();
         TutorialData tutData;
 
-        String id = "@drawable/apple";
-        tutData = new TutorialData(id, true, false);
-        tutorialDataList.add(tutData);
-
-        id = "@drawable/glass2";
-        tutData = new TutorialData(id, false, true); //id, fv, dr
-        tutorialDataList.add(tutData);
-
-        id = "@drawable/fruitandveg";
-        tutData = new TutorialData(id, true, false);
-        tutorialDataList.add(tutData);
-
-        id = "@drawable/healthymeal";
-        tutData = new TutorialData(id, true, false);
-        tutorialDataList.add(tutData);
-
-        id = "@drawable/spaghetti";
+        String id = "@drawable/burger";
         tutData = new TutorialData(id, false, false);
         tutorialDataList.add(tutData);
 
-        id = "@drawable/mealdrink";
-        tutData = new TutorialData(id, true, true);
+        id = "@drawable/fruit";
+        tutData = new TutorialData(id, true, false); //id, fv, dr
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/icecream2";
+        tutData = new TutorialData(id, false, false);
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/pastry";
+        tutData = new TutorialData(id, false, false);
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/pizza";
+        tutData = new TutorialData(id, false, false);
+        tutorialDataList.add(tutData);
+
+        //id = "@drawable/mealdrink";
+       // tutData = new TutorialData(id, true, true);
+        //tutorialDataList.add(tutData);
+
+        id = "@drawable/salad2";
+        tutData = new TutorialData(id, true, false);
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/strawbs";
+        tutData = new TutorialData(id, true, false);
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/tea";
+        tutData = new TutorialData(id, false, true);
+        tutorialDataList.add(tutData);
+
+        id = "@drawable/water";
+        tutData = new TutorialData(id, false, true);
         tutorialDataList.add(tutData);
 
 
@@ -291,8 +307,27 @@ public class TutorialActivity extends AppCompatActivity {
             ImageButton replay = (ImageButton) findViewById(R.id.buttonReplayTut);
             replay.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.INVISIBLE);
-            finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
+           // finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
             finalSum.setVisibility(View.VISIBLE);
+            finalSum.setImageResource(R.drawable.finalallcorrect);
+            //finalSum.setImageResource(R.drawable.finalalmost);
+            //finalSum.setImageResource(R.drawable.finalgettingthere);
+
+            int total = correctFVCount + correctDRCount;
+            if (total==16)
+            {
+                finalSum.setImageResource(R.drawable.finalallcorrect);
+            }else if(total>8&& total<16){
+                finalSum.setImageResource(R.drawable.finalalmost);
+            }
+            else{
+
+                finalSum.setImageResource(R.drawable.finalgettingthere);
+            }
+
+
+            pictureView.setVisibility(View.INVISIBLE);
+            picResult.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -301,14 +336,21 @@ public class TutorialActivity extends AppCompatActivity {
         currInstr++;
         if (currInstr == instructions.length) {
             //picResult.setImageResource(instructions[currInstr]);
-            picResult.setVisibility(View.INVISIBLE);
+            //picResult.setVisibility(View.INVISIBLE);
+            currInstr--;
         } else {
             picResult.setImageResource(instructions[currInstr]);
             picResult.setVisibility(View.VISIBLE);
 
             if (currInstr == (instructions.length - 1)) {
-                ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
+                //beginLay
+
+                //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
+                LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
                 begin.setVisibility(View.VISIBLE);
+                begin.bringToFront();
+                ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
+                //right.setVisibility(View.INVISIBLE);
             }
         }
         if(currInstr>0){
@@ -316,14 +358,19 @@ public class TutorialActivity extends AppCompatActivity {
             left.setVisibility(View.VISIBLE);
 
         }
+
+
     }
 
     public void prevInstruct(View v) {
         if (currInstr > 0) {
             //This may not be correct
             if (currInstr == (instructions.length - 1)) {
-                ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
+                //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
+                LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
                 begin.setVisibility(View.INVISIBLE);
+               //ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
+                //right.setVisibility(View.VISIBLE);
             }
             currInstr--;
             picResult.setImageResource(instructions[currInstr]);
@@ -336,6 +383,7 @@ public class TutorialActivity extends AppCompatActivity {
             left.setVisibility(View.INVISIBLE);
 
         }
+
     }
 
     public void beginTutorial(View v) {
@@ -344,8 +392,12 @@ public class TutorialActivity extends AppCompatActivity {
         ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
         left.setVisibility(View.INVISIBLE);
         right.setVisibility(View.INVISIBLE);
-        ImageButton begin = (ImageButton) findViewById(R.id.beginTut);
+        //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
+        LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
         begin.setVisibility(View.INVISIBLE);
+
+
+
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.ButtonLayout);
         ll.setVisibility(View.VISIBLE);

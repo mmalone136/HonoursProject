@@ -1,196 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    android:orientation="vertical">
 
 
     <Button
-        android:text="Back To Main Menu"
+        android:id="@+id/buttonBackFromTut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonBackFromTut"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="backOption"
-        android:visibility="invisible"/>
+        android:text="Back To Main Menu"
+        android:visibility="invisible" />
 
-    <LinearLayout android:id="@+id/ButtonLayoutInstr"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <ImageView
+        android:id="@+id/imageViewTut"
+        android:layout_width="match_parent"
+        android:foregroundGravity="center"
+
+        android:scaleType="fitCenter"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ButtonLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <ImageView
+        android:id="@+id/imageViewResult"
         android:layout_width="fill_parent"
-        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/ButtonLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/txtViewFinalSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ButtonLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/NextButtonsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imageViewTut"
-        android:visibility="visible"
-        >
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/buttonReplayTut"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="replay"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/replay" />
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:onClick="backOption"
+            android:text="Back To Main Menu" />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/buttonNextImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageViewTut"
+        android:onClick="nextOption"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Next"
+        android:visibility="invisible" />
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ButtonLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <ImageButton
+            android:id="@+id/buttonFV"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="addToFV"
+            android:tag="FV"
+            android:text="Add To\nFruit\n and Veg"
+            app:srcCompat="@drawable/bowlcross" />
 
 
         <ImageButton
-            app:srcCompat="@drawable/leftarrow"
-            android:layout_weight="1"
+            android:id="@+id/buttonDR"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonPrevInst"
-            android:onClick="prevInstruct"
-
-            />
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="addToDrinks"
+            android:tag="Drink"
+            android:text="ADD TO\nDRINKS"
+            app:srcCompat="@drawable/glasscross" />
 
 
         <ImageButton
-            app:srcCompat="@drawable/rightarrow"
+            android:id="@+id/buttonSubmit2"
             android:layout_width="0dp"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonNextInst"
-            android:onClick="nextInstruct"
-            />
+            android:onClick="goToNext"
+            android:text="Submit"
+            app:srcCompat="@drawable/arrow" />
+
 
     </LinearLayout>
 
 
-    <LinearLayout android:id="@+id/ButtonLayout"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <LinearLayout
+        android:id="@+id/place"
         android:layout_width="fill_parent"
-        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:visibility="invisible">
+        android:layout_below="@+id/imageViewTut"
+        android:orientation="vertical">
 
-        <ImageButton
-            app:srcCompat="@drawable/bowlcross"
-            android:text="Add To\nFruit\n and Veg"
+        <LinearLayout
+            android:id="@+id/ButtonLayoutInstr"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/buttonFV"
-            android:onClick="addToFV"
-            android:tag="FV"
-            />
+            android:orientation="horizontal"
+            android:visibility="visible">
 
 
-        <ImageButton
-            app:srcCompat="@drawable/glasscross"
-            android:text="ADD TO\nDRINKS"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:id="@+id/buttonDR"
-            android:onClick="addToDrinks"
-            android:tag="Drink"
-            />
+
+            <ImageButton
+                android:id="@+id/buttonPrevInst"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="prevInstruct"
+                app:srcCompat="@drawable/leftarrow"
+
+                />
 
 
-        <ImageButton
-            app:srcCompat="@drawable/arrow"
-            android:text="Submit"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/buttonSubmit2"
-            android:onClick="goToNext"
+            <ImageButton
+                android:id="@+id/buttonNextInst"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="nextInstruct"
+                app:srcCompat="@drawable/rightarrow" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
 
     </LinearLayout>
 
-    <ImageView
+
+
+    <LinearLayout
+        android:id="@+id/beginLay"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-
-        android:id="@+id/imageViewTut"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/ButtonLayout" />
-
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/imageViewResult"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/ButtonLayout"
-        android:visibility="invisible" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txtViewFinalSummary"
-        android:layout_above="@+id/ButtonLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:background="@drawable/background"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        />
-
-
-    <LinearLayout android:id="@+id/NextButtonsLayout"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageViewTut">
+        android:layout_below="@+id/imageViewTut"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        >
 
-        <ImageButton
-            app:srcCompat="@drawable/replay"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+
+
+    <LinearLayout
+        android:id="@+id/ButtonBegin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/buttonReplayTut"
-            android:onClick="replay"
             android:visibility="invisible"/>
 
-        <Button
-            android:text="Back To Main Menu"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonBack"
-            android:onClick="backOption"
-             />
+
+        <ImageButton
+            android:id="@+id/beginTut2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="beginTutorial"
+            android:src ="@drawable/playtut" />
     </LinearLayout>
 
-    <Button
-        android:text="Next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonNextImage"
-        android:onClick="nextOption"
-        android:visibility="invisible"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonBackFromTut"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageViewTut" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="invisible"/>
 
-    <ImageButton
-        app:srcCompat="@drawable/playtut"
-        android:text="      Begin Tutorial        "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/beginTut"
-        android:layout_above="@+id/buttonBackFromTut"
-        android:layout_below="@+id/imageViewTut"
-        android:onClick="beginTutorial"
-        android:visibility="invisible"
-        />
+
+</LinearLayout>
 
 
 </RelativeLayout>

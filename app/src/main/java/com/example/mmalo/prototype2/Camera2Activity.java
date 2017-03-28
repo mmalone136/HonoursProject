@@ -380,7 +380,14 @@ public class Camera2Activity extends AppCompatActivity {
     public void afterTaken(byte[] photoData) {
         try {
             Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
-            bitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), rotationMat, true);
+
+            // SEVEN 7777
+            if(Build.VERSION.SDK_INT==21) {
+                bitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), rotationMat, true);
+            }else {
+                bitmap = bmp;
+            }
+
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
             theTime = ts;
@@ -430,6 +437,8 @@ public class Camera2Activity extends AppCompatActivity {
             PTakenActivity.filename = theTime.toString();
 
             releaseCamera();
+            //bitmap.recycle();
+            dataToPass = null;
             System.gc();
 
             Intent i = new Intent(this, PTakenActivity.class);
@@ -444,12 +453,6 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-
-        releaseCamera();
-        super.onBackPressed();
-    }
 
 
     public void cancelPic(View v) {

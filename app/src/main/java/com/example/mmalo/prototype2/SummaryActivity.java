@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -86,7 +88,7 @@ public class SummaryActivity extends AppCompatActivity {
         setListView();
         newMeal = "";
         try {
-            currPhoto = readImageFromFile(theentry.getFilepath());//theentry.getPhotoData();
+            currPhoto = readImageFromFile(theentry.getFilepath());
             Bitmap bmp = BitmapFactory.decodeByteArray(currPhoto, 0, currPhoto.length);
             ImageView summaryPhoto = (ImageView) findViewById(R.id.imagePhoto);
             summaryPhoto.setImageBitmap(bmp);
@@ -99,6 +101,30 @@ public class SummaryActivity extends AppCompatActivity {
             currDR = 0;
             fvChange = false;
             drChange = false;
+
+
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+            int height = metrics.heightPixels;
+            int theHeight;
+            if(height<1200)
+            {
+
+            }
+            else
+            {
+                theHeight = height/2;
+                ViewGroup.LayoutParams params = summaryPhoto.getLayoutParams();
+                params.height = theHeight;
+                summaryPhoto.requestLayout();
+            }
+
+
+
+
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

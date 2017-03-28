@@ -34,26 +34,26 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/fruitveg"
+                app:srcCompat="@drawable/fruitveg2"
                 />
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/drinks"/>
+                app:srcCompat="@drawable/drinks2"/>
 
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/meals"/>
+                app:srcCompat="@drawable/meals2"/>
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/unhealth"/>
+                app:srcCompat="@drawable/unhealth2"/>
 
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/exercise"/>
+                app:srcCompat="@drawable/exercise2"/>
 
 
 
@@ -82,14 +82,14 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/buttonInfoTab"
             android:text="General Advice"
             android:onClick="showGenInfo"/>
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/buttonExamplesTab"
             android:layout_weight="1"
             android:text="Examples"

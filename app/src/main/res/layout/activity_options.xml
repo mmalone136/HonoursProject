@@ -6,19 +6,19 @@
     android:weightSum="1"
     tools:context="com.example.mmalo.prototype2.OptionsActivity">
 
-    <Button
+    <ImageButton
+        android:src="@drawable/targets"
         android:text="          \t\t\t\tTargets"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/buttonTargets"
         android:onClick="loadTargets"
         android:layout_weight="0.2"
-        android:drawableLeft="@drawable/target"
-        android:gravity="left|center_vertical"
+        android:gravity="center"
 
         />
-
-    <Button
+    <ImageButton
+        android:src="@drawable/adddiary"
         android:text="\tCreate Diary Entry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,8 @@
         android:gravity="left|center_vertical"
         />
 
-    <Button
+    <ImageButton
+        android:src="@drawable/mydiary"
         android:text="           View Diary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,7 +42,8 @@
         android:gravity="left|center_vertical"
         />
 
-    <Button
+    <ImageButton
+        android:src="@drawable/healthmsgs"
         android:text="    Healthy Messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,7 +55,8 @@
         />
 
 
-    <Button
+    <ImageButton
+        android:src="@drawable/playtutbutt"
         android:text="                Tutorial"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -41,8 +41,8 @@ public class OptionsActivity extends AppCompatActivity {
         dbCont = new DBContainer();
         dbCont.createTables(this);
         //if (DataHolder.dataRead) {
-            DataHolder.readData(this);
-       // }
+        DataHolder.readData(this);
+        // }
 
         //Button diaryButton = (Button) findViewById(R.id.buttonSummary);
         //LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
@@ -55,7 +55,7 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_layout, menu);
+        //inflater.inflate(R.menu.menu_layout, menu);
         return true;
     }
 
@@ -102,14 +102,16 @@ public class OptionsActivity extends AppCompatActivity {
         int apiLevel = Build.VERSION.SDK_INT;
         Intent i;
         if (apiLevel < 21) {
-            i = new Intent(this, CameraActivity.class);
+                i = new Intent(this, CameraActivity.class);
         } else {
             i = new Intent(this, Camera2Activity.class);
         }
         this.startActivity(i);
+
     }
 
     //ViewGuide
+
     public void viewGuide(View v) {
         Intent i = new Intent(getBaseContext(), GuideActivity.class);
         this.startActivity(i);

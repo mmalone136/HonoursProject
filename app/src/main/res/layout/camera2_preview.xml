@@ -56,7 +56,7 @@
         <RelativeLayout
             android:id="@+id/RelLay1"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.3"
             android:orientation="horizontal"
             android:layout_width="fill_parent">
 
@@ -73,7 +73,7 @@
                     android:id="@+id/button_cancel"
                     android:text="Cancel"
                     android:onClick="cancelPic"
-                    app:srcCompat="@drawable/backarrow"
+                    app:srcCompat="@drawable/back3"
                     />
 
                 <ImageButton
@@ -82,7 +82,7 @@
                     android:layout_weight="1"
                     android:id="@+id/button_capture"
                     android:text="Capture"
-                    app:srcCompat="@drawable/camera"
+                    app:srcCompat="@drawable/camera3"
                     />
 
 
@@ -104,11 +104,11 @@
                     android:id="@+id/button_cancell"
                     android:text="Cancel"
                     android:onClick="cancelPic"
-                    app:srcCompat="@drawable/retake2"
+                    app:srcCompat="@drawable/retake3"
                     />
 
                 <ImageButton
-                    app:srcCompat="@drawable/arrow"
+                    app:srcCompat="@drawable/arrow3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
