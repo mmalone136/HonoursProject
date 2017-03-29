@@ -64,6 +64,7 @@ public class SummaryActivity extends AppCompatActivity {
     int dr, fv;
     int fvDiff, drDiff;
     boolean fvChange, drChange;
+    boolean firstClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class SummaryActivity extends AppCompatActivity {
             fv = initFV;
             currFV = 0;
             currDR = 0;
+            firstClick = true;
             fvChange = false;
             drChange = false;
 
@@ -208,6 +210,17 @@ public class SummaryActivity extends AppCompatActivity {
         //LinearLayout edits = (LinearLayout) findViewById(R.id.LinLayEdits);
         edits.setVisibility(View.VISIBLE);
 
+    }
+
+    public void clearTextBox(View v) {
+        if (v.getId() == R.id.textComms) ;
+        {
+            if (firstClick) {
+                EditText e = (EditText) v;
+                e.setText("");
+                firstClick = false;
+            }
+        }
     }
 
     public void saveCount(View v) {

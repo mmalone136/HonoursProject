@@ -38,6 +38,7 @@ public class TutorialActivity extends AppCompatActivity {
     ImageButton buttonFV;
     ImageButton buttonDR;
     ImageButton left;
+    TextView itemText;
     int correctFVCount;
     int correctDRCount;
     ImageView finalSum;
@@ -60,11 +61,13 @@ public class TutorialActivity extends AppCompatActivity {
         DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
         finalSum = (ImageView) findViewById(R.id.txtViewFinalSummary);
-        setCurrentPhoto(getNextPhoto());
+        //setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
         correctDRCount = 0;
         currInstr = 0;
         picResult = (ImageView) findViewById(R.id.imageViewResult);
+
+        itemText = (TextView) findViewById(R.id.currItemText);
 
         int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial2_5,R.drawable.tutorial3,
                 R.drawable.tutorial3_5,R.drawable.tutorial4, R.drawable.tutorial5};
@@ -74,7 +77,7 @@ public class TutorialActivity extends AppCompatActivity {
         picResult.setVisibility(View.VISIBLE);
         left = (ImageButton) findViewById(R.id.buttonPrevInst);
         left.setVisibility(View.INVISIBLE);
-        pictureView.setVisibility(View.INVISIBLE);
+        //pictureView.setVisibility(View.INVISIBLE);
 
     }
 
@@ -84,23 +87,23 @@ public class TutorialActivity extends AppCompatActivity {
         TutorialData tutData;
 
         String id = "@drawable/burger";
-        tutData = new TutorialData(id, false, false);
+        tutData = new TutorialData(id, false, false, "Burger");
         tutorialDataList.add(tutData);
 
         id = "@drawable/fruit";
-        tutData = new TutorialData(id, true, false); //id, fv, dr
+        tutData = new TutorialData(id, true, false, "Some Fruit"); //id, fv, dr
         tutorialDataList.add(tutData);
 
         id = "@drawable/icecream2";
-        tutData = new TutorialData(id, false, false);
+        tutData = new TutorialData(id, false, false, "Ice-Cream");
         tutorialDataList.add(tutData);
 
         id = "@drawable/pastry";
-        tutData = new TutorialData(id, false, false);
+        tutData = new TutorialData(id, false, false, "Cream-Pastries");
         tutorialDataList.add(tutData);
 
         id = "@drawable/pizza";
-        tutData = new TutorialData(id, false, false);
+        tutData = new TutorialData(id, false, false,"Pizza");
         tutorialDataList.add(tutData);
 
         //id = "@drawable/mealdrink";
@@ -108,19 +111,19 @@ public class TutorialActivity extends AppCompatActivity {
         //tutorialDataList.add(tutData);
 
         id = "@drawable/salad2";
-        tutData = new TutorialData(id, true, false);
+        tutData = new TutorialData(id, true, false, "Salad");
         tutorialDataList.add(tutData);
 
         id = "@drawable/strawbs";
-        tutData = new TutorialData(id, true, false);
+        tutData = new TutorialData(id, true, false, "Strawberries");
         tutorialDataList.add(tutData);
 
         id = "@drawable/tea";
-        tutData = new TutorialData(id, false, true);
+        tutData = new TutorialData(id, false, true,"Sugar-Free Tea");
         tutorialDataList.add(tutData);
 
         id = "@drawable/water";
-        tutData = new TutorialData(id, false, true);
+        tutData = new TutorialData(id, false, true, "Water");
         tutorialDataList.add(tutData);
 
 
@@ -128,10 +131,13 @@ public class TutorialActivity extends AppCompatActivity {
 
     public void setCurrentPhoto(TutorialData tutData) {
         try {
+
+
             String identifier = tutData.getFilePath();
             currHasFV = tutData.getHasFV();
             currHasDR = tutData.getHasDR();
             pictureView = (ImageView) findViewById(R.id.imageViewTut);
+            itemText.setText(tutData.getPicName());
             String test = "@drawable/apple";
 
             //http://stackoverflow.com/questions/11737607/how-to-set-the-image-from-drawable-dynamically-in-android?noredirect=1&lq=1
@@ -221,6 +227,7 @@ public class TutorialActivity extends AppCompatActivity {
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.bothcorrect);
             picResult.setVisibility(View.VISIBLE);
+            itemText.setVisibility(View.INVISIBLE);
 
             // finalSum.setText("Correct!\n\nWell Done, you assigned both categories correctly!");
             //finalSum.setVisibility(View.VISIBLE);
@@ -235,6 +242,7 @@ public class TutorialActivity extends AppCompatActivity {
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.almostfood);
             picResult.setVisibility(View.VISIBLE);
+            itemText.setVisibility(View.INVISIBLE);
 
             //finalSum.setText("Almost There!\n\nYou assigned to the Fruit and Vegetable category correctly but the drinks were wrong!");
             //finalSum.setVisibility(View.VISIBLE);
@@ -250,6 +258,7 @@ public class TutorialActivity extends AppCompatActivity {
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.almostdrink);
             picResult.setVisibility(View.VISIBLE);
+            itemText.setVisibility(View.INVISIBLE);
             //finalSum.setText("Almost There!\n\nYou assigned to the Drinks category correctly but the Fruit and Vegetable category was wrong!");
             //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
@@ -263,6 +272,7 @@ public class TutorialActivity extends AppCompatActivity {
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.bothincorrect);
             picResult.setVisibility(View.VISIBLE);
+            itemText.setVisibility(View.INVISIBLE);
 
             //finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
             //finalSum.setVisibility(View.VISIBLE);
@@ -295,7 +305,7 @@ public class TutorialActivity extends AppCompatActivity {
         buttonDR.setVisibility(View.VISIBLE);
         submitOption.setVisibility(View.VISIBLE);
         pictureView.setVisibility(View.VISIBLE);
-
+        itemText.setVisibility(View.VISIBLE);
 
 
         if (tutorialDataList.size() > 0) {
@@ -309,15 +319,16 @@ public class TutorialActivity extends AppCompatActivity {
             nextTutOption.setVisibility(View.INVISIBLE);
            // finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
             finalSum.setVisibility(View.VISIBLE);
-            finalSum.setImageResource(R.drawable.finalallcorrect);
+            //finalSum.setImageResource(R.drawable.finalallcorrect);
             //finalSum.setImageResource(R.drawable.finalalmost);
             //finalSum.setImageResource(R.drawable.finalgettingthere);
 
             int total = correctFVCount + correctDRCount;
-            if (total==16)
+
+            if (total==18)
             {
                 finalSum.setImageResource(R.drawable.finalallcorrect);
-            }else if(total>8&& total<16){
+            }else if(total>9&& total<18){
                 finalSum.setImageResource(R.drawable.finalalmost);
             }
             else{
@@ -328,6 +339,7 @@ public class TutorialActivity extends AppCompatActivity {
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setVisibility(View.INVISIBLE);
+            itemText.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -388,10 +400,20 @@ public class TutorialActivity extends AppCompatActivity {
 
     public void beginTutorial(View v) {
         picResult.setVisibility(View.INVISIBLE);
-        ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
-        ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
-        left.setVisibility(View.INVISIBLE);
-        right.setVisibility(View.INVISIBLE);
+        //ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
+        //ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
+        //left.setVisibility(View.INVISIBLE);
+       // right.setVisibility(View.INVISIBLE);
+
+        setCurrentPhoto(getNextPhoto());
+
+
+
+
+
+        LinearLayout ll2 = (LinearLayout) findViewById(R.id.place);
+        ll2.setVisibility(View.INVISIBLE);
+        //place
         //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
         LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
         begin.setVisibility(View.INVISIBLE);
@@ -403,6 +425,7 @@ public class TutorialActivity extends AppCompatActivity {
         ll.setVisibility(View.VISIBLE);
 
         pictureView.setVisibility(View.VISIBLE);
+        itemText.setVisibility(View.VISIBLE);
     }
 
 

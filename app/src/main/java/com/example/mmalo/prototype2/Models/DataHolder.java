@@ -24,7 +24,7 @@ public class DataHolder {
 
     public static boolean dataRead = false;
 
-    public static void readData(Context cont){
+    public static void readData(Context cont) {
         try {
             java.util.Date date = new java.util.Date();
 
@@ -60,16 +60,13 @@ public class DataHolder {
     }
 
 
-    public static boolean checkCompleted(Context cont){
+    public static boolean checkCompleted(Context cont) {
 
         readData(cont);
 
-        if(todaysFV>=5&&todaysDrinks>=8&&todayBreak&&todayLunch&&todayDinner)
-        {
+        if (todaysFV >= 5 && todaysDrinks >= 8 && todayBreak && todayLunch && todayDinner) {
             todayComplete = true;
-        }
-        else
-        {
+        } else {
             todayComplete = false;
         }
 
@@ -77,17 +74,18 @@ public class DataHolder {
         DBContainer dbCont = new DBContainer();
         int[] notif = dbCont.readFromNotifFile(cont, strCurrentDate);
 
-        if(todayComplete) {
+        if (todayComplete) {
             //if notif null or (10) found nothing in file or (0) found previous entry to say not done
-            if (notif == null || (notif[0] == 10 || notif[1] == 10) || (notif[0] == 0 || notif[1] == 0) ) {
-                dbCont.writeToNotifFile(cont,strCurrentDate,1,1);
+            if (notif == null || (notif[0] == 10 || notif[1] == 10) || (notif[0] == 0 || notif[1] == 0)) {
+                dbCont.writeToNotifFile(cont, strCurrentDate, 1, 1);
                 shouldNotif = true;
             }
-        }else{
+        } else {
             //if not found in file or previous entry to say not done
-            if ((notif[0] != 10 || notif[1] != 10 ) || (notif[0] == 1 || notif[1] ==1)) {
-                dbCont.writeToNotifFile(cont,strCurrentDate,0,0);
+            if ((notif[0] != 10 || notif[1] != 10) || (notif[0] == 1 || notif[1] == 1)) {
+                dbCont.writeToNotifFile(cont, strCurrentDate, 0, 0);
             }
+
         }
 
 

@@ -269,7 +269,9 @@ public class PTakenActivity extends AppCompatActivity {
     public void incCount(View v) {
         TextView tv = (TextView) findViewById(R.id.textViewCount);
         int curr = Integer.valueOf(tv.getText().toString());
-        curr++;
+        if (curr < 8) {
+            curr++;
+        }
         tv.setText(String.valueOf(curr));
 
         updateLocals(curr);

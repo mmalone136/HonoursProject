@@ -164,7 +164,7 @@ public class GuideActivity extends AppCompatActivity {
             }
             else if (i == 4)
             {
-                currInt = R.drawable.icecream2;
+                currInt = R.drawable.icecream;
             }
             else if (i == 5)
             {

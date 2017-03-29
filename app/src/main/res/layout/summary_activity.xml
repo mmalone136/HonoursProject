@@ -102,6 +102,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:maxLength="100"
+        android:onClick="clearTextBox"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imagePhoto"

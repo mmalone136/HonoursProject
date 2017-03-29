@@ -149,7 +149,7 @@ public class DBContainer {
                     //stringBuilder.append(receiveString);
                     splitLine = receiveString.split(",");
                     if(splitLine!=null){
-                        if(splitLine.equals(targetDate)){
+                        if(splitLine[0].equals(targetDate)){
                             toReturn[0] = Integer.parseInt(splitLine[1]);
                             toReturn[1] = Integer.parseInt(splitLine[2]);
                         }

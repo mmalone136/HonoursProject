@@ -8,11 +8,13 @@ public class TutorialData {
     private String filePath;
     private boolean hasFV;
     private boolean hasDR;
+    private String picName;
 
-    public TutorialData(String fp, boolean fv, boolean dr){
+    public TutorialData(String fp, boolean fv, boolean dr, String pn){
         this.setFilePath(fp);
         this.setHasFV(fv);
         this.setHasDR(dr);
+        this.setPicName(pn);
     }
 
     public void setFilePath(String fp){
@@ -27,6 +29,15 @@ public class TutorialData {
     public void setHasDR(boolean dr)
     {
         this.hasDR = dr;
+    }
+
+    public void setPicName(String pn)
+    {
+        this.picName = pn;
+    }
+
+    public String getPicName(){
+        return this.picName;
     }
 
     public String getFilePath(){

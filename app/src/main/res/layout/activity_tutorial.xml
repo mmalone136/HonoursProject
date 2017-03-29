@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <Button
         android:id="@+id/buttonBackFromTut"
         android:layout_width="match_parent"
@@ -24,10 +23,24 @@
 
         android:scaleType="fitCenter"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ButtonLayout"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/ButtonLayout" />
+
+    <TextView
+        android:id="@+id/currItemText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sugar-Free Coffee"
+        android:layout_above="@+id/NextButtonsLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="invisible"
+        />
 
 
     <ImageView
@@ -76,13 +89,11 @@
             android:id="@+id/buttonBack"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:textStyle="bold"
             android:onClick="backOption"
             android:text="Back To Main Menu" />
     </LinearLayout>
-
-
 
     <Button
         android:id="@+id/buttonNextImage"
@@ -99,18 +110,11 @@
         android:text="Next"
         android:visibility="invisible" />
 
-
-
-
-
-
-
-
     <LinearLayout
         android:id="@+id/ButtonLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonBackFromTut"
+        android:layout_above="@+id/place2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="horizontal"
@@ -150,6 +154,11 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/place2"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_alignParentBottom="true" />
 
     <LinearLayout
         android:id="@+id/place"
@@ -182,6 +191,21 @@
                 />
 
 
+            <Button
+                android:id="@+id/beginTut22"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="beginTutorial"
+                android:src ="@drawable/playtut"
+                android:text="Skip Instructions"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                />
+
+
+
+
             <ImageButton
                 android:id="@+id/buttonNextInst"
                 android:layout_width="0dp"
@@ -200,8 +224,6 @@
 
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:id="@+id/beginLay"
@@ -237,7 +259,7 @@
             android:id="@+id/beginTut2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:onClick="beginTutorial"
             android:src ="@drawable/playtut" />
     </LinearLayout>
@@ -250,6 +272,8 @@
 
 
 </LinearLayout>
+
+
 
 
 </RelativeLayout>
