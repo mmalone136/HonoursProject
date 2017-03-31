@@ -149,11 +149,14 @@ public class SummaryActivity extends AppCompatActivity {
 
     public void setListView() {
         ArrayList<String> listData = new ArrayList<String>();
-        String[] moreListData = new String[4];
+        String[] moreListData = new String[3];
 
 
         String count1 = "Fruit & Veg: " + theentry.getFvCount();
-        String count2 = "Drinks: " + theentry.getDrCount();
+        //String count2 = "Drinks: " + theentry.getDrCount();
+
+        count1 = theentry.getFvCount() + "#" + theentry.getDrCount();
+
 
         String comms = theentry.getComment();
         if (comms.equals("")) {
@@ -162,14 +165,15 @@ public class SummaryActivity extends AppCompatActivity {
 
         listData.add(theentry.getMeal());
         //listData.add(String.valueOf(theentry.getTimestamp()));
-        listData.add(comms);
         listData.add(count1);
-        listData.add(count2);
+        listData.add(comms);
+
+        //listData.add(count2);
 
         moreListData[0] = theentry.getMeal();
-        moreListData[1] = comms;
-        moreListData[2] = count1;
-        moreListData[3] = count2;
+        moreListData[2] = comms;
+        moreListData[1] = count1;
+        //moreListData[3] = count2;
 
 
         dataList = (ListView) findViewById(R.id.listViewOfDatas);
@@ -213,10 +217,12 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     public void clearTextBox(View v) {
-        if (v.getId() == R.id.textComms) ;
+        EditText e = (EditText) v;
+        if (e.getId() == R.id.textComms) ;
         {
-            if (firstClick) {
-                EditText e = (EditText) v;
+            String temp = e.getText().toString();
+            if(temp.equals("Tap here to type a comment") && firstClick){
+
                 e.setText("");
                 firstClick = false;
             }

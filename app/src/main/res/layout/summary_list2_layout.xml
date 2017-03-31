@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:id="@+id/ivSymbol"
             app:srcCompat="@drawable/apple"
             />
@@ -22,6 +22,27 @@
 
         <TextView
             android:id="@+id/tvChild"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/ivSymbol2"
+            app:srcCompat="@drawable/apple"
+            />
+
+
+        <TextView
+            android:id="@+id/tvChild2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"

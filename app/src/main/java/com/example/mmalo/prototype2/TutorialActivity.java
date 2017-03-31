@@ -91,7 +91,7 @@ public class TutorialActivity extends AppCompatActivity {
         tutorialDataList.add(tutData);
 
         id = "@drawable/fruit";
-        tutData = new TutorialData(id, true, false, "Some Fruit"); //id, fv, dr
+        tutData = new TutorialData(id, true, false, "Some Fruit");
         tutorialDataList.add(tutData);
 
         id = "@drawable/icecream2";
@@ -184,7 +184,6 @@ public class TutorialActivity extends AppCompatActivity {
     public void changeButtonColours(Button curr, String colour) {
         curr.setBackgroundColor(Color.parseColor(colour));
     }
-
 
     public void changeButtonColours(ImageButton curr, String colour, int flag) {
         if (colour.equals("#50BF0B")) {//curr.setBackgroundColor(Color.parseColor(colour));

@@ -183,6 +183,7 @@ public class Camera2Activity extends AppCompatActivity {
     public void takePictureHigher() {
         cancelButton = (ImageButton) findViewById(R.id.button_cancel);
         cancelButton.setEnabled(false);
+        turn.setVisibility(View.INVISIBLE);
         try {
             int width = 640, height = 480;
             if (jpegSizes != null && jpegSizes.length > 0) {
@@ -380,6 +381,9 @@ public class Camera2Activity extends AppCompatActivity {
     public void afterTaken(byte[] photoData) {
         try {
             Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+
+            turn.setVisibility(View.INVISIBLE);
+
 
             // SEVEN 7777
             if(Build.VERSION.SDK_INT==21) {

@@ -34,26 +34,26 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/fruitveg2"
+                app:srcCompat="@drawable/fruitveg"
                 />
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/drinks2"/>
+                app:srcCompat="@drawable/drinks"/>
 
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/meals2"/>
+                app:srcCompat="@drawable/meals"/>
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/unhealth2"/>
+                app:srcCompat="@drawable/unhealth"/>
 
 
             <ImageView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/exercise2"/>
+                app:srcCompat="@drawable/exercise"/>
 
 
 

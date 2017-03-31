@@ -124,19 +124,13 @@ public class CustomAdapter extends BaseAdapter {
             }else{
                 LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
                 ll.setBackgroundResource(R.color.aBlue);
-
-
-
             }
-
-
 
              if (current) {
                 star.setImageResource(R.drawable.goldstar);
             } else {
                 star.setImageResource(R.drawable.greystar);
             }
-
 
 //            star.setOnTouchListener(new View.OnTouchListener()
 //            {
@@ -166,7 +160,6 @@ public class CustomAdapter extends BaseAdapter {
 //                    }
 //                    return false;
 //                }});
-
 
             }else if (selector == 2) {
 
@@ -205,41 +198,62 @@ public class CustomAdapter extends BaseAdapter {
                 date.setText(stringList[1]);
                 ivMeal.setImageResource(seven);
             } else if (selector == 3) {
-                String str = moreData[position];
+            String str = moreData[position];
+
+            //convertView = LayoutInflater.from(context).inflate(R.layout.summary_list_layout, null);
+
+            int symb;
+            int symb2 = R.drawable.glassfull;
+
+            if (position == 0) {
+                switch (str) {
+                    case "Breakfast":
+                        symb = R.drawable.breakfasticon;
+                        break;
+                    case "Lunch":
+                        symb = R.drawable.lunchicon;
+                        break;
+                    case "Dinner":
+                        symb = R.drawable.dinnicon;
+                        break;
+                    case "Drink":
+                        symb = R.drawable.glassfull;
+                        break;
+                    case "Snack":
+                        symb = R.drawable.snackicon;
+                        break;
+                    default:
+                        symb = R.drawable.glassempty1;
+                        break;
+                }
+            } else if (position == 1) {
+                symb = R.drawable.fruitbowl;
+                symb2 = R.drawable.glassfull;
+            } else {
+                symb = R.drawable.comments;
+            }
+
+
+            if (position == 1) {
+
+                convertView = LayoutInflater.from(context).inflate(R.layout.summary_list2_layout, null);
+
+
+                String [] temp = str.split("#");
+
+
+                ImageView symbol = (ImageView) convertView.findViewById(R.id.ivSymbol);
+                symbol.setImageResource(symb);
+                ImageView symbol2 = (ImageView) convertView.findViewById(R.id.ivSymbol2);
+                symbol2.setImageResource(symb2);
+                TextView day = (TextView) convertView.findViewById(R.id.tvChild);
+                day.setText(temp[0]);
+                TextView day2 = (TextView) convertView.findViewById(R.id.tvChild2);
+                day2.setText(temp[1]);
+
+            } else {
 
                 convertView = LayoutInflater.from(context).inflate(R.layout.summary_list_layout, null);
-
-                int symb;
-
-                if (position == 0) {
-                    switch (str) {
-                        case "Breakfast":
-                            symb = R.drawable.breakfasticon;
-                            break;
-                        case "Lunch":
-                            symb = R.drawable.lunchicon;
-                            break;
-                        case "Dinner":
-                            symb = R.drawable.dinnicon;
-                            break;
-                        case "Drink":
-                            symb = R.drawable.glassfull;
-                            break;
-                        case "Snack":
-                            symb = R.drawable.snackicon;
-                            break;
-                        default:
-                            symb = R.drawable.glassempty1;
-                            break;
-                    }
-                } else if (position == 1) {
-                    symb = R.drawable.comments;
-
-                } else if (position == 2) {
-                    symb = R.drawable.fruitbowl;
-                } else {
-                    symb = R.drawable.glassfull;
-                }
 
 
                 ImageView symbol = (ImageView) convertView.findViewById(R.id.ivSymbol);
@@ -247,7 +261,7 @@ public class CustomAdapter extends BaseAdapter {
                 day.setText(str);
                 symbol.setImageResource(symb);
             }
-
+        }
             return convertView;
         }
     }
