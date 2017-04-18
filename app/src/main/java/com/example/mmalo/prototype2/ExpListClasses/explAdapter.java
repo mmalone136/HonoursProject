@@ -13,6 +13,7 @@ import com.example.mmalo.prototype2.R;
 import java.util.ArrayList;
 
 //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+
 /**
  * Created by mmalo on 14/02/2017.
  */
@@ -21,7 +22,18 @@ public class ExplAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<ExpListGroup> groups;
+    /**
+     * The Drawables.
+     */
     ArrayList<Integer> [] drawables;
+
+    /**
+     * Instantiates a new Expl adapter.
+     *
+     * @param cont  the cont
+     * @param g     the g
+     * @param draws the draws
+     */
     public ExplAdapter( Context cont, ArrayList<ExpListGroup> g, ArrayList<Integer> []  draws){
         this.context = cont;
         this.groups = g;

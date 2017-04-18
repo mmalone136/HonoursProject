@@ -50,15 +50,45 @@ public class CameraActivity extends Activity {
     private Camera mCamera;
     private CameraPreview mPreview;
     private boolean cancelFlag;
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The The time.
+     */
     Timestamp theTime;
+    /**
+     * The Data to pass.
+     */
     byte[] dataToPass;
+    /**
+     * The Rotation mat.
+     */
     Matrix rotationMat;
+    /**
+     * The Api level.
+     */
     int apiLevel;
+    /**
+     * The Preview.
+     */
     FrameLayout preview;
+    /**
+     * The Im text view.
+     */
     TextureView imTextView;
+    /**
+     * The M orientation listener.
+     */
     OrientationEventListener mOrientationListener;
+    /**
+     * The Capture button.
+     */
     ImageButton captureButton;
+    /**
+     * The Turn.
+     */
     ImageView turn;
 
     @Override
@@ -115,6 +145,9 @@ public class CameraActivity extends Activity {
     }
 
 
+    /**
+     * Lower api.
+     */
     public void lowerAPI() {
         // Create an instance of Camera
         captureButton = (ImageButton) findViewById(R.id.button_capture);
@@ -142,6 +175,11 @@ public class CameraActivity extends Activity {
         }
     }
 
+    /**
+     * Take pic click.
+     *
+     * @param v the v
+     */
     public void takePicClick(View v) {
         mCamera.takePicture(null, null, mPicture);
     }
@@ -154,6 +192,11 @@ public class CameraActivity extends Activity {
     };
 
 
+    /**
+     * After taken.
+     *
+     * @param photoData the photo data
+     */
     public void afterTaken(byte[] photoData) {
         try {
             bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
@@ -201,6 +244,11 @@ public class CameraActivity extends Activity {
         }
     }
 
+    /**
+     * Continue form.
+     *
+     * @param v the v
+     */
     public void continueForm(View v) {
         //Pass data to next activity then release camera then load activity
         try {
@@ -233,6 +281,11 @@ public class CameraActivity extends Activity {
         super.onBackPressed();
     }
 
+    /**
+     * Skip pic take.
+     *
+     * @param v the v
+     */
     public void skipPicTake(View v) {
         releaseCamera();
         Intent i = new Intent(this, PTakenActivity.class);
@@ -240,6 +293,11 @@ public class CameraActivity extends Activity {
 
     }
 
+    /**
+     * Cancel pic.
+     *
+     * @param v the v
+     */
     public void cancelPic(View v) {
 
         if (!cancelFlag) {

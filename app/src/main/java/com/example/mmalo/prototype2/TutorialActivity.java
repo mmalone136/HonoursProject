@@ -24,27 +24,80 @@ import java.util.Random;
 /**
  * Created by mmalo on 16/02/2017.
  */
-
 public class TutorialActivity extends AppCompatActivity {
 
+    /**
+     * The Tutorial data list.
+     */
     ArrayList<TutorialData> tutorialDataList;
+    /**
+     * The Picture view.
+     */
     ImageView pictureView;
+    /**
+     * The Pic result.
+     */
     ImageView picResult;
+    /**
+     * The Curr has fv.
+     */
     boolean currHasFV;
+    /**
+     * The Curr has dr.
+     */
     boolean currHasDR;
+    /**
+     * The User fv.
+     */
     boolean userFV;
+    /**
+     * The User dr.
+     */
     boolean userDR;
     private Random randGen;
+    /**
+     * The Button fv.
+     */
     ImageButton buttonFV;
+    /**
+     * The Button dr.
+     */
     ImageButton buttonDR;
+    /**
+     * The Left.
+     */
     ImageButton left;
+    /**
+     * The Item text.
+     */
     TextView itemText;
+    /**
+     * The Correct fv count.
+     */
     int correctFVCount;
+    /**
+     * The Correct dr count.
+     */
     int correctDRCount;
+    /**
+     * The Final sum.
+     */
     ImageView finalSum;
+    /**
+     * The Next tut option.
+     */
     Button nextTutOption;
+    /**
+     * The Submit option.
+     */
     ImageButton submitOption;
+    /**
+     * The Instructions.
+     */
     int[] instructions;
+    /**
+     * The Curr instr.
+     */
     int currInstr;
 
     @Override
@@ -82,6 +135,9 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Create list.
+     */
     public void createList() {
         tutorialDataList = new ArrayList<TutorialData>();
         TutorialData tutData;
@@ -129,6 +185,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets current photo.
+     *
+     * @param tutData the tut data
+     */
     public void setCurrentPhoto(TutorialData tutData) {
         try {
 
@@ -152,6 +213,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Gets next photo.
+     *
+     * @return the next photo
+     */
     public TutorialData getNextPhoto() {
         //http://stackoverflow.com/questions/5034370/retrieving-a-random-item-from-arraylist
         int nextIndex = randGen.nextInt(tutorialDataList.size());
@@ -160,6 +226,11 @@ public class TutorialActivity extends AppCompatActivity {
         return nextData;
     }
 
+    /**
+     * Add to drinks.
+     *
+     * @param v the v
+     */
     public void addToDrinks(View v) {
         //toggle drinks on/off
         userDR = !userDR;
@@ -171,6 +242,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Add to fv.
+     *
+     * @param v the v
+     */
     public void addToFV(View v) {
         //toggle FV on/off
         userFV = !userFV;
@@ -181,10 +257,23 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Change button colours.
+     *
+     * @param curr   the curr
+     * @param colour the colour
+     */
     public void changeButtonColours(Button curr, String colour) {
         curr.setBackgroundColor(Color.parseColor(colour));
     }
 
+    /**
+     * Change button colours.
+     *
+     * @param curr   the curr
+     * @param colour the colour
+     * @param flag   the flag
+     */
     public void changeButtonColours(ImageButton curr, String colour, int flag) {
         if (colour.equals("#50BF0B")) {//curr.setBackgroundColor(Color.parseColor(colour));
             if (flag == 1) {
@@ -201,6 +290,11 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Go to next.
+     *
+     * @param v the v
+     */
     public void goToNext(View v) {
         //compare user choices to actual value and update score
         boolean fvResult = (userFV == currHasFV);
@@ -287,15 +381,30 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Replay.
+     *
+     * @param v the v
+     */
     public void replay(View v) {
         this.recreate();
     }
 
+    /**
+     * Back option.
+     *
+     * @param v the v
+     */
     public void backOption(View v) {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
     }
 
+    /**
+     * Next option.
+     *
+     * @param v the v
+     */
     public void nextOption(View v) {
         finalSum.setVisibility(View.INVISIBLE);
         nextTutOption.setVisibility(View.INVISIBLE);
@@ -343,6 +452,11 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Next instruct.
+     *
+     * @param v the v
+     */
     public void nextInstruct(View v) {
         currInstr++;
         if (currInstr == instructions.length) {
@@ -373,6 +487,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Prev instruct.
+     *
+     * @param v the v
+     */
     public void prevInstruct(View v) {
         if (currInstr > 0) {
             //This may not be correct
@@ -397,6 +516,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Begin tutorial.
+     *
+     * @param v the v
+     */
     public void beginTutorial(View v) {
         picResult.setVisibility(View.INVISIBLE);
         //ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);

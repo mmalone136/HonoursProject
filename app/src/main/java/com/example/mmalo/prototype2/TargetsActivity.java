@@ -23,11 +23,22 @@ import java.util.List;
 /**
  * Created by mmalo on 28/02/2017.
  */
-
 public class TargetsActivity extends AppCompatActivity {
+    /**
+     * The Db cont.
+     */
     public DBContainer dbCont;
+    /**
+     * The Info view.
+     */
     ImageView infoView;
+    /**
+     * The Lin lay icons.
+     */
     LinearLayout linLayIcons;
+    /**
+     * The Close button.
+     */
     ImageButton closeButton;
 
     @Override
@@ -45,6 +56,9 @@ public class TargetsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Read count data.
+     */
     public void readCountData() {
         try {
 
@@ -97,6 +111,9 @@ public class TargetsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Update target images.
+     */
     public void updateTargetImages() {
 
         ImageView bfast = (ImageView) findViewById(R.id.imgBreak);
@@ -197,11 +214,21 @@ public class TargetsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Back option.
+     *
+     * @param v the v
+     */
     public void backOption(View v) {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);
     }
 
+    /**
+     * Show info.
+     *
+     * @param v the v
+     */
     public void showInfo(View v) {
         //FVCount
         //Meals
@@ -222,6 +249,11 @@ public class TargetsActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Hide info.
+     *
+     * @param v the v
+     */
     public void hideInfo(View v) {
         infoView.setVisibility(View.INVISIBLE);
         linLayIcons.setVisibility(View.VISIBLE);

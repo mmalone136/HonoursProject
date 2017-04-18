@@ -30,16 +30,39 @@ import java.util.ArrayList;
 /**
  * Created by mmalo on 30/01/2017.
  */
-
 public class DateviewActivity extends AppCompatActivity {
 
+    /**
+     * The Entries.
+     */
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
+    /**
+     * The Init.
+     */
     public ArrayList<DiaryData> init = new ArrayList<DiaryData>();
+    /**
+     * The Sorted.
+     */
     public ArrayList<DiaryData> sorted = new ArrayList<DiaryData>();
+    /**
+     * The Count data.
+     */
     public ContentValues countData;
+    /**
+     * The constant date.
+     */
     public static String date;
+    /**
+     * The Flag.
+     */
     public boolean flag;
+    /**
+     * The Db cont.
+     */
     public DBContainer dbCont;
+    /**
+     * The Sort button.
+     */
     Button sortButton;
 
     @Override
@@ -62,6 +85,9 @@ public class DateviewActivity extends AppCompatActivity {
         setHeading();
     }
 
+    /**
+     * Set heading.
+     */
     public void setHeading(){
 
         SimpleDateFormat headForm = new SimpleDateFormat("EEEE\t\tdd/MM/yyyy");
@@ -70,6 +96,11 @@ public class DateviewActivity extends AppCompatActivity {
         head.setText(heading);
     }
 
+    /**
+     * Init vals.
+     *
+     * @param sortFlag the sort flag
+     */
     public void initVals(Boolean sortFlag){
 
         if(sortFlag) {
@@ -98,11 +129,21 @@ public class DateviewActivity extends AppCompatActivity {
         setListAdapter(listData);
     }
 
+    /**
+     * Flip sort.
+     *
+     * @param v the v
+     */
     public void flipSort(View v){
         flag = !flag;
         initVals(flag);
     }
 
+    /**
+     * Set button text.
+     *
+     * @param sortFlag the sort flag
+     */
     public void setButtonText(boolean sortFlag){
         if(sortFlag) {
             sortButton.setText(R.string.sortMeal);
@@ -112,6 +153,11 @@ public class DateviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Set list adapter.
+     *
+     * @param listData the list data
+     */
     public void setListAdapter(ArrayList<String[]> listData){
         try {
 
@@ -143,6 +189,11 @@ public class DateviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Split lists array list.
+     *
+     * @return the array list
+     */
     public ArrayList<DiaryData> splitLists(){
         ArrayList<DiaryData> breakfast = new ArrayList<DiaryData>();
         ArrayList<DiaryData> lunch = new ArrayList<DiaryData>();
@@ -185,6 +236,13 @@ public class DateviewActivity extends AppCompatActivity {
         return sortedList;
     }
 
+    /**
+     * Get counts from lists.
+     *
+     * @param breakList the break list
+     * @param lunchList the lunch list
+     * @param dinnList  the dinn list
+     */
     public void getCountsFromLists(ArrayList<DiaryData> breakList,ArrayList<DiaryData> lunchList,ArrayList<DiaryData> dinnList){
         countData.put("BreakfastCount",breakList.size());
         countData.put("LunchCount",lunchList.size());
@@ -192,6 +250,11 @@ public class DateviewActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Go back.
+     *
+     * @param v the v
+     */
     public void goBack(View v){
         Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
         this.startActivity(i);

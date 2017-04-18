@@ -87,7 +87,7 @@
             android:layout_weight="1"
             android:text="Next\nWeek"
             android:tag="+"
-            app:srcCompat="@drawable/rightarrow"
+            app:srcCompat="@drawable/rightarrowgrey"
             android:onClick="updateWeek" />
 
     </LinearLayout>

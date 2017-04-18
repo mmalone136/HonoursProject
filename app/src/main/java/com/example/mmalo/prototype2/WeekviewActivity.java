@@ -35,24 +35,74 @@ import java.util.GregorianCalendar;
 /**
  * Created by mmalo on 17/01/2017.
  */
-
 public class WeekviewActivity extends AppCompatActivity {
 
+    /**
+     * The Entries.
+     */
     public ArrayList<DiaryData> entries = new ArrayList<DiaryData>();
+    /**
+     * The Unique dates.
+     */
     public ArrayList<String> uniqueDates = new ArrayList<String>();
+    /**
+     * The constant showNotif.
+     */
     public static boolean showNotif;
+    /**
+     * The Week data.
+     */
     String[] weekData;
+    /**
+     * The Week dates.
+     */
     String[] weekDates;
+    /**
+     * The More week data.
+     */
     ArrayList<String[]> moreWeekData;
+    /**
+     * The Week start.
+     */
     Date weekStart;
+    /**
+     * The Week end.
+     */
     Date weekEnd;
+    /**
+     * The Step.
+     */
     int step;
+    /**
+     * The Step limit.
+     */
     int stepLimit;
+    /**
+     * The Today position.
+     */
     int todayPosition;
+    /**
+     * The Star bools.
+     */
     boolean[] starBools;
+    /**
+     * The Check arrows.
+     */
     boolean checkArrows;
+    /**
+     * The Date list.
+     */
     ListView dateList;
-    ImageButton weekPlus, weekBack;
+    /**
+     * The Week plus.
+     */
+    ImageButton weekPlus, /**
+     * The Week back.
+     */
+    weekBack;
+    /**
+     * The Db cont.
+     */
     DBContainer dbCont;
 
     @Override
@@ -88,6 +138,9 @@ public class WeekviewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show notif.
+     */
     public void showNotif(){
         ImageView congrats = (ImageView) findViewById(R.id.congratsImage);
         congrats.setVisibility(View.VISIBLE);
@@ -102,6 +155,11 @@ public class WeekviewActivity extends AppCompatActivity {
         WeekviewActivity.showNotif = false;
     }
 
+    /**
+     * Gets current week.
+     *
+     * @param step the step
+     */
     public void getCurrentWeek(int step) {
         //TODO: Refactor
         Calendar c = GregorianCalendar.getInstance();
@@ -127,6 +185,11 @@ public class WeekviewActivity extends AppCompatActivity {
         weekEnd = last;
     }
 
+    /**
+     * Read unique dates array list.
+     *
+     * @return the array list
+     */
     public ArrayList<String> readUniqueDates() {
 
         ArrayList<String> dates = new ArrayList<>();
@@ -135,6 +198,13 @@ public class WeekviewActivity extends AppCompatActivity {
         return dates;
     }
 
+    /**
+     * Read dates between array list.
+     *
+     * @param start the start
+     * @param end   the end
+     * @return the array list
+     */
     public ArrayList<String> readDatesBetween(Date start, Date end) {
         ArrayList<String> toReturn = new ArrayList<String>();
 
@@ -156,6 +226,12 @@ public class WeekviewActivity extends AppCompatActivity {
         return toReturn;
     }
 
+    /**
+     * Gets list for week.
+     *
+     * @param CurrentWeek the current week
+     * @return the list for week
+     */
     public ArrayList<String[]> getListForWeek(ArrayList<String> CurrentWeek) {
 
         ArrayList<String[]> dataLists = new ArrayList<>();
@@ -235,6 +311,11 @@ public class WeekviewActivity extends AppCompatActivity {
         return dataLists;
     }
 
+    /**
+     * Calculate earliest int.
+     *
+     * @return the int
+     */
     public int calculateEarliest() {
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(weekStart);
@@ -253,6 +334,11 @@ public class WeekviewActivity extends AppCompatActivity {
         return difference;
     }
 
+    /**
+     * Update view.
+     *
+     * @param step the step
+     */
     public void updateView(int step) {
 
         //Read unique dates if not done
@@ -277,22 +363,35 @@ public class WeekviewActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Set arrow vis.
+     *
+     * @param step the step
+     */
     public void setArrowVis(int step){
         if(step==stepLimit)
         {
             weekBack.setEnabled(false);
+            weekBack.setImageResource(R.drawable.leftarrowgrey);
         }else{
             weekBack.setEnabled(true);
+            weekBack.setImageResource(R.drawable.leftarrow);
         }
 
         if(step==0)
         {
             weekPlus.setEnabled(false);
+            weekPlus.setImageResource(R.drawable.rightarrowgrey);
+
         }else{
             weekPlus.setEnabled(true);
+            weekPlus.setImageResource(R.drawable.rightarrow);
         }
     }
 
+    /**
+     * Sets list adapter.
+     */
     public void setListAdapter() {
 
 
@@ -339,6 +438,12 @@ public class WeekviewActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Gets the bools.
+     *
+     * @param curr the curr
+     * @return the the bools
+     */
     public boolean getTheBools(Date curr) {
         String dateStr = String.valueOf(curr);
         int[] countValues = dbCont.readCountData(this, curr);
@@ -360,6 +465,11 @@ public class WeekviewActivity extends AppCompatActivity {
         return completed;
     }
 
+    /**
+     * Update week.
+     *
+     * @param v the v
+     */
     public void updateWeek(View v) {
         String tag = v.getTag().toString();
 
@@ -382,6 +492,11 @@ public class WeekviewActivity extends AppCompatActivity {
         backOption(new View(getApplicationContext()));
     }
 
+    /**
+     * Back option.
+     *
+     * @param v the v
+     */
     public void backOption(View v) {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);

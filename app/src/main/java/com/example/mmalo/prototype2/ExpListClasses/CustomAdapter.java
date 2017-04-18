@@ -21,21 +21,55 @@ import java.util.ArrayList;
 
 /**
  * Created by mmalo on 06/03/2017.
+ *
+ *
+ * Class Adapted from tutorial:
+ * //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
+ *
  */
-
 public class CustomAdapter extends BaseAdapter {
-    //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
 
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Data.
+     */
     ArrayList<String[]> data;
+    /**
+     * The More data.
+     */
     String[] moreData;
+    /**
+     * The Today position.
+     */
     int todayPosition;
+    /**
+     * The Selector.
+     */
     int selector;
+    /**
+     * The Star flags.
+     */
     boolean[] starFlags;
+    /**
+     * The T.
+     */
     int t;
+    /**
+     * The Seven.
+     */
     TextView seven;
     private static LayoutInflater inflater = null;
 
+    /**
+     * Instantiates a new Custom adapter.
+     *
+     * @param context the context
+     * @param data    the data
+     * @param sel     the sel
+     */
     public CustomAdapter(Context context, ArrayList<String[]> data, int sel) {
         this.context = context;
         this.data = data;
@@ -45,6 +79,16 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
+    /**
+     * Instantiates a new Custom adapter.
+     *
+     * @param context  the context
+     * @param data     the data
+     * @param sel      the sel
+     * @param forImage the for image
+     * @param today    the today
+     * @param text     the text
+     */
     public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage, int today,TextView text) {
         this.context = context;
         this.data = data;
@@ -58,6 +102,13 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
+    /**
+     * Instantiates a new Custom adapter.
+     *
+     * @param context the context
+     * @param theData the the data
+     * @param sel     the sel
+     */
     public CustomAdapter(Context context, String[] theData, int sel) {
         this.context = context;
         this.moreData = theData;
@@ -132,34 +183,7 @@ public class CustomAdapter extends BaseAdapter {
                 star.setImageResource(R.drawable.greystar);
             }
 
-//            star.setOnTouchListener(new View.OnTouchListener()
-//            {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if(todayPosition!=77) {
-//                        //Toast to = Toast.makeText(context, "Position: " + position, Toast.LENGTH_SHORT);
-//                        //to.show();
-//
-//                        if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-//                            seven.setVisibility(View.VISIBLE);
-//
-//                            String toDisplay = "Position: " + position +
-//                                    "\nFV: " + position +
-//                                    "\nDR: " + position +
-//                                    "\nBREAKFAST: " + position +
-//                                    "\nLUNCH: " + position +
-//                                    "\ndinner: " +position;
-//
-//                            seven.setText(toDisplay);
-//                            seven.bringToFront();
-//                        } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-//                            seven.setVisibility(View.INVISIBLE);
-//                        }
-//
-//
-//                    }
-//                    return false;
-//                }});
+
 
             }else if (selector == 2) {
 

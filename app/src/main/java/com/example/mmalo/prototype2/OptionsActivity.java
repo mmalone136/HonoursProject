@@ -29,39 +29,35 @@ import java.util.ArrayList;
 /**
  * Created by mmalo on 13/01/2017.
  */
-
 public class OptionsActivity extends AppCompatActivity {
 
+    /**
+     * The Db cont.
+     */
     public DBContainer dbCont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Create activity and initialise necessary variables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
         dbCont = new DBContainer();
         dbCont.createTables(this);
-        //if (DataHolder.dataRead) {
         DataHolder.readData(this);
-        // }
-
-        //Button diaryButton = (Button) findViewById(R.id.buttonSummary);
-        //LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        //diaryButton = infalInflater.inflate(R.layout.imagebutton_layout, null);
-
-        //android:drawableLeft="@drawable/diary1"
-        //android:gravity="left|center_vertical"
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //Create menu in top right of screen
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_layout, menu);
+        //inflater.inflate(R.menu.menu_layout, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+        //Select item in list, do this
         switch (item.getItemId()) {
             case R.id.DelData:
                 dbCont.dropTables(getApplicationContext());
@@ -90,15 +86,21 @@ public class OptionsActivity extends AppCompatActivity {
 //--------------Functions for changing forms
 
 
-    //TakePhoto
+    /**
+     * Open photo preview.
+     *
+     * @param v the v
+     */
     public void openPhotoPreview(View v) {
-        CameraController cc = new CameraController();
-        boolean hasCam = cc.checkCameraHardware(this);
-        System.out.println(hasCam);
-        Toast toast;
-        toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
+        //CameraController cc = new CameraController();
+       // boolean hasCam = cc.checkCameraHardware(this);
+        //System.out.println(hasCam);
+        //Toast toast;
+        //toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
         //toast.show();
 
+
+        //Check API level and choose correct camera activity for API level
         int apiLevel = Build.VERSION.SDK_INT;
         Intent i;
         if (apiLevel < 21) {
@@ -107,29 +109,45 @@ public class OptionsActivity extends AppCompatActivity {
             i = new Intent(this, Camera2Activity.class);
         }
         this.startActivity(i);
-
     }
 
-    //ViewGuide
-
+    /**
+     * Starts and opens "Healthy Messages" Section
+     *
+     * @param v the v
+     */
     public void viewGuide(View v) {
         Intent i = new Intent(getBaseContext(), GuideActivity.class);
         this.startActivity(i);
     }
 
-    //ViewDiary
+    /**
+     * Starts and opens "Weekview" of the diary
+     *
+     * @param v the v
+     */
     public void viewDates(View v) {
         WeekviewActivity.showNotif = false;
         Intent i = new Intent(getBaseContext(), WeekviewActivity.class);
         this.startActivity(i);
     }
 
+    /**
+     * Loads and opens tutorial.
+     *
+     * @param v the v
+     */
     public void loadTutorial(View v) {
         Intent i = new Intent(getBaseContext(), TutorialActivity.class);
         this.startActivity(i);
     }
 
 
+    /**
+     * Open targets section.
+     *
+     * @param v the v
+     */
     public void loadTargets(View v) {
         Intent i = new Intent(getBaseContext(), TargetsActivity.class);
         this.startActivity(i);
@@ -139,6 +157,11 @@ public class OptionsActivity extends AppCompatActivity {
 //--------------Functions for creating dummy data => Temporary functions
 
 
+    /**
+     * Do db things array list.
+     *
+     * @return the array list
+     */
     public ArrayList<DiaryData> doDBThings() {
 
         DBHelper dbh = new DBHelper(getApplicationContext());

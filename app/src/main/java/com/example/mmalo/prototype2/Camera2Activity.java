@@ -56,31 +56,78 @@ import static com.example.mmalo.prototype2.Controllers.CameraController.getCamer
 
 /**
  * Created by mmalo on 27/02/2017.
+ *
+ *
+ * Most of the functionality in this class is adapted from:
+ * http://coderzpassion.com/android-working-camera2-api/
+ * (all for handling camera functionality)
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Camera2Activity extends AppCompatActivity {
 
-    //http://coderzpassion.com/android-working-camera2-api/
+
     private boolean cancelFlag;
     private Size jpegSizes[];
     private Size prevSize;
 
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The The time.
+     */
     Timestamp theTime;
+    /**
+     * The Filename.
+     */
     String filename;
+    /**
+     * The Data to pass.
+     */
     byte[] dataToPass;
+    /**
+     * The Rotation mat.
+     */
     Matrix rotationMat;
+    /**
+     * The Preview.
+     */
     FrameLayout preview;
+    /**
+     * The Cam device.
+     */
     protected CameraDevice camDevice;
+    /**
+     * The Im text view.
+     */
     TextureView imTextView;
     private CaptureRequest.Builder prevBuild;
     private CameraCaptureSession prevSesh;
+    /**
+     * The Manager.
+     */
     CameraManager manager;
+    /**
+     * The Capture button.
+     */
     ImageButton captureButton;
+    /**
+     * The Cancel button.
+     */
     ImageButton cancelButton;
+    /**
+     * The M orientation listener.
+     */
     OrientationEventListener mOrientationListener;
     private static final SparseIntArray ORIENT = new SparseIntArray();
+    /**
+     * The Vals.
+     */
     List<Integer> vals;
+    /**
+     * The Turn.
+     */
     ImageView turn;
 
     static {
@@ -140,6 +187,9 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
+    /**
+     * Higher api.
+     */
     public void higherAPI() {
         Toast t = Toast.makeText(this, "HIGHER API", Toast.LENGTH_LONG);
         //t.show();
@@ -179,6 +229,9 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
+    /**
+     * Take picture higher.
+     */
     @TargetApi(21)
     public void takePictureHigher() {
         cancelButton = (ImageButton) findViewById(R.id.button_cancel);
@@ -268,6 +321,9 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
+    /**
+     * Open camera.
+     */
     @TargetApi(21)
     public void openCamera() {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -331,6 +387,9 @@ public class Camera2Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Start camera.
+     */
     void startCamera() {
         if (camDevice == null || !imTextView.isAvailable() || prevSize == null) {
             return;
@@ -363,6 +422,9 @@ public class Camera2Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets changed preview.
+     */
     void getChangedPreview() {
         if (camDevice == null) {
             return;
@@ -378,6 +440,13 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
+
+
+    /**
+     * After taken.
+     *
+     * @param photoData the photo data
+     */
     public void afterTaken(byte[] photoData) {
         try {
             Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
@@ -430,6 +499,11 @@ public class Camera2Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Continue form.
+     *
+     * @param v the v
+     */
     public void continueForm(View v) {
         //Pass data to next activity then release camera then load activity
         //saveImageToFile(dataToPass);
@@ -457,8 +531,11 @@ public class Camera2Activity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Cancel pic.
+     *
+     * @param v the v
+     */
     public void cancelPic(View v) {
 
         if (!cancelFlag) {

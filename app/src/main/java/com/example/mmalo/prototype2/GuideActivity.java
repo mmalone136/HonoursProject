@@ -18,10 +18,19 @@ import com.example.mmalo.prototype2.Models.DataHolder;
 
 import java.util.ArrayList;
 
+/**
+ * The type Guide activity.
+ */
 public class GuideActivity extends AppCompatActivity {
 
 
+    /**
+     * The General info.
+     */
     ScrollView generalInfo;
+    /**
+     * The Expl examples.
+     */
     ExpandableListView explExamples;
     //int prevOpenGroup = 0;
 
@@ -29,6 +38,9 @@ public class GuideActivity extends AppCompatActivity {
     private ExpandableListAdapter explAdapter;
     private ArrayList<ExpListGroup> explItems;
     private ExpandableListView dataList;
+    /**
+     * The Images.
+     */
     ArrayList<Integer>[] images;
 
     @Override
@@ -65,6 +77,11 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Set drawables array list [ ].
+     *
+     * @return the array list [ ]
+     */
     public ArrayList<Integer>[] setDrawables() {
 
         ArrayList<Integer>[] drawables = new ArrayList[3];
@@ -199,6 +216,11 @@ public class GuideActivity extends AppCompatActivity {
 }
 
 
+    /**
+     * Sets data groups.
+     *
+     * @return the data groups
+     */
     public ArrayList<ExpListGroup> setDataGroups() {
         ArrayList<ExpListGroup> groups = new ArrayList<ExpListGroup>();
         ArrayList<ExpListChild> children = new ArrayList<ExpListChild>();
@@ -365,33 +387,11 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_layout, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        Intent intent;
-        switch (item.getItemId()) {
-//            case R.id.menuGuide:
-//                intent = new Intent(this, GuideActivity.class);
-//                startActivity(intent);
-//                return true;
-//            case R.id.menuMainLayout:
-//                intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
+    /**
+     * Show gen info.
+     *
+     * @param v the v
+     */
     public void showGenInfo(View v) {
         generalInfo.setVisibility(View.VISIBLE);
         explExamples.setVisibility(View.INVISIBLE);
@@ -400,6 +400,11 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Show examples.
+     *
+     * @param v the v
+     */
     public void showExamples(View v) {
         generalInfo.setVisibility(View.INVISIBLE);
         explExamples.setVisibility(View.VISIBLE);
@@ -407,7 +412,12 @@ public class GuideActivity extends AppCompatActivity {
     }
 
 
-    //OptionsActivity - Back button
+    /**
+     * Back to main.
+     *
+     * @param v the v
+     */
+//OptionsActivity - Back button
     public void backToMain(View v) {
         Intent i = new Intent(getBaseContext(), OptionsActivity.class);
         this.startActivity(i);

@@ -6,13 +6,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by mmalo on 14/01/2017.
+ *
+ * Class adapted from tutorial:
+ * //https://developer.android.com/training/basics/data-storage/databases.html
+ *
+ *
  */
 
 public class DBHelper extends SQLiteOpenHelper{
 
-    //https://developer.android.com/training/basics/data-storage/databases.html
+    //Setup container variables for Database version, name
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "DiaryData.db";
+
+    //Define necessary create statements
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE IF NOT EXISTS diary_entries (" +
                     " entry_ID INTEGER PRIMARY KEY," +
@@ -35,32 +42,36 @@ public class DBHelper extends SQLiteOpenHelper{
                     " hadLunch BOOLEAN" +
                     " hadDinner BOOLEAN)";
 
-    private static final String SQL_CREATE_NOTIF =
-            "CREATE TABLE IF NOT EXISTS notif_track (" +
-                    " time_stamp text,"+
-                    " had_notif INT" +
-                    " is_complete INT";
 
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS diary_entries";
-
+    /**
+     *
+     * @param cont
+     */
     public DBHelper(Context cont)
     {
         super(cont,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
+    /**
+     *
+     * @param sdb
+     */
     public void onCreate(SQLiteDatabase sdb)
     {
+        //Execute create statements
         sdb.execSQL(SQL_CREATE_ENTRIES);
         sdb.execSQL(SQL_CREATE_COUNTS);
-        //sdb.execSQL(SQL_CREATE_NOTIF);
     }
 
+    /**
+     * From tutorial - may not be necessary
+     *
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
