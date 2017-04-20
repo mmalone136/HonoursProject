@@ -11,15 +11,13 @@
         android:label="FoodDiaryApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
 
-        </activity>
         <activity android:name=".GuideActivity"  android:screenOrientation="portrait"> </activity>
 
         <activity android:name=".TutorialActivity"  android:screenOrientation="portrait"> </activity>
         <activity android:name=".TargetsActivity"  android:screenOrientation="portrait"> </activity>
 
-        <activity android:name=".MainActivity"> </activity>
+
         <activity android:name=".PTakenActivity" android:screenOrientation="portrait"> </activity>
         <activity android:name=".DateviewActivity" android:screenOrientation="portrait"> </activity>
 

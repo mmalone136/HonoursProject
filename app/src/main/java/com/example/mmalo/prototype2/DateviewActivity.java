@@ -67,17 +67,25 @@ public class DateviewActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //Create activity and set up necessary variables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dateview);
         DataHolder.readData(this);
         dbCont = new DBContainer();
         countData = new ContentValues();
+
+        //Get list of entries for current passed in date
         init = dbCont.readEntriesForDate(this,date);
+
+        //Check no error occurred on reading data - init should never be empty
         if(init == null){
+            //Show error message - go back a page
             Toast toast = Toast.makeText(this,"An error occured while reading data for: " + date,Toast.LENGTH_LONG);
             toast.show();
             onBackPressed();
         }
+
+        //Set up more initialisation  of references and variables
         sortButton = (Button) findViewById(R.id.buttonSortEntries);
         sorted = splitLists();
         flag = true;
@@ -89,7 +97,7 @@ public class DateviewActivity extends AppCompatActivity {
      * Set heading.
      */
     public void setHeading(){
-
+        //Set heading at top of screen to be current day and date
         SimpleDateFormat headForm = new SimpleDateFormat("EEEE\t\tdd/MM/yyyy");
         String heading = headForm.format(entries.get(0).getTimestamp());
         TextView head = (TextView) findViewById(R.id.tvHeader);
@@ -97,40 +105,46 @@ public class DateviewActivity extends AppCompatActivity {
     }
 
     /**
-     * Init vals.
+     * Initisation of values and variables to allow activity to work.
      *
      * @param sortFlag the sort flag
      */
     public void initVals(Boolean sortFlag){
 
+        //Check which sorting method to use
         if(sortFlag) {
+            //Sorted by time
             entries = init;
         }else{
+            //Sorted by meal type
             entries = sorted;
         }
         setButtonText(sortFlag);
+
         SimpleDateFormat sdForm = new SimpleDateFormat("HH:mm"); //:ss\t -\t dd/MM/yyyy");
 
+        //Create list of string data to store entry data in displayable format
         ArrayList<String[]> listData = new ArrayList<>();
         for (DiaryData d : entries) {
+            //Read timestamp from DiaryData object and format
             Timestamp dTimestamp = d.getTimestamp();
-
-
             String dateString = sdForm.format(dTimestamp);
-            String meal = d.getMeal();
-            String [] curr = new String[2];
 
+            //Get meal from DiaryData object
+            String meal = d.getMeal();
+
+            //Create array to store the strings and add to overall list
+            String [] curr = new String[2];
             curr[0] = meal;
             curr[1] = dateString;
             listData.add(curr);
         }
-        System.out.println("");
-
+        //Call to setup listview adapter
         setListAdapter(listData);
     }
 
     /**
-     * Flip sort.
+     * Flip sort - use the other sort method as was currently being used.
      *
      * @param v the v
      */
@@ -140,7 +154,7 @@ public class DateviewActivity extends AppCompatActivity {
     }
 
     /**
-     * Set button text.
+     * Set sort button text based on which sorting method has been used
      *
      * @param sortFlag the sort flag
      */
@@ -160,41 +174,41 @@ public class DateviewActivity extends AppCompatActivity {
      */
     public void setListAdapter(ArrayList<String[]> listData){
         try {
-
+            //Get listview reference
             ListView entryList = (ListView) findViewById(R.id.listEntries);
 
-            //ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-
-            //entryList.setAdapter(adapter);
+            //Setup listview with custom adapter type
             entryList.setAdapter(new CustomAdapter(this, listData, 2));
 
+            //Setup onClick listener for the item onClick
             entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //activity.dateselected = dates.get(position);
-
+                    //Pass data to next activity based on current listview position
                     DiaryData curr = entries.get(position);
                     SummaryActivity.counts = countData;
                     SummaryActivity.theentry = curr;
+
+                    //Create and start net activity - Summary
                     Intent i = new Intent(getBaseContext(), SummaryActivity.class);
-                    //i.putExtra("diary_data", curr);
                     startActivity(i);
                 }
             });
         }catch(Exception e){
-
-            e.printStackTrace();
+            //It has done an error setting ListView
             e.printStackTrace();
         }
 
     }
 
     /**
-     * Split lists array list.
+     * Split initial array list (sorted by time) into each type to allow display by type.
      *
      * @return the array list
      */
     public ArrayList<DiaryData> splitLists(){
+
+        //Create holder lists for each meal type
         ArrayList<DiaryData> breakfast = new ArrayList<DiaryData>();
         ArrayList<DiaryData> lunch = new ArrayList<DiaryData>();
         ArrayList<DiaryData> dinner = new ArrayList<DiaryData>();
@@ -203,6 +217,7 @@ public class DateviewActivity extends AppCompatActivity {
 
         for(DiaryData dd : init)
         {
+            //Check each entry found and add to specific list for its meal type
             switch(dd.getMeal())
             {
                 case("Breakfast"):
@@ -222,6 +237,7 @@ public class DateviewActivity extends AppCompatActivity {
                     break;
             }
         }
+        //Concatenate lists so they are sorted in meal type order
         ArrayList<DiaryData> sortedList = new ArrayList<DiaryData>();
         sortedList.addAll(breakfast);
         sortedList.addAll(lunch);
@@ -229,10 +245,8 @@ public class DateviewActivity extends AppCompatActivity {
         sortedList.addAll(snacks);
         sortedList.addAll(drinks);
 
-
+        //Check size of each list
         getCountsFromLists(breakfast, lunch,dinner);
-
-
         return sortedList;
     }
 
@@ -244,6 +258,7 @@ public class DateviewActivity extends AppCompatActivity {
      * @param dinnList  the dinn list
      */
     public void getCountsFromLists(ArrayList<DiaryData> breakList,ArrayList<DiaryData> lunchList,ArrayList<DiaryData> dinnList){
+        //Add to count data for each list type
         countData.put("BreakfastCount",breakList.size());
         countData.put("LunchCount",lunchList.size());
         countData.put("DinnerCount",dinnList.size());

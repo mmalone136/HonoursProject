@@ -23,6 +23,7 @@ import java.util.ArrayList;
  */
 public class GuideActivity extends AppCompatActivity {
 
+    //TODO: Refactor many things here
 
     /**
      * The General info.
@@ -32,8 +33,6 @@ public class GuideActivity extends AppCompatActivity {
      * The Expl examples.
      */
     ExpandableListView explExamples;
-    //int prevOpenGroup = 0;
-
 
     private ExpandableListAdapter explAdapter;
     private ArrayList<ExpListGroup> explItems;
@@ -49,7 +48,6 @@ public class GuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guide);
 
         generalInfo = (ScrollView) findViewById(R.id.generalInfo);
-        //generalInfo.setMovementMethod(new ScrollingMovementMethod());
 
         DataHolder.readData(this);
 
@@ -86,6 +84,9 @@ public class GuideActivity extends AppCompatActivity {
 
         ArrayList<Integer>[] drawables = new ArrayList[3];
 
+
+
+        // TODO: Refactor this lots
         ArrayList<Integer> temp = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             int currInt;
