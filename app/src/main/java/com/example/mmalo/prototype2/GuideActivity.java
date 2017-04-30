@@ -44,16 +44,13 @@ public class GuideActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Create activity and set up variables and references
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
-
         generalInfo = (ScrollView) findViewById(R.id.generalInfo);
-
         DataHolder.readData(this);
-
         explExamples = (ExpandableListView) findViewById(R.id.expListView);
         explExamples.setVisibility(View.INVISIBLE);
-
         dataList = (ExpandableListView) findViewById(R.id.expListView);
         explItems = setDataGroups();
         images = setDrawables();
@@ -61,10 +58,12 @@ public class GuideActivity extends AppCompatActivity {
         dataList.setAdapter(explAdapter);
 
 
+
         //http://stackoverflow.com/questions/7862396/show-only-one-child-of-expandable-list-at-a-time?rq=1
+        //Keeps index to previously open group
+        // Closes previous group when new one is opened
         dataList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int prevOpenGroup = -1;
-
             @Override
             public void onGroupExpand(int groupPosition) {
                 if (groupPosition != prevOpenGroup)
@@ -207,8 +206,6 @@ public class GuideActivity extends AppCompatActivity {
             tempthree.add(currInt);
         }
 
-
-
     drawables[0]=temp;
     drawables[1]=tempTwo;
     drawables[2]=tempthree;
@@ -226,8 +223,20 @@ public class GuideActivity extends AppCompatActivity {
         ArrayList<ExpListGroup> groups = new ArrayList<ExpListGroup>();
         ArrayList<ExpListChild> children = new ArrayList<ExpListChild>();
 
-        ExpListGroup g1 = new ExpListGroup();
-        g1.setName("Fruit & Vegetables");
+       // Code adapted from code in:
+        ////http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+
+
+
+
+        //For each object to be added to list below
+        //Create overall group holder object
+        //Name and add each child object to group
+        //Add group to list of groups
+        //Next
+
+        ExpListGroup group1 = new ExpListGroup();
+        group1.setName("Fruit & Vegetables");
 
         ExpListChild child = new ExpListChild();
         child.setName("Apples");
@@ -279,13 +288,13 @@ public class GuideActivity extends AppCompatActivity {
         child.setTag(null);
         children.add(child);
 
-        g1.setItems(children);
-        groups.add(g1);
+        group1.setItems(children);
+        groups.add(group1);
 
 
         children = new ArrayList<ExpListChild>();
-        ExpListGroup g2 = new ExpListGroup();
-        g2.setName("Healthy Drinks");
+        ExpListGroup group2 = new ExpListGroup();
+        group2.setName("Healthy Drinks");
 
         child = new ExpListChild();
         child.setName("Water");
@@ -322,13 +331,13 @@ public class GuideActivity extends AppCompatActivity {
         child.setTag(null);
         children.add(child);
 
-        g2.setItems(children);
-        groups.add(g2);
+        group2.setItems(children);
+        groups.add(group2);
 
 
         children = new ArrayList<ExpListChild>();
-        ExpListGroup g3 = new ExpListGroup();
-        g3.setName("Eat less often, in small amounts");
+        ExpListGroup group3 = new ExpListGroup();
+        group3.setName("Eat less often, in small amounts");
 
         child = new ExpListChild();
         child.setName("Chocolate");
@@ -380,8 +389,8 @@ public class GuideActivity extends AppCompatActivity {
         child.setTag(null);
         children.add(child);
 
-        g3.setItems(children);
-        groups.add(g3);
+        group3.setItems(children);
+        groups.add(group3);
 
 
         return groups;
@@ -389,27 +398,24 @@ public class GuideActivity extends AppCompatActivity {
 
 
     /**
-     * Show gen info.
+     * Show general info tab.
      *
      * @param v the v
      */
     public void showGenInfo(View v) {
         generalInfo.setVisibility(View.VISIBLE);
         explExamples.setVisibility(View.INVISIBLE);
-
-
     }
 
 
     /**
-     * Show examples.
+     * Show examples tab.
      *
      * @param v the v
      */
     public void showExamples(View v) {
         generalInfo.setVisibility(View.INVISIBLE);
         explExamples.setVisibility(View.VISIBLE);
-
     }
 
 

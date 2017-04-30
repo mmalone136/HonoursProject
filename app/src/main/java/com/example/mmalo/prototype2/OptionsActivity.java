@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +50,9 @@ public class OptionsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Create menu in top right of screen
+
         MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_layout, menu);
+        inflater.inflate(R.menu.menu_layout, menu);
         return true;
     }
 
@@ -59,28 +61,31 @@ public class OptionsActivity extends AppCompatActivity {
         // Handle item selection
         //Select item in list, do this
         switch (item.getItemId()) {
-            case R.id.DelData:
-                dbCont.dropTables(getApplicationContext());
-                return true;
-            case R.id.CreateData:
-                dbCont.createTables(getApplicationContext());
-                return true;
-            case R.id.InsertData:
-                ArrayList<DiaryData> seven = doDBThings();
-                for (DiaryData d : seven) {
-                    dbCont.insertEntryTemp(d, getApplicationContext());
-                }
-                return true;
-            case R.id.DeleteMore:
-                dbCont.deleteDate(getApplicationContext());
-                return true;
-            case R.id.RefreshTotals:
-                //readCountData();
+            case R.id.ImgRefs:
+                showImageRefs();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    public void showImageRefs(){
+        LinearLayout optionsMenu  = (LinearLayout) findViewById(R.id.LinLayOptionsMenu);
+        optionsMenu.setVisibility(View.INVISIBLE);
+
+        ImageView refs  = (ImageView) findViewById(R.id.ivImageRefs);
+        refs.setVisibility(View.VISIBLE);
+    }
+
+    public void hideImageRefs(View v){
+        LinearLayout optionsMenu  = (LinearLayout) findViewById(R.id.LinLayOptionsMenu);
+        optionsMenu.setVisibility(View.VISIBLE);
+
+        ImageView refs  = (ImageView) findViewById(R.id.ivImageRefs);
+        refs.setVisibility(View.INVISIBLE);
+    }
+
 
 
 //--------------Functions for changing forms
@@ -92,14 +97,6 @@ public class OptionsActivity extends AppCompatActivity {
      * @param v the v
      */
     public void openPhotoPreview(View v) {
-        //CameraController cc = new CameraController();
-       // boolean hasCam = cc.checkCameraHardware(this);
-        //System.out.println(hasCam);
-        //Toast toast;
-        //toast = Toast.makeText(this, "Has Camera: " + hasCam, Toast.LENGTH_LONG);
-        //toast.show();
-
-
         //Check API level and choose correct camera activity for API level
         int apiLevel = Build.VERSION.SDK_INT;
         Intent i;

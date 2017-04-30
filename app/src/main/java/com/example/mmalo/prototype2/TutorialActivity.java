@@ -102,6 +102,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Create activity and initialise many variables and references
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         createList();
@@ -114,14 +115,13 @@ public class TutorialActivity extends AppCompatActivity {
         DataHolder.readData(this);
         nextTutOption = (Button) findViewById(R.id.buttonNextImage);
         finalSum = (ImageView) findViewById(R.id.txtViewFinalSummary);
-        //setCurrentPhoto(getNextPhoto());
         correctFVCount = 0;
         correctDRCount = 0;
         currInstr = 0;
         picResult = (ImageView) findViewById(R.id.imageViewResult);
-
         itemText = (TextView) findViewById(R.id.currItemText);
 
+        //Set up array of images to show - instruction images
         int[] temp = {R.drawable.tutorialintro, R.drawable.tutorial2, R.drawable.tutorial2_5,R.drawable.tutorial3,
                 R.drawable.tutorial3_5,R.drawable.tutorial4, R.drawable.tutorial5};
         instructions = temp;
@@ -130,59 +130,63 @@ public class TutorialActivity extends AppCompatActivity {
         picResult.setVisibility(View.VISIBLE);
         left = (ImageButton) findViewById(R.id.buttonPrevInst);
         left.setVisibility(View.INVISIBLE);
-        //pictureView.setVisibility(View.INVISIBLE);
+
 
     }
 
 
     /**
-     * Create list.
+     * Create list of images to be shown.
      */
     public void createList() {
-        tutorialDataList = new ArrayList<TutorialData>();
+        //Create list and holder variable
+        tutorialDataList = new ArrayList<>();
         TutorialData tutData;
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         String id = "@drawable/burger";
         tutData = new TutorialData(id, false, false, "Burger");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/fruit";
         tutData = new TutorialData(id, true, false, "Some Fruit");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/icecream2";
         tutData = new TutorialData(id, false, false, "Ice-Cream");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/pastry";
         tutData = new TutorialData(id, false, false, "Cream-Pastries");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/pizza";
         tutData = new TutorialData(id, false, false,"Pizza");
         tutorialDataList.add(tutData);
 
-        //id = "@drawable/mealdrink";
-       // tutData = new TutorialData(id, true, true);
-        //tutorialDataList.add(tutData);
-
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/salad2";
         tutData = new TutorialData(id, true, false, "Salad");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/strawbs";
         tutData = new TutorialData(id, true, false, "Strawberries");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/tea";
         tutData = new TutorialData(id, false, true,"Sugar-Free Tea");
         tutorialDataList.add(tutData);
 
+        //Define next id, reinitialise Tutorial Data Object, add to list
         id = "@drawable/water";
         tutData = new TutorialData(id, false, true, "Water");
         tutorialDataList.add(tutData);
-
-
     }
 
     /**
@@ -192,20 +196,18 @@ public class TutorialActivity extends AppCompatActivity {
      */
     public void setCurrentPhoto(TutorialData tutData) {
         try {
-
-
+            //Get filepath for next image - read answer values too
             String identifier = tutData.getFilePath();
             currHasFV = tutData.getHasFV();
             currHasDR = tutData.getHasDR();
             pictureView = (ImageView) findViewById(R.id.imageViewTut);
             itemText.setText(tutData.getPicName());
-            String test = "@drawable/apple";
 
+            //Code adapted from:
             //http://stackoverflow.com/questions/11737607/how-to-set-the-image-from-drawable-dynamically-in-android?noredirect=1&lq=1
             int id = getResources().getIdentifier(identifier, null, getPackageName());
             Drawable curr = getResources().getDrawable(id);
             pictureView.setImageDrawable(curr);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,7 +216,7 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets next photo.
+     * Gets next photo - random value.
      *
      * @return the next photo
      */
@@ -233,6 +235,7 @@ public class TutorialActivity extends AppCompatActivity {
      */
     public void addToDrinks(View v) {
         //toggle drinks on/off
+        //No longer changes colour - shows tick or cross
         userDR = !userDR;
         if (userDR) {
             changeButtonColours(buttonDR, "#50BF0B", 2);
@@ -249,6 +252,7 @@ public class TutorialActivity extends AppCompatActivity {
      */
     public void addToFV(View v) {
         //toggle FV on/off
+        //No longer changes colour - shows tick or cross
         userFV = !userFV;
         if (userFV) {
             changeButtonColours(buttonFV, "#50BF0B", 1);
@@ -257,15 +261,6 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Change button colours.
-     *
-     * @param curr   the curr
-     * @param colour the colour
-     */
-    public void changeButtonColours(Button curr, String colour) {
-        curr.setBackgroundColor(Color.parseColor(colour));
-    }
 
     /**
      * Change button colours.
@@ -275,7 +270,9 @@ public class TutorialActivity extends AppCompatActivity {
      * @param flag   the flag
      */
     public void changeButtonColours(ImageButton curr, String colour, int flag) {
-        if (colour.equals("#50BF0B")) {//curr.setBackgroundColor(Color.parseColor(colour));
+        //Toggles image on button on or off
+
+        if (colour.equals("#50BF0B")) {
             if (flag == 1) {
                 curr.setImageResource(R.drawable.bowltick);
             } else {
@@ -300,6 +297,7 @@ public class TutorialActivity extends AppCompatActivity {
         boolean fvResult = (userFV == currHasFV);
         boolean drResult = (userDR == currHasDR);
 
+        //If correct - increment score counts
         if (fvResult) {
             correctFVCount++;
         }
@@ -307,6 +305,7 @@ public class TutorialActivity extends AppCompatActivity {
             correctDRCount++;
         }
 
+        //Reset button states
         changeButtonColours(buttonFV, "#b0b4b7", 1);
         changeButtonColours(buttonDR, "#b0b4b7", 2);
         userFV = false;
@@ -314,6 +313,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         String review = "";
 
+        //Checks results and shows feedback image based on answers
         if (fvResult && drResult) {
             review = "Correct for both";
 
@@ -321,9 +321,6 @@ public class TutorialActivity extends AppCompatActivity {
             picResult.setImageResource(R.drawable.bothcorrect);
             picResult.setVisibility(View.VISIBLE);
             itemText.setVisibility(View.INVISIBLE);
-
-            // finalSum.setText("Correct!\n\nWell Done, you assigned both categories correctly!");
-            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -336,9 +333,6 @@ public class TutorialActivity extends AppCompatActivity {
             picResult.setImageResource(R.drawable.almostfood);
             picResult.setVisibility(View.VISIBLE);
             itemText.setVisibility(View.INVISIBLE);
-
-            //finalSum.setText("Almost There!\n\nYou assigned to the Fruit and Vegetable category correctly but the drinks were wrong!");
-            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
@@ -346,43 +340,31 @@ public class TutorialActivity extends AppCompatActivity {
 
         } else if ((!fvResult) && (drResult)) {
             review = "Correct for drinks, incorrect for fruit & veg";
-            //things
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.almostdrink);
             picResult.setVisibility(View.VISIBLE);
             itemText.setVisibility(View.INVISIBLE);
-            //finalSum.setText("Almost There!\n\nYou assigned to the Drinks category correctly but the Fruit and Vegetable category was wrong!");
-            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
             submitOption.setVisibility(View.INVISIBLE);
         } else {
-            //if(!(fvResult && drResult)){
             review = "Incorrect for both";
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setImageResource(R.drawable.bothincorrect);
             picResult.setVisibility(View.VISIBLE);
             itemText.setVisibility(View.INVISIBLE);
-
-            //finalSum.setText("Incorrect!\n\nTry again, you assigned both categories incorrectly!");
-            //finalSum.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.VISIBLE);
             buttonFV.setVisibility(View.INVISIBLE);
             buttonDR.setVisibility(View.INVISIBLE);
             submitOption.setVisibility(View.INVISIBLE);
         }
-
-        Toast t = Toast.makeText(this, review, Toast.LENGTH_LONG);
-        //t.show();
-
-
     }
 
     /**
-     * Replay.
+     * Replay tutorial
      *
      * @param v the v
      */
@@ -401,11 +383,12 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     /**
-     * Next option.
+     * Goes to next image - submitting current answers.
      *
      * @param v the v
      */
     public void nextOption(View v) {
+        //Show and hide necessary views
         finalSum.setVisibility(View.INVISIBLE);
         nextTutOption.setVisibility(View.INVISIBLE);
         picResult.setVisibility(View.INVISIBLE);
@@ -415,35 +398,34 @@ public class TutorialActivity extends AppCompatActivity {
         pictureView.setVisibility(View.VISIBLE);
         itemText.setVisibility(View.VISIBLE);
 
-
+        //Check if last image has been done
         if (tutorialDataList.size() > 0) {
+            //Still photos left - keep going with next image
             setCurrentPhoto(getNextPhoto());
         } else {
+            //Run out of images - tutorial complete
+
             LinearLayout tutButtons = (LinearLayout) findViewById(R.id.ButtonLayout);
             tutButtons.setVisibility(View.INVISIBLE);
-
             ImageButton replay = (ImageButton) findViewById(R.id.buttonReplayTut);
             replay.setVisibility(View.VISIBLE);
             nextTutOption.setVisibility(View.INVISIBLE);
-           // finalSum.setText("Tutorial Complete!\n\nFruit & Veg Correct: " + correctFVCount + "\n\nDrinks Correct: " + correctDRCount);
             finalSum.setVisibility(View.VISIBLE);
-            //finalSum.setImageResource(R.drawable.finalallcorrect);
-            //finalSum.setImageResource(R.drawable.finalalmost);
-            //finalSum.setImageResource(R.drawable.finalgettingthere);
 
+            //Calculate final total
             int total = correctFVCount + correctDRCount;
 
+            //Show feedback based on total
             if (total==18)
             {
                 finalSum.setImageResource(R.drawable.finalallcorrect);
             }else if(total>9&& total<18){
                 finalSum.setImageResource(R.drawable.finalalmost);
             }
-            else{
-
+            else
+            {
                 finalSum.setImageResource(R.drawable.finalgettingthere);
             }
-
 
             pictureView.setVisibility(View.INVISIBLE);
             picResult.setVisibility(View.INVISIBLE);
@@ -458,37 +440,32 @@ public class TutorialActivity extends AppCompatActivity {
      * @param v the v
      */
     public void nextInstruct(View v) {
+        //Increment index
         currInstr++;
+        //Check if at last instruction (Checks index wont go out of bounds)
         if (currInstr == instructions.length) {
-            //picResult.setImageResource(instructions[currInstr]);
-            //picResult.setVisibility(View.INVISIBLE);
             currInstr--;
         } else {
+            //Set appropriate image for index
             picResult.setImageResource(instructions[currInstr]);
             picResult.setVisibility(View.VISIBLE);
 
+            //If at end - show begin button
             if (currInstr == (instructions.length - 1)) {
-                //beginLay
-
-                //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
                 LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
                 begin.setVisibility(View.VISIBLE);
                 begin.bringToFront();
-                ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
-                //right.setVisibility(View.INVISIBLE);
             }
         }
         if(currInstr>0){
-            //ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
             left.setVisibility(View.VISIBLE);
-
         }
 
 
     }
 
     /**
-     * Prev instruct.
+     * Go to Previous instruction.
      *
      * @param v the v
      */
@@ -496,52 +473,35 @@ public class TutorialActivity extends AppCompatActivity {
         if (currInstr > 0) {
             //This may not be correct
             if (currInstr == (instructions.length - 1)) {
-                //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
                 LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
                 begin.setVisibility(View.INVISIBLE);
-               //ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
-                //right.setVisibility(View.VISIBLE);
             }
             currInstr--;
             picResult.setImageResource(instructions[currInstr]);
             picResult.setVisibility(View.VISIBLE);
-
-
         }
         if(currInstr==0){
-            //left = (ImageButton) findViewById(R.id.buttonPrevInst);
             left.setVisibility(View.INVISIBLE);
-
         }
 
     }
 
     /**
-     * Begin tutorial.
+     * Begin tutorial - shows layouts relating to tutorial playing
+     * Hides layouts associated with instructions section of tutorial.
      *
      * @param v the v
      */
     public void beginTutorial(View v) {
         picResult.setVisibility(View.INVISIBLE);
-        //ImageButton left = (ImageButton) findViewById(R.id.buttonPrevInst);
-        //ImageButton right = (ImageButton) findViewById(R.id.buttonNextInst);
-        //left.setVisibility(View.INVISIBLE);
-       // right.setVisibility(View.INVISIBLE);
 
         setCurrentPhoto(getNextPhoto());
 
-
-
-
-
         LinearLayout ll2 = (LinearLayout) findViewById(R.id.place);
         ll2.setVisibility(View.INVISIBLE);
-        //place
-        //ImageButton begin = (ImageButton) findViewById(R.id.beginTut2);
+
         LinearLayout begin = (LinearLayout) findViewById(R.id.beginLay);
         begin.setVisibility(View.INVISIBLE);
-
-
 
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.ButtonLayout);

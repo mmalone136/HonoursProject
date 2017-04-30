@@ -12,10 +12,15 @@ import android.widget.TextView;
 import com.example.mmalo.prototype2.R;
 import java.util.ArrayList;
 
-//http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+
 
 /**
  * Created by mmalo on 14/02/2017.
+ *
+ *
+ * Class adapted from code in:
+ * //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+ *
  */
 
 public class ExplAdapter extends BaseExpandableListAdapter {

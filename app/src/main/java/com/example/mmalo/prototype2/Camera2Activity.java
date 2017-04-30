@@ -58,9 +58,10 @@ import static com.example.mmalo.prototype2.Controllers.CameraController.getCamer
  * Created by mmalo on 27/02/2017.
  *
  *
- * Most of the functionality in this class is adapted from:
+ * Lots functionality in this class is adapted from:
  * http://coderzpassion.com/android-working-camera2-api/
  * (all for handling camera functionality)
+ *
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Camera2Activity extends AppCompatActivity {
@@ -156,29 +157,24 @@ public class Camera2Activity extends AppCompatActivity {
 
             @Override
             public void onOrientationChanged(int orientation) {
-                //if (vals.contains(orientation)) {
-                //    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
-                //t.show();
-                //}
+
                 if (!cancelFlag) {
                     if (orientation < 200 || orientation > 320) {
                         turn.setVisibility(View.VISIBLE);
                         captureButton.setEnabled(false);
-                        //setVisibility(View.VISIBLE);
+
                     } else {
                         turn.setVisibility(View.INVISIBLE);
                         captureButton.setEnabled(true);
-                        //.setVisibility(View.INVISIBLE);
+
                     }
                 }
             }
         };
 
         if (mOrientationListener.canDetectOrientation() == true) {
-            //  Log.v(DEBUG_TAG, "Can detect orientation");
             mOrientationListener.enable();
         } else {
-            //    Log.v(DEBUG_TAG, "Cannot detect orientation");
             mOrientationListener.disable();
         }
 
@@ -191,8 +187,6 @@ public class Camera2Activity extends AppCompatActivity {
      * Higher api.
      */
     public void higherAPI() {
-        Toast t = Toast.makeText(this, "HIGHER API", Toast.LENGTH_LONG);
-        //t.show();
         jpegSizes = null;
         captureButton = (ImageButton) findViewById(R.id.button_capture);
         imTextView = (TextureView) findViewById(R.id.imageTextView);
@@ -320,7 +314,6 @@ public class Camera2Activity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Open camera.
      */
@@ -439,9 +432,6 @@ public class Camera2Activity extends AppCompatActivity {
         }
     }
 
-
-
-
     /**
      * After taken.
      *
@@ -453,8 +443,6 @@ public class Camera2Activity extends AppCompatActivity {
 
             turn.setVisibility(View.INVISIBLE);
 
-
-            // SEVEN 7777
             if(Build.VERSION.SDK_INT==21) {
                 bitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), rotationMat, true);
             }else {
@@ -467,7 +455,6 @@ public class Camera2Activity extends AppCompatActivity {
 
             imTextView = (TextureView) findViewById(R.id.imageTextView);
             imTextView.setVisibility(View.INVISIBLE);
-            //imTextView.clear
 
             ImageView iv = (ImageView) findViewById(R.id.frame_taken);
             iv.setImageBitmap(bitmap);
@@ -475,20 +462,11 @@ public class Camera2Activity extends AppCompatActivity {
 
             cancelFlag = !cancelFlag;
 
-            //Button confirm = (Button) findViewById(R.id.button_cont);
-            //confirm.setVisibility(View.VISIBLE);
-            //captureButton = (ImageButton) findViewById(R.id.button_capture);
-            //captureButton.setVisibility(View.INVISIBLE);
-
-
             RelativeLayout seven = (RelativeLayout) findViewById(R.id.RelLay1);
             LinearLayout options = (LinearLayout) seven.findViewById(R.id.LinLay2);
             options.setVisibility(View.VISIBLE);
             LinearLayout toHide = (LinearLayout) seven.findViewById(R.id.LinLay1);
             toHide.setVisibility(View.INVISIBLE);
-
-
-            //LinLay1
 
             dataToPass = photoData;
         } catch (Exception e) {

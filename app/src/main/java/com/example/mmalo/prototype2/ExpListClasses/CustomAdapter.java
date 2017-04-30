@@ -21,11 +21,13 @@ import java.util.ArrayList;
 
 /**
  * Created by mmalo on 06/03/2017.
- *
- *
- * Class Adapted from tutorial:
+ * <p>
+ * <p>
+ * * Class created by adapting code from:
  * //http://stackoverflow.com/questions/15832335/android-custom-row-item-for-listview
- *
+ * <p>
+ * <p>
+ * //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
  */
 public class CustomAdapter extends BaseAdapter {
 
@@ -89,7 +91,7 @@ public class CustomAdapter extends BaseAdapter {
      * @param today    the today
      * @param text     the text
      */
-    public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage, int today,TextView text) {
+    public CustomAdapter(Context context, ArrayList<String[]> data, int sel, boolean[] forImage, int today, TextView text) {
         this.context = context;
         this.data = data;
         this.selector = sel;
@@ -129,13 +131,13 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
         return data.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
         return position;
     }
 
@@ -144,87 +146,73 @@ public class CustomAdapter extends BaseAdapter {
         if (selector == 1) {
             String[] stringList = data.get(position);
             boolean current = starFlags[position];
-            t=position;
+            t = position;
 
             convertView = LayoutInflater.from(context).inflate(R.layout.imagebutton_layout, null);
 
             TextView day = (TextView) convertView.findViewById(R.id.tvChild);
             TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
-            //TextView other = (TextView) convertView.findViewById(R.id.tvChild2);
-            //ImageButton star = (ImageButton) convertView.findViewById(R.id.ivStar);
             ImageView star = (ImageView) convertView.findViewById(R.id.ivStar);
 
             day.setText(stringList[0]);
             date.setText(stringList[1]);
-            //other.setText(stringList[2]);
-
 
             if (position == todayPosition) {
-                //convertView.setBackgroundResource(R.color.explvGroupBackGood);
                 LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
                 ll.setBackgroundResource(R.color.explvGroupBackGood);
-                //other.setText("TODAY");
                 String str = stringList[1] + "\nTODAY";
                 date.setText(str);
+            } else if (stringList[2].equals("NO ENTRIES")) {
 
-            }
-            else if(stringList[2].equals("NO ENTRIES")){
-                //LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
-                //ll.setBackgroundResource(R.color.colorPrimaryDark);
-
-            }else{
+            } else {
                 LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.thing);
                 ll.setBackgroundResource(R.color.aBlue);
             }
 
-             if (current) {
+            if (current) {
                 star.setImageResource(R.drawable.goldstar);
             } else {
                 star.setImageResource(R.drawable.greystar);
             }
 
+        } else if (selector == 2) {
+
+            String[] stringList = data.get(position);
+            convertView = LayoutInflater.from(context).inflate(R.layout.dateview_list_layout, null);
+
+            int seven;
+            switch (stringList[0]) {
+                case "Breakfast":
+                    seven = R.drawable.breakfasticon;
+                    break;
+                case "Lunch":
+                    seven = R.drawable.lunchicon;
+                    break;
+                case "Dinner":
+                    seven = R.drawable.dinnicon;
+                    break;
+                case "Drink":
+                    seven = R.drawable.glassfull;
+                    break;
+                case "Snack":
+                    seven = R.drawable.snackicon;
+                    break;
+                default:
+                    seven = R.drawable.glassempty1;
+                    break;
+            }
 
 
-            }else if (selector == 2) {
-
-                String[] stringList = data.get(position);
-                convertView = LayoutInflater.from(context).inflate(R.layout.dateview_list_layout, null);
-
-                int seven;
-                switch (stringList[0]) {
-                    case "Breakfast":
-                        seven = R.drawable.breakfasticon;
-                        break;
-                    case "Lunch":
-                        seven = R.drawable.lunchicon;
-                        break;
-                    case "Dinner":
-                        seven = R.drawable.dinnicon;
-                        break;
-                    case "Drink":
-                        seven = R.drawable.glassfull;
-                        break;
-                    case "Snack":
-                        seven = R.drawable.snackicon;
-                        break;
-                    default:
-                        seven = R.drawable.glassempty1;
-                        break;
-                }
+            ImageView ivMeal = (ImageView) convertView.findViewById(R.id.ivMeal);
+            TextView day = (TextView) convertView.findViewById(R.id.tvChild);
+            TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
 
 
-                ImageView ivMeal = (ImageView) convertView.findViewById(R.id.ivMeal);
-                TextView day = (TextView) convertView.findViewById(R.id.tvChild);
-                TextView date = (TextView) convertView.findViewById(R.id.tvChild1);
-
-
-                day.setText(stringList[0]);
-                date.setText(stringList[1]);
-                ivMeal.setImageResource(seven);
-            } else if (selector == 3) {
+            day.setText(stringList[0]);
+            date.setText(stringList[1]);
+            ivMeal.setImageResource(seven);
+        } else if (selector == 3) {
             String str = moreData[position];
-
-            //convertView = LayoutInflater.from(context).inflate(R.layout.summary_list_layout, null);
 
             int symb;
             int symb2 = R.drawable.glassfull;
@@ -257,13 +245,10 @@ public class CustomAdapter extends BaseAdapter {
                 symb = R.drawable.comments;
             }
 
-
             if (position == 1) {
 
                 convertView = LayoutInflater.from(context).inflate(R.layout.summary_list2_layout, null);
-
-
-                String [] temp = str.split("#");
+                String[] temp = str.split("#");
 
 
                 ImageView symbol = (ImageView) convertView.findViewById(R.id.ivSymbol);
@@ -286,6 +271,6 @@ public class CustomAdapter extends BaseAdapter {
                 symbol.setImageResource(symb);
             }
         }
-            return convertView;
-        }
+        return convertView;
     }
+}

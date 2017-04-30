@@ -44,9 +44,12 @@ import static com.example.mmalo.prototype2.Controllers.CameraController.getCamer
 
 /**
  * Created by mmalo on 27/10/2016.
+ *
+ * Camera functionality adapted from tutorial:
+ * https://developer.android.com/guide/topics/media/camera.html
+ *
  */
 public class CameraActivity extends Activity {
-    //http://coderzpassion.com/android-working-camera2-api/
     private Camera mCamera;
     private CameraPreview mPreview;
     private boolean cancelFlag;
@@ -111,30 +114,25 @@ public class CameraActivity extends Activity {
 
             @Override
             public void onOrientationChanged(int orientation) {
-                //if (vals.contains(orientation)) {
-                //    Toast t = Toast.makeText(getApplicationContext(), "Orientation changed to " + orientation, Toast.LENGTH_LONG);
-                //t.show();
-                //}
+
                 if (!cancelFlag) {
                     if (orientation < 200 || orientation > 320) {
                         turn.setVisibility(View.VISIBLE);
                         turn.bringToFront();
                         captureButton.setEnabled(false);
-                        //setVisibility(View.VISIBLE);
+
                     } else {
                         turn.setVisibility(View.INVISIBLE);
                         captureButton.setEnabled(true);
-                        //.setVisibility(View.INVISIBLE);
+
                     }
                 }
             }
         };
 
-        if (mOrientationListener.canDetectOrientation() == true) {
-            //  Log.v(DEBUG_TAG, "Can detect orientation");
+        if (mOrientationListener.canDetectOrientation()) {
             mOrientationListener.enable();
         } else {
-            //    Log.v(DEBUG_TAG, "Cannot detect orientation");
             mOrientationListener.disable();
         }
 
@@ -220,13 +218,6 @@ public class CameraActivity extends Activity {
 
             cancelFlag = !cancelFlag;
 
-
-
-            //ImageButton confirm = (ImageButton) findViewById(R.id.button_cont);
-            //confirm.setVisibility(View.VISIBLE);
-
-            //ImageButton capture = (ImageButton) findViewById(R.id.button_capture);
-            //capture.setVisibility(View.INVISIBLE);
 
             RelativeLayout seven = (RelativeLayout) findViewById(R.id.RelLay1);
             LinearLayout options = (LinearLayout) seven.findViewById(R.id.LinLay2);

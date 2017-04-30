@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Created by mmalo on 14/02/2017.
+ *  * Class adapted from code in:
+ * //http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
  */
 public class ExpListGroup {
 
